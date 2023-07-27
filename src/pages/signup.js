@@ -10,7 +10,7 @@ const SignUpPage = () => {
   return (
     <div>
       {" "}
-      <div className="sm:w-[70%]  sm:mx-auto mt-[10%] my-10 px-5">
+      <div className="sm:w-[70%]  sm:mx-auto mt-[8%] my-10 px-5">
         <div className="grid sm:grid-cols-2 grid-cols-1">
           <div className="mx-auto">
             <Image
@@ -30,7 +30,7 @@ const SignUpPage = () => {
             <div>
               <SignupFrom></SignupFrom>
             </div>
-            <div className="sm:w-[150%]">
+            <div className="">
               <Divider>Or Login with</Divider>
             </div>
             <div className="my-5">

@@ -27,6 +27,13 @@ body {
   font-size: 13px;
 }
 
+.input-select-border {
+  border: 1px solid #cacaca;
+  border-radius: 4px;
+  padding: 4px 5px;
+  font-size: 13px;
+}
+
 .input-title {
   font-size: 15px;
   font-weight: 600;
