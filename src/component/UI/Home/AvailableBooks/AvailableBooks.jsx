@@ -22,7 +22,7 @@ const AvailableBooks = () => {
   }, []);
 
   return (
-    <div className="lg:w-[80%] lg:mx-auto py-4 sm:my-[10%] my-16 px-4">
+    <div className="lg:w-[80%] lg:mx-auto py-4 sm:mt-[10%] mt-16 mb-16 px-4">
       <h1 className="heading text-center">Available Books</h1>
       <p className="text-xl font-secondary text-accent text-center lg:px-[200px] my-5">
         Welcome to BookLink&apos;s expansive book categories section. Here, you

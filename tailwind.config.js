@@ -13,7 +13,7 @@ module.exports = {
       colors: {
         primary: "#438E93",
         secondary: "#1B6273",
-        popover: "#ddedee",
+        popover: "#F1F1F1",
         accent: "#808080",
         dark: "#3C4048",
       },

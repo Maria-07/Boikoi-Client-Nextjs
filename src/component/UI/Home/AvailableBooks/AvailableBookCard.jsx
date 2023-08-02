@@ -1,4 +1,4 @@
-import Card from "antd/es/card/Card";
+import { Card } from "antd";
 import bookPic from "../../../../assets/img/book.jpg";
 import Image from "next/image";
 import Link from "next/link";
@@ -24,7 +24,7 @@ const AvailableBookCard = ({ book }) => {
               <h1 className="text-sm text-accent font-primary font-medium ">
                 {publisher_name}
               </h1>
-              <h2 className="text-base font-primary h-[55px] my-1 font-medium text-dark">
+              <h2 className="text-base font-primary h-[55px] my-1 font-semibold text-dark">
                 {title}
               </h2>
               <h3 className="text-base font-primary mb-2 font-medium text-primary">

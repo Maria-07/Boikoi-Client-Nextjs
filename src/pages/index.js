@@ -4,6 +4,7 @@ import Image from "next/image";
 import banner from "../assets/img/Bookshop-amico.png";
 import Count from "@/component/UI/Home/Count/Count";
 import AvailableBooks from "@/component/UI/Home/AvailableBooks/AvailableBooks";
+import Categories from "@/component/UI/Home/Categories/Categories";
 
 const HomePage = () => {
   return (
@@ -36,6 +37,7 @@ const HomePage = () => {
       </div>
       <Count></Count>
       <AvailableBooks></AvailableBooks>
+      <Categories></Categories>
     </>
   );
 };
