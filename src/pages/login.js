@@ -5,6 +5,7 @@ import Login from "@/component/UI/Login/Login";
 import { Divider } from "antd";
 import { BsFacebook, BsGithub, BsGoogle } from "react-icons/bs";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
 
 const LoginPage = () => {
   return (
@@ -33,10 +34,25 @@ const LoginPage = () => {
           </div>
           <div className="my-5">
             <div className="flex flex-wrap gap-4">
-              <button className="flex items-center gap-2 input-button">
-                <BsGoogle /> Google
+              <button
+                onClick={() =>
+                  signIn("google", {
+                    callbackUrl: "http://localhost:3000/",
+                  })
+                }
+                className="flex items-center gap-2 input-button"
+              >
+                <BsGoogle />
+                Google
               </button>
-              <button className="flex items-center gap-2 input-button">
+              <button
+                onClick={() =>
+                  signIn("github", {
+                    callbackUrl: "http://localhost:3000/",
+                  })
+                }
+                className="flex items-center gap-2 input-button"
+              >
                 <BsGithub /> Github
               </button>
               <button className="flex items-center gap-2 input-button">
