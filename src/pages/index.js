@@ -2,6 +2,8 @@ import RootLayout from "@/component/Layouts/RootLayout";
 import Head from "next/head";
 import Image from "next/image";
 import banner from "../assets/img/Bookshop-amico.png";
+import Count from "@/component/UI/Home/Count/Count";
+import AvailableBooks from "@/component/UI/Home/AvailableBooks/AvailableBooks";
 
 const HomePage = () => {
   return (
@@ -32,6 +34,8 @@ const HomePage = () => {
           </div>
         </div>
       </div>
+      <Count></Count>
+      <AvailableBooks></AvailableBooks>
     </>
   );
 };

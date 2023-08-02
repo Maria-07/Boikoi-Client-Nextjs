@@ -15,7 +15,7 @@ module.exports = {
         secondary: "#1B6273",
         popover: "#ddedee",
         accent: "#808080",
-        dark: "#050505",
+        dark: "#3C4048",
       },
       fontFamily: {
         primary: ["EB Garamond", "serif"],
