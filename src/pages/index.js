@@ -5,6 +5,7 @@ import banner from "../assets/img/Bookshop-amico.png";
 import Count from "@/component/UI/Home/Count/Count";
 import AvailableBooks from "@/component/UI/Home/AvailableBooks/AvailableBooks";
 import Categories from "@/component/UI/Home/Categories/Categories";
+import BoikoiInfo from "@/component/UI/Home/Boikoi/BoikoiInfo";
 
 const HomePage = () => {
   return (
@@ -38,6 +39,7 @@ const HomePage = () => {
       <Count></Count>
       <AvailableBooks></AvailableBooks>
       <Categories></Categories>
+      <BoikoiInfo></BoikoiInfo>
     </>
   );
 };
