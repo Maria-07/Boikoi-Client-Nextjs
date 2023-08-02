@@ -1,5 +1,4 @@
 import RootLayout from "@/component/Layouts/RootLayout";
-import React from "react";
 
 const bookDetails = () => {
   return <div>bookDetails</div>;

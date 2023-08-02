@@ -6,6 +6,7 @@ import Count from "@/component/UI/Home/Count/Count";
 import AvailableBooks from "@/component/UI/Home/AvailableBooks/AvailableBooks";
 import Categories from "@/component/UI/Home/Categories/Categories";
 import BoikoiInfo from "@/component/UI/Home/Boikoi/BoikoiInfo";
+import OldBooks from "@/component/UI/Home/OldBooks/OldBooks";
 
 const HomePage = () => {
   return (
@@ -40,6 +41,7 @@ const HomePage = () => {
       <AvailableBooks></AvailableBooks>
       <Categories></Categories>
       <BoikoiInfo></BoikoiInfo>
+      <OldBooks></OldBooks>
     </>
   );
 };

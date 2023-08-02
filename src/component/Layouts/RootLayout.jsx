@@ -1,4 +1,4 @@
-import Navbar from "../UI/Layouts/navbar";
+import Navbar from "../UI/Layouts/Navbar";
 
 const RootLayout = ({ children }) => {
   return (

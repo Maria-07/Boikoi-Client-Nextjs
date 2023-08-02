@@ -1,0 +1,9 @@
+ .option:hover .option-visible {
+     background-color: rgba(0, 0, 0, 0.427);
+     transition: ease-in-out all 0.2s;
+     visibility: visible;
+ }
+
+ .option-visible {
+     visibility: hidden;
+ }
