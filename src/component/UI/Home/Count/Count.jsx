@@ -1,7 +1,7 @@
 const Count = () => {
   return (
-    <div className="sm:w-[60%]  sm:mx-auto py-4 ">
-      <div className="sm:absolute border shadow-md sm:mt-[-5%] sm:w-[60%]">
+    <div className="lg:w-[60%]  sm:mx-auto py-4 ">
+      <div className="lg:absolute border shadow-md sm:mt-[-5%] lg:w-[60%]">
         <div className="bg-white p-8 ">
           <div className="grid sm:grid-cols-3 grid-cols-1 gap-2">
             <div className="p-4 sm:border-r-2 ">
