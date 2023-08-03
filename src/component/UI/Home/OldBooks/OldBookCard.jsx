@@ -38,7 +38,7 @@ const OldBookCard = ({ book }) => {
                     <RiListSettingsLine />
                   </button>
                   <div className="text-gray-300">|</div>
-                  <Link href={"/oldBooks/123"}>
+                  <Link href={"/books/oldBooks/123"}>
                     <button
                       title="Book Details"
                       className="mt-1 text-xl text-primary hover:text-secondary font-semibold px-2"

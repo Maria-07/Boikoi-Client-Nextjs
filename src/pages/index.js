@@ -7,6 +7,7 @@ import AvailableBooks from "@/component/UI/Home/AvailableBooks/AvailableBooks";
 import Categories from "@/component/UI/Home/Categories/Categories";
 import BoikoiInfo from "@/component/UI/Home/Boikoi/BoikoiInfo";
 import OldBooks from "@/component/UI/Home/OldBooks/OldBooks";
+import BooksOnSale from "@/component/UI/Home/BooksOnSale/BooksOnSale";
 
 const HomePage = () => {
   return (
@@ -42,6 +43,7 @@ const HomePage = () => {
       <Categories></Categories>
       <BoikoiInfo></BoikoiInfo>
       <OldBooks></OldBooks>
+      <BooksOnSale></BooksOnSale>
     </>
   );
 };
