@@ -9,6 +9,7 @@ import BoikoiInfo from "@/component/UI/Home/Boikoi/BoikoiInfo";
 import OldBooks from "@/component/UI/Home/OldBooks/OldBooks";
 import BooksOnSale from "@/component/UI/Home/BooksOnSale/BooksOnSale";
 import Facilities from "@/component/UI/Home/Facilities/Facilities";
+import Blogs from "@/component/UI/Home/Blogs/Blogs";
 
 const HomePage = () => {
   return (
@@ -46,6 +47,7 @@ const HomePage = () => {
       <OldBooks></OldBooks>
       <BooksOnSale></BooksOnSale>
       <Facilities></Facilities>
+      <Blogs></Blogs>
     </>
   );
 };
