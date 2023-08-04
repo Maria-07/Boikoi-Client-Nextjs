@@ -19,7 +19,7 @@ module.exports = {
       },
       fontFamily: {
         primary: ["EB Garamond", "serif"],
-        secondary: ["Libre Caslon Text", "serif"],
+        secondary: ["Rufina", "serif"],
       },
     },
   },
