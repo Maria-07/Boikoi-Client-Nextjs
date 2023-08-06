@@ -1,0 +1,172 @@
+[
+  {
+    "shop_name": "Book Paradise",
+    "shop_number": "12345",
+    "contact_number": "9876543210",
+    "image": "https://example.com/book_paradise.jpg",
+    "location": "Dhanmondi",
+    "address": {
+      "street": "Mirpur Road",
+      "area": "Dhanmondi",
+      "city": "Dhaka"
+    },
+    "shop_weekend": "Saturday, Sunday",
+    "shop_open_time": "10:00 AM",
+    "shop_close_time": "8:00 PM",
+    "book_shop_ratings": 4.5,
+    "userEmail": "bookparadise@example.com"
+  },
+  {
+    "shop_name": "Novel Nook",
+    "shop_number": "98765",
+    "contact_number": "9876543210",
+    "image": "https://example.com/novel_nook.jpg",
+    "location": "Banani",
+    "address": {
+      "street": "Banani Road",
+      "area": "Banani",
+      "city": "Dhaka"
+    },
+    "shop_weekend": "Friday, Saturday",
+    "shop_open_time": "11:00 AM",
+    "shop_close_time": "9:00 PM",
+    "book_shop_ratings": 4.7,
+    "userEmail": "novelnook@example.com"
+  },
+  {
+    "shop_name": "Page Turner Books",
+    "shop_number": "54321",
+    "contact_number": "9876543210",
+    "image": "https://example.com/page_turner_books.jpg",
+    "location": "Gulshan",
+    "address": {
+      "street": "Gulshan Avenue",
+      "area": "Gulshan",
+      "city": "Dhaka"
+    },
+    "shop_weekend": "Saturday, Sunday",
+    "shop_open_time": "9:00 AM",
+    "shop_close_time": "7:00 PM",
+    "book_shop_ratings": 4.3,
+    "userEmail": "pageturner@example.com"
+  },
+  {
+    "shop_name": "Classic Reads",
+    "shop_number": "67890",
+    "contact_number": "9876543210",
+    "image": "https://example.com/classic_reads.jpg",
+    "location": "Uttara",
+    "address": {
+      "street": "Uttara Avenue",
+      "area": "Uttara",
+      "city": "Dhaka"
+    },
+    "shop_weekend": "Friday, Saturday",
+    "shop_open_time": "10:30 AM",
+    "shop_close_time": "8:30 PM",
+    "book_shop_ratings": 4.9,
+    "userEmail": "classicreads@example.com"
+  },
+  {
+    "shop_name": "Wonderland Books",
+    "shop_number": "23456",
+    "contact_number": "9876543210",
+    "image": "https://example.com/wonderland_books.jpg",
+    "location": "Mohakhali",
+    "address": {
+      "street": "Mohakhali Road",
+      "area": "Mohakhali",
+      "city": "Dhaka"
+    },
+    "shop_weekend": "Saturday, Sunday",
+    "shop_open_time": "11:30 AM",
+    "shop_close_time": "9:30 PM",
+    "book_shop_ratings": 4.6,
+    "userEmail": "wonderland@example.com"
+  },
+  {
+    "shop_name": "Read and Relax",
+    "shop_number": "87654",
+    "contact_number": "9876543210",
+    "image": "https://example.com/read_and_relax.jpg",
+    "location": "Banani",
+    "address": {
+      "street": "Banani Avenue",
+      "area": "Banani",
+      "city": "Dhaka"
+    },
+    "shop_weekend": "Friday, Saturday",
+    "shop_open_time": "10:00 AM",
+    "shop_close_time": "8:00 PM",
+    "book_shop_ratings": 4.4,
+    "userEmail": "readrelax@example.com"
+  },
+  {
+    "shop_name": "Ink and Paper",
+    "shop_number": "98765",
+    "contact_number": "9876543210",
+    "image": "https://example.com/ink_and_paper.jpg",
+    "location": "Dhanmondi",
+    "address": {
+      "street": "Dhanmondi Road",
+      "area": "Dhanmondi",
+      "city": "Dhaka"
+    },
+    "shop_weekend": "Saturday, Sunday",
+    "shop_open_time": "9:30 AM",
+    "shop_close_time": "7:30 PM",
+    "book_shop_ratings": 4.8,
+    "userEmail": "inkpaper@example.com"
+  },
+  {
+    "shop_name": "Storybook Haven",
+    "shop_number": "54321",
+    "contact_number": "9876543210",
+    "image": "https://example.com/storybook_haven.jpg",
+    "location": "Gulshan",
+    "address": {
+      "street": "Gulshan Road",
+      "area": "Gulshan",
+      "city": "Dhaka"
+    },
+    "shop_weekend": "Saturday, Sunday",
+    "shop_open_time": "10:00 AM",
+    "shop_close_time": "8:00 PM",
+    "book_shop_ratings": 4.6,
+    "userEmail": "storybook@example.com"
+  },
+  {
+    "shop_name": "Literary Corner",
+    "shop_number": "67890",
+    "contact_number": "9876543210",
+    "image": "https://example.com/literary_corner.jpg",
+    "location": "Uttara",
+    "address": {
+      "street": "Uttara Road",
+      "area": "Uttara",
+      "city": "Dhaka"
+    },
+    "shop_weekend": "Friday, Saturday",
+    "shop_open_time": "11:00 AM",
+    "shop_close_time": "9:00 PM",
+    "book_shop_ratings": 4.7,
+    "userEmail": "literarycorner@example.com"
+  },
+  {
+    "shop_name": "Enchanted Reads",
+    "shop_number": "23456",
+    "contact_number": "9876543210",
+    "image": "https://example.com/enchanted_reads.jpg",
+    "location": "Mohakhali",
+    "address": {
+      "street": "Mohakhali Avenue",
+      "area": "Mohakhali",
+      "city": "Dhaka"
+    },
+    "shop_weekend": "Friday, Saturday",
+    "shop_open_time": "10:30 AM",
+    "shop_close_time": "8:30 PM",
+    "book_shop_ratings": 4.9,
+    "userEmail": "enchantedreads@example.com"
+  }
+]

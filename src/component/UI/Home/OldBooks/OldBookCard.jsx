@@ -1,7 +1,6 @@
 import { Card } from "antd";
 import Image from "next/image";
 import bookPic from "../../../../assets/img/book.jpg";
-import { BsBookmark } from "react-icons/bs";
 import { RiListSettingsLine } from "react-icons/ri";
 import { BiDetail } from "react-icons/bi";
 import Link from "next/link";

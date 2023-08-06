@@ -11,6 +11,7 @@ import BooksOnSale from "@/component/UI/Home/BooksOnSale/BooksOnSale";
 import Facilities from "@/component/UI/Home/Facilities/Facilities";
 import Blogs from "@/component/UI/Home/Blogs/Blogs";
 import AboutUs from "@/component/UI/AboutUs/AboutUs";
+import Reviews from "@/component/UI/Home/Reviews/Reviews";
 
 const HomePage = () => {
   return (
@@ -50,6 +51,7 @@ const HomePage = () => {
       <Facilities></Facilities>
       <Blogs></Blogs>
       <AboutUs></AboutUs>
+      <Reviews></Reviews>
     </>
   );
 };
