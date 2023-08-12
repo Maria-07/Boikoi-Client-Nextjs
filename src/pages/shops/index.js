@@ -1,6 +1,7 @@
 import RootLayout from "@/component/Layouts/RootLayout";
 import ShopCard from "@/component/UI/Shops/ShopCard";
-import { Breadcrumb } from "antd";
+import { Breadcrumb, Pagination } from "antd";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AiOutlineHome, AiOutlineShop } from "react-icons/ai";
 
@@ -9,6 +10,7 @@ const ShopsPage = () => {
   const [area, setArea] = useState("");
   const [city, setCity] = useState("");
   const [location, setLocation] = useState("");
+  const currentRoute = usePathname();
 
   const [demoData, setDemoData] = useState([]);
   console.log("demoData", demoData);
@@ -47,7 +49,13 @@ const ShopsPage = () => {
               },
               {
                 title: (
-                  <button className="flex items-center gap-2 hover:text-primary font-semibold">
+                  <button
+                    className={
+                      currentRoute === "/shops"
+                        ? "text-primary flex items-center gap-2 hover:text-primary font-semibold"
+                        : "flex items-center gap-2 hover:text-primary font-semibold"
+                    }
+                  >
                     <AiOutlineShop className="  text-lg" />
                     <span>Shops</span>
                   </button>
@@ -275,11 +283,14 @@ const ShopsPage = () => {
                 </select>
               </div>
             </div>
-            <div className="md:col-span-4">
+            <div className="md:col-span-4 border shadow-md px-3 py-5">
               <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4  gap-5 ">
                 {demoData?.map((shop, i) => (
                   <ShopCard shop={shop} key={i}></ShopCard>
                 ))}
+              </div>
+              <div className="my-10 flex items-center justify-center">
+                <Pagination defaultCurrent={1} total={50} />
               </div>
             </div>
           </div>

@@ -41,7 +41,7 @@ body {
   border: 1px solid #cacaca;
   border-radius: 4px;
   padding: 3px 5px;
-  font-size: 13px;
+  font-size: 15px;
 }
 
 .input-select-border {
@@ -58,6 +58,61 @@ body {
   line-height: 1.5em;
   text-transform: none;
   letter-spacing: 0.5px;
+}
+
+.input-border-bottom {
+  border-bottom: 1.5px solid #438E93;
+  padding: 3px 5px;
+  font-size: 15px;
+  font-weight: 550;
+  color: #464646;
+}
+
+.input-title-font {
+  color: #757575;
+  font-size: 13px;
+  font-weight: 600;
+  margin: 5px 0;
+  line-height: 1.5em;
+  text-transform: none;
+  letter-spacing: 0.5px;
+}
+
+.bk-input-button {
+  background-color: #438E93;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 2em;
+  letter-spacing: 0.3px;
+  color: #fff;
+  background-position-y: 0%;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-top: 4px;
+  padding-bottom: 3px;
+  border-width: 0px;
+  border-radius: 4px;
+  box-shadow: 1px 1px 4px 0px #000000;
+  transition: ease-in-out 0.3s;
+}
+
+.bk-input-button:hover {
+  color: #fff;
+  font-weight: 600;
+  line-height: 2em;
+  letter-spacing: 0.3px;
+  background-color: #1B6273;
+  background-position-y: 0%;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-top: 4px;
+  padding-bottom: 3px;
+  border-width: 0px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  box-shadow: 1px 1px 4px 0px #000000;
 }
 
 .input-button {
@@ -77,6 +132,8 @@ body {
   box-shadow: 1px 1px 4px 0px #000000;
   transition: ease-in-out 0.3s;
 }
+
+
 
 .input-button:hover {
   color: #fff;
@@ -107,4 +164,24 @@ body {
   line-height: 1.7em;
   letter-spacing: 0.2px;
   word-spacing: 0.2px;
+}
+
+.my-item-button {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.9em;
+  text-transform: capitalize;
+  letter-spacing: 0.6px;
+  text-align: center;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  transition: ease-in-out all 0.3s;
+  margin: 10px 0;
+}
+
+.my-item-button:hover {
+  border: 1px solid #438E93;
+  box-shadow: 1px 1.4px 4px 0px #000000;
+  background-color: #438E93;
+  color: #fff;
 }

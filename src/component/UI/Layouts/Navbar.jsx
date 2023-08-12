@@ -67,6 +67,16 @@ const Navbar = () => {
             >
               Blogs
             </Link>
+            <Link
+              className={
+                currentRoute === "/myItems"
+                  ? "text-primary text-base font-semibold border-b-[2px] border-primary h-8"
+                  : "text-dark text-base font-semibold h-8 hover:text-primary hover:border-primary hover:border-b-[2px] transition-all duration-100"
+              }
+              href={"/myItems"}
+            >
+              My Items
+            </Link>
             {!session?.user && (
               <Link
                 className={
