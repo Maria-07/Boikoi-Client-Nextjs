@@ -1,9 +1,11 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import MyItemsLayout from "@/component/Layouts/MyItemsLayout";
 import RootLayout from "@/component/Layouts/RootLayout";
-import { Upload } from "antd";
+import { Input, Upload } from "antd";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+
+const { TextArea } = Input;
 
 const createShop = () => {
   const [fileList, setFileList] = useState();
@@ -223,6 +225,20 @@ const createShop = () => {
               {...register("shop_close_time")}
             />
           </div>
+        </div>
+        <div>
+          <h1 className="input-title-font">Shop CLose Time</h1>
+          <TextArea
+            {...register("description")}
+            rows={4}
+            placeholder="maxLength is 6"
+            maxLength={6}
+          />
+          {/* <Textarea
+              type="time"
+              className="input-border-bottom w-full  mb-2"
+              {...register("shop_close_time")}
+            /> */}
         </div>
         <div>
           <h1 className="input-title-font">Shop Image</h1>

@@ -35,15 +35,17 @@ const MyShop = () => {
   const onSubmit = (data) => console.log(data);
   return (
     <div>
-      <div className="flex items-end justify-end">
+      <div className="flex items-center justify-center py-16 mb-10 border bg-[#438e9320]">
         <Link href={"/myItems/shop/createShop"}>
           {" "}
-          <button>Create a shop</button>
+          <button className="font-semibold text-xl text-primary font-primary">
+            Create a shop
+          </button>
         </Link>
       </div>
 
       <div>
-        <h1 className="text-primary text-lg font-semibold">Create Your Shop</h1>
+        <h1 className="text-primary text-lg font-semibold">My Shop</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-5 my-5">
             {" "}
