@@ -10,9 +10,9 @@ const SignUpPage = () => {
   return (
     <div>
       {" "}
-      <div className="sm:w-[70%]  sm:mx-auto mt-[8%] my-10 px-5">
-        <div className="grid sm:grid-cols-2 grid-cols-1">
-          <div className="mx-auto">
+      <div className="sm:w-[50%]  sm:mx-auto mt-[7%] my-10 px-5">
+        <div className="grid lg:grid-cols-2 grid-cols-1 gap-10">
+          <div className="mx-auto my-auto">
             <Image
               src={logo}
               width={"auto"}
@@ -30,7 +30,8 @@ const SignUpPage = () => {
             <div>
               <SignupFrom></SignupFrom>
             </div>
-            <div className="">
+            {/**! important code  */}
+            {/* <div className="">
               <Divider>Or Login with</Divider>
             </div>
             <div className="my-5">
@@ -45,9 +46,9 @@ const SignUpPage = () => {
                   <BsFacebook /> Facebook
                 </button>
               </div>
-            </div>
+            </div> */}
 
-            <div className="text-sm font-medium text-gray-600 flex gap-2 my-5">
+            <div className="text-sm font-medium text-gray-600 justify-center items-center flex gap-2 my-5">
               Already have an account ?
               <Link href={"/login"}>
                 <button className="text-primary font-semibold"> Login </button>

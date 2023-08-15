@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import MyItemsLayout from "@/component/Layouts/MyItemsLayout";
 import RootLayout from "@/component/Layouts/RootLayout";
+import { useCreateShopMutation } from "@/redux/features/shop/shopApi";
 import { Input, Upload } from "antd";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -34,7 +35,43 @@ const createShop = () => {
     reset,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => console.log(data);
+
+  const [error, setError] = useState("");
+  const [image, setImage] = useState("");
+  const [description, setDescription] = useState("");
+
+  const [createShop] = useCreateShopMutation();
+
+  const onSubmit = async (data) => {
+    console.log(data);
+    try {
+      const shopData = {
+        shop_name: data.shop_name,
+        shop_number: data.shop_number,
+        contact_number: data.contact_number,
+        image: image,
+        location: data.location,
+        address: {
+          street: data.street,
+          area: data.area,
+          city: data.city,
+        },
+        shop_weekend: data.shop_weekend,
+        shop_open_time: data.shop_open_time,
+        shop_close_time: data.shop_open_time,
+        book_shop_ratings: "4.5",
+        description: description,
+      };
+      console.log("shopData", shopData);
+
+      const response = await createShop(shopData).unwrap();
+      console.log(response.message);
+      console.log("respose", response);
+    } catch (error) {
+      // console.error(error?.data?.message);
+      setError(error?.data?.message);
+    }
+  };
   return (
     <div>
       <h1 className="text-primary text-lg font-semibold">Create Your Shop</h1>
@@ -52,10 +89,6 @@ const createShop = () => {
                 required: {
                   value: true,
                   message: "shop_name is required",
-                },
-                pattern: {
-                  value: /@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/,
-                  message: "Provide a valid shop_name", // JS only: <p>error message</p> TS only support string
                 },
               })}
             />
@@ -227,12 +260,11 @@ const createShop = () => {
           </div>
         </div>
         <div>
-          <h1 className="input-title-font">Shop CLose Time</h1>
+          <h1 className="input-title-font">Description</h1>
           <TextArea
-            {...register("description")}
+            onChange={(e) => setDescription(e.target.value)}
             rows={4}
-            placeholder="maxLength is 6"
-            maxLength={6}
+            placeholder="About Your Shop"
           />
           {/* <Textarea
               type="time"

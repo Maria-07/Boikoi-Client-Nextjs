@@ -1,17 +1,73 @@
+import { useSignUpMutation } from "@/redux/features/auth/userApi";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 const SignupFrom = () => {
+  const [signUp, { isLoading, isError }] = useSignUpMutation();
+
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => console.log(data);
+
+  const onSubmit = async (data) => {
+    try {
+      const response = await signUp(data);
+
+      if (isLoading) {
+        toast("Loading");
+      }
+      if (isError) {
+        toast("Duplicate value");
+      }
+
+      if (signUp.isError) {
+        // Handle signup error
+        toast.error("Signup failed: " + signUp.error?.message);
+      } else if (response.error?.data?.message) {
+        console.log(response.error?.data?.message, "response");
+        // Handle successful signup
+        toast.error(response.error?.data?.message);
+      } else if (response) {
+        console.log(response.data.message);
+        toast.success("Signup successful!", response?.data?.message);
+      }
+    } catch (error) {
+      // Handle general error
+      toast.error("An error occurred during signup.");
+    }
+  };
+
+  // const onSubmit = async (data) => {
+  //   console.log("Sign up data 👤 = ", data);
+
+  //   try {
+  //     if (isLoading) {
+  //       toast("Loading");
+  //     }
+  //     if (isError) {
+  //       toast("Duplicate value");
+  //     }
+
+  //     await signUpMutation(data);
+  //     // Handle successful signup
+
+  //     // await signUpMutation(data);
+  //     // navigate("/login");
+  //   } catch (error) {
+  //     toast("Jamela", error);
+  //     console.log("ki jhamela");
+  //   }
+  // };
+  const notify = () => toast("Wow so easy!");
+
   return (
     <div className="mt-10">
+      <button onClick={notify}>Notify!</button>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex flex-wrap gap-3">
+        <div className="flex flex-wrap sm:flex-nowrap gap-3">
           <div>
             <h1 className="input-title">
               First Name <span className="text-red-600">*</span>
@@ -90,7 +146,7 @@ const SignupFrom = () => {
             >
               <option className="py-3" value=""></option>
               <option value="customer">Customer</option>
-              <option value="shopOwner">Shop Owner</option>
+              <option value="bookShopOwner">Shop Owner 222</option>
             </select>
             <label className="label">
               <span className="text-sm">
