@@ -5,6 +5,7 @@ import { useCreateShopMutation } from "@/redux/features/shop/shopApi";
 import { Input, Upload } from "antd";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 const { TextArea } = Input;
 
@@ -67,6 +68,9 @@ const createShop = () => {
       const response = await createShop(shopData).unwrap();
       console.log(response.message);
       console.log("respose", response);
+      if (response.message) {
+        toast.success(response?.message);
+      }
     } catch (error) {
       // console.error(error?.data?.message);
       setError(error?.data?.message);

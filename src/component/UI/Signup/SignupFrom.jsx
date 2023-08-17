@@ -1,9 +1,10 @@
-import { useSignUpMutation } from "@/redux/features/auth/userApi";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { useState } from "react";
+import { useSignupMutation } from "@/redux/features/auth/userApi";
 
 const SignupFrom = () => {
-  const [signUp, { isLoading, isError }] = useSignUpMutation();
+  const [signup, { isLoading }] = useSignupMutation();
 
   const {
     register,
@@ -13,59 +14,26 @@ const SignupFrom = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
+    console.log("Sign up data =", data);
+
     try {
-      const response = await signUp(data);
-
-      if (isLoading) {
-        toast("Loading");
-      }
-      if (isError) {
-        toast("Duplicate value");
-      }
-
-      if (signUp.isError) {
-        // Handle signup error
-        toast.error("Signup failed: " + signUp.error?.message);
-      } else if (response.error?.data?.message) {
-        console.log(response.error?.data?.message, "response");
-        // Handle successful signup
-        toast.error(response.error?.data?.message);
-      } else if (response) {
-        console.log(response.data.message);
-        toast.success("Signup successful!", response?.data?.message);
+      const response = await signup({ ...data }).unwrap();
+      if (response) {
+        console.log(response, "response");
+        toast.success(response?.message);
       }
     } catch (error) {
-      // Handle general error
-      toast.error("An error occurred during signup.");
+      console.log("error?.data?.message", error?.data?.message);
+      if (error?.data?.message === "Already exist") {
+        toast.error("User already exists");
+      } else {
+        console.error("signUp failed:", error);
+      }
     }
   };
 
-  // const onSubmit = async (data) => {
-  //   console.log("Sign up data 👤 = ", data);
-
-  //   try {
-  //     if (isLoading) {
-  //       toast("Loading");
-  //     }
-  //     if (isError) {
-  //       toast("Duplicate value");
-  //     }
-
-  //     await signUpMutation(data);
-  //     // Handle successful signup
-
-  //     // await signUpMutation(data);
-  //     // navigate("/login");
-  //   } catch (error) {
-  //     toast("Jamela", error);
-  //     console.log("ki jhamela");
-  //   }
-  // };
-  const notify = () => toast("Wow so easy!");
-
   return (
     <div className="mt-10">
-      <button onClick={notify}>Notify!</button>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-wrap sm:flex-nowrap gap-3">
           <div>
@@ -146,7 +114,7 @@ const SignupFrom = () => {
             >
               <option className="py-3" value=""></option>
               <option value="customer">Customer</option>
-              <option value="bookShopOwner">Shop Owner 222</option>
+              <option value="bookShopOwner">Shop Owner</option>
             </select>
             <label className="label">
               <span className="text-sm">

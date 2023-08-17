@@ -5,7 +5,7 @@ const shopApi = api.injectEndpoints({
     //* create a shop
     createShop: builder.mutation({
       query: (shopData) => ({
-        url: "/shop",
+        url: "/shops",
         method: "POST",
         body: shopData,
       }),

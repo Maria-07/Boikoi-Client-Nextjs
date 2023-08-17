@@ -1,4 +1,8 @@
+import { useLoginMutation } from "@/redux/features/auth/userApi";
+import Cookies from "js-cookie";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+// import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const {
@@ -7,7 +11,35 @@ const Login = () => {
     reset,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => console.log(data);
+
+  const [login, { isLoading }] = useLoginMutation(undefined, {
+    refetchOnMountOrArgChange: true,
+    pollingInterval: 50,
+  });
+
+  const onSubmit = async (data) => {
+    try {
+      const response = await login(data);
+      console.log("response", response);
+
+      if (response?.data?.statusCode === 200) {
+        toast.success(response?.data?.message);
+      } else {
+        toast.error(response?.error?.data?.message);
+      }
+
+      const accessToken = response?.data?.data?.accessToken;
+
+      console.log("accessToken ", accessToken);
+
+      if (accessToken) {
+        Cookies.set("accessToken", accessToken); // Store the access token in a cookie
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
   return (
     <div className="mt-10">
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -80,18 +112,3 @@ const Login = () => {
 };
 
 export default Login;
-
-{
-  /* register your input into the hook by invoking the "register" function */
-}
-
-{
-  /* include validation with required or other standard HTML validation rules */
-}
-
-{
-  /* errors will return when field validation fails  */
-}
-// {
-//   errors.exampleRequired && <span>This field is required</span>;
-// }
