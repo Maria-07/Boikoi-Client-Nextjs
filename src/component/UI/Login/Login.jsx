@@ -1,5 +1,6 @@
 import { useLoginMutation } from "@/redux/features/auth/userApi";
 import Cookies from "js-cookie";
+import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 // import { useNavigate } from "react-router-dom";
@@ -11,6 +12,9 @@ const Login = () => {
     reset,
     formState: { errors },
   } = useForm();
+
+  const router = useRouter();
+  // const { callbackUrl } = router.query;
 
   const [login, { isLoading }] = useLoginMutation(undefined, {
     refetchOnMountOrArgChange: true,
@@ -35,6 +39,9 @@ const Login = () => {
       if (accessToken) {
         Cookies.set("accessToken", accessToken); // Store the access token in a cookie
       }
+      console.log("router.query.redirect", router);
+      const redirect = router.query.redirect || "/";
+      router.push(redirect || "/");
     } catch (error) {
       console.log("error", error);
     }

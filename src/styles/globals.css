@@ -128,8 +128,8 @@ body {
 
 .input-button {
   color: #438E93;
-  font-weight: 600;
-  font-size: 15px;
+  font-weight: 500;
+  font-size: 14px;
   line-height: 2em;
   letter-spacing: 0.3px;
   background-color: #fff;
@@ -143,25 +143,9 @@ body {
   transition: ease-in-out 0.3s;
 }
 
-
-
 .input-button:hover {
   color: #fff;
-  font-weight: 600;
-  font-size: 15px;
-  line-height: 2em;
-  letter-spacing: 0.3px;
   background-color: #438E93;
-  padding-left: 8px;
-  padding-right: 8px;
-  padding-top: 4px;
-  padding-bottom: 3px;
-  border-width: 0px;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
-  box-shadow: 1px 1px 4px 0px #000000;
 }
 
 .heading {
@@ -193,4 +177,52 @@ body {
   box-shadow: 1px 1.4px 4px 0px #000000;
   background-color: #438E93;
   color: #fff;
+}
+
+
+/* menu  hover effect  */
+
+.custom_link {
+  background-image: linear-gradient(to right,
+      #438E93,
+      #1B6273 50%,
+      #000 50%);
+  background-size: 200% 100%;
+  background-position: -100%;
+  display: inline-block;
+  position: relative;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: all 0.3s ease-in-out;
+}
+
+.custom_link:before {
+  content: '';
+  background: #438E93;
+  display: block;
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  transition: all 0.3s ease-in-out;
+}
+
+.custom_link:hover,
+.custom_link.active {
+  background-position: 0;
+}
+
+.custom_link:hover::before,
+.custom_link.active::before {
+  width: 100%;
+}
+
+/* style for mobile menu  */
+.custom_link_.active_ {
+  color: white;
+}
+
+.custom_link_ {
+  color: black;
 }

@@ -2,36 +2,56 @@ import Image from "next/image";
 import logo from "@/assets/img/logo.png";
 import Link from "next/link";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
+import NavbarSmallDevice from "./NavbarSmallDevice";
+import CurrentUserEmail from "@/hook/currentUserHook";
+import Cookies from "js-cookie";
+import { getAccessToken } from "@/redux/api/apiSlice";
+import { useRouter } from "next/router";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const [accessToken, setAccessToken] = useState("");
   const currentRoute = usePathname();
 
-  const { data: session } = useSession();
-  console.log("session user", session);
+  const token = getAccessToken();
+  const email = CurrentUserEmail();
+  console.log("userEmail", email);
+
+  useEffect(() => {
+    setAccessToken(token);
+  }, [token]);
+
+  const router = useRouter();
+
+  const handleLogOut = () => {
+    console.log("logout");
+    Cookies.remove("accessToken");
+    router.push("/");
+    console.log("userEmail logout", email);
+  };
 
   return (
     <div>
       {" "}
-      <div className="hidden md:block">
+      <div className="hidden lg:block">
         <div className="sm:w-[80%]  sm:mx-auto py-4 flex justify-between">
           <div>
-            <Image
-              src={logo}
-              width={150}
-              height={150}
-              alt="Picture of the author"
-            />
+            <Link href={"/"}>
+              <Image
+                src={logo}
+                width={150}
+                height={150}
+                alt="Picture of the author"
+              />
+            </Link>
           </div>
           <div className="flex items-center gap-5">
             <Link
               className={
-                currentRoute === "/"
-                  ? "text-primary text-base font-semibold border-b-[2px] border-primary h-8"
-                  : "text-dark text-base font-semibold h-8 hover:text-primary hover:border-primary hover:border-b-[2px] transition-all duration-100"
+                currentRoute === "/" ? "active custom_link" : "custom_link"
               }
               href={"/"}
             >
@@ -39,9 +59,7 @@ const Navbar = () => {
             </Link>
             <Link
               className={
-                currentRoute === "/shops"
-                  ? "text-primary text-base font-semibold border-b-[2px] border-primary h-8"
-                  : "text-dark text-base font-semibold h-8 hover:text-primary hover:border-primary hover:border-b-[2px] transition-all duration-100"
+                currentRoute === "/shops" ? "active custom_link" : "custom_link"
               }
               href={"/shops"}
             >
@@ -49,9 +67,7 @@ const Navbar = () => {
             </Link>
             <Link
               className={
-                currentRoute === "/books"
-                  ? "text-primary text-base font-semibold border-b-[2px] border-primary h-8"
-                  : "text-dark text-base font-semibold h-8 hover:text-primary hover:border-primary hover:border-b-[2px] transition-all duration-100"
+                currentRoute === "/books" ? "active custom_link" : "custom_link"
               }
               href={"/books"}
             >
@@ -60,54 +76,42 @@ const Navbar = () => {
             <Link
               className={
                 currentRoute === "/blogs"
-                  ? "text-primary text-base font-semibold border-b-[2px] border-primary h-8"
-                  : "text-dark text-base font-semibold h-8 hover:text-primary hover:border-primary hover:border-b-[2px] transition-all duration-100"
+                  ? "active custom_link font-medium"
+                  : "custom_link font-medium"
               }
               href={"/blogs"}
             >
               Blogs
             </Link>
+
             <Link
               className={
                 currentRoute === "/myItems"
-                  ? "text-primary text-base font-semibold border-b-[2px] border-primary h-8"
-                  : "text-dark text-base font-semibold h-8 hover:text-primary hover:border-primary hover:border-b-[2px] transition-all duration-100"
+                  ? "active custom_link"
+                  : "custom_link"
               }
-              href={"/myItems"}
+              href={token ? "/myItems" : "/login"}
+              // href={"/myItems"}
             >
-              My Items
+              My Item
             </Link>
-            {!session?.user && (
-              <Link
-                className={
-                  currentRoute === "/login"
-                    ? "text-primary text-base font-semibold border-b-[2px] border-primary h-8"
-                    : "text-dark text-base font-semibold h-8 hover:text-primary hover:border-primary hover:border-b-[2px] transition-all duration-100"
-                }
-                href={"/login"}
-              >
-                Login
-              </Link>
-            )}
-            {!session?.user && (
-              <Link
-                className={
-                  currentRoute === "/signup"
-                    ? "text-primary text-base font-semibold border-b-[2px] border-primary h-8"
-                    : "text-dark text-base font-semibold h-8 hover:text-primary hover:border-primary hover:border-b-[2px] transition-all duration-100"
-                }
-                href={"/signup"}
-              >
-                Sign Up
-              </Link>
-            )}
-            {session?.user && (
-              <button onClick={() => signOut()}>Sign Out</button>
-            )}
+
+            <div>
+              {accessToken ? (
+                <button className="input-button" onClick={handleLogOut}>
+                  Log Out
+                </button>
+              ) : (
+                <Link href={"/login"}>
+                  <button className="input-button">Log In</button>
+                </Link>
+              )}
+            </div>
+            <button className="bk-input-button ">Search</button>
           </div>
         </div>
       </div>
-      <div className="md:hidden block">
+      <div className="lg:hidden block">
         <div className="flex items-center justify-between px-3 py-2">
           <div>
             <GiHamburgerMenu
@@ -126,85 +130,7 @@ const Navbar = () => {
           </div>
           <button>Search</button>
         </div>
-        {open && (
-          <div className="absolute bg-white w-3/4 h-[100vh]">
-            <div>
-              <Link href={"/"}>
-                <div className="text-center text-dark text-base font-semibold h-8 p-2 transition-all hover:bg-primary hover:text-white">
-                  Home
-                </div>
-              </Link>
-              <Link
-                className={
-                  currentRoute === "/"
-                    ? "text-primary text-base font-semibold border-b-[2px] border-primary h-8"
-                    : "text-dark text-base font-semibold h-8 hover:text-primary hover:border-primary hover:border-b-[2px] transition-all duration-100"
-                }
-                href={"/shops"}
-              >
-                <div className="text-center text-dark text-base font-semibold h-8 p-2 transition-all hover:bg-primary hover:text-white">
-                  Shops
-                </div>
-              </Link>
-              <Link
-                className={
-                  currentRoute === "/"
-                    ? "text-primary text-base font-semibold border-b-[2px] border-primary h-8"
-                    : "text-dark text-base font-semibold h-8 hover:text-primary hover:border-primary hover:border-b-[2px] transition-all duration-100"
-                }
-                href={"/books"}
-              >
-                <div className="text-center text-dark text-base font-semibold h-8 p-2 transition-all hover:bg-primary hover:text-white">
-                  Books
-                </div>
-              </Link>
-              <Link
-                className={
-                  currentRoute === "/"
-                    ? "text-primary text-base font-semibold border-b-[2px] border-primary h-8"
-                    : "text-dark text-base font-semibold h-8 hover:text-primary hover:border-primary hover:border-b-[2px] transition-all duration-100"
-                }
-                href={"/blogs"}
-              >
-                <div className="text-center text-dark text-base font-semibold h-8 p-2 transition-all hover:bg-primary hover:text-white">
-                  Blogs
-                </div>
-              </Link>
-              <Link
-                className={
-                  currentRoute === "/"
-                    ? "text-primary text-base font-semibold border-b-[2px] border-primary h-8"
-                    : "text-dark text-base font-semibold h-8 hover:text-primary hover:border-primary hover:border-b-[2px] transition-all duration-100"
-                }
-                href={"/login"}
-              >
-                <div className="text-center text-dark text-base font-semibold h-8 p-2 transition-all hover:bg-primary hover:text-white">
-                  Login
-                </div>
-              </Link>
-              <Link
-                className={
-                  currentRoute === "/"
-                    ? "text-primary text-base font-semibold border-b-[2px] border-primary h-8"
-                    : "text-dark text-base font-semibold h-8 hover:text-primary hover:border-primary hover:border-b-[2px] transition-all duration-100"
-                }
-                href={"/signup"}
-              >
-                <div className="text-center text-dark text-base font-semibold h-8 p-2 transition-all hover:bg-primary hover:text-white">
-                  Sign Up
-                </div>
-              </Link>
-            </div>
-            <div className=" absolute bottom-5 mx-5">
-              <Image
-                src={logo}
-                width={200}
-                height={200}
-                alt="Picture of the author"
-              />
-            </div>
-          </div>
-        )}
+        <NavbarSmallDevice isOpen={open} setOpen={setOpen}></NavbarSmallDevice>
       </div>
     </div>
   );

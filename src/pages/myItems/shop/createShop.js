@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 /* eslint-disable react-hooks/rules-of-hooks */
 import MyItemsLayout from "@/component/Layouts/MyItemsLayout";
 import RootLayout from "@/component/Layouts/RootLayout";
@@ -6,6 +7,7 @@ import { Input, Upload } from "antd";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { Country, State, City } from "country-state-city";
 
 const { TextArea } = Input;
 
@@ -76,8 +78,27 @@ const createShop = () => {
       setError(error?.data?.message);
     }
   };
+
+  const [country, setCountry] = useState("");
+
+  const onCountryChange = (country) => {
+    setCountry(country);
+  };
+
+  console.log("CountryStateCity");
+  console.log(Country.getAllCountries());
+  console.log(State.getAllStates());
+
   return (
     <div>
+      <div>
+        {/* <select onChange={onCountryChange}>
+          {CountryStateCity.map((country) => (
+            <option value={country}>{country}</option>
+          ))}
+        </select> */}
+      </div>
+
       <h1 className="text-primary text-lg font-semibold">Create Your Shop</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-5 my-5">
