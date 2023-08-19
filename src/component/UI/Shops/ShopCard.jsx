@@ -7,7 +7,7 @@ const ShopCard = ({ shop }) => {
   const { shop_name, location, address, contact_number } = shop;
   return (
     <div className="mx-auto">
-      <Link href={"/shops/123"}>
+      <Link href={"/shops/shopDetails/123"}>
         <Card hoverable style={{ width: 260 }}>
           <div className="relative w-full ">
             <Image

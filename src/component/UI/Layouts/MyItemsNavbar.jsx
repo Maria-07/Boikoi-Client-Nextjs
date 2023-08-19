@@ -47,6 +47,19 @@ const MyItemsNavbar = () => {
         </span>{" "}
         My Books
       </Link>
+      <Link
+        className={
+          currentRoute === "/myItems/blogs"
+            ? "flex items-center gap-2 justify-center border-[2px] h-8 my-item-button text-base font-medium leading-5 tracking-wide uppercase pt-1 pb-1 transition ease-in-out duration-300 bg-primary border-primary text-white"
+            : "flex items-center gap-2 justify-center text-dark border-[2px] h-8 my-item-button text-base font-medium leading-5 tracking-wide uppercase pt-1 pb-1 transition ease-in-out duration-300"
+        }
+        href={"/myItems/blogs"}
+      >
+        <span>
+          <BsBook className="text-base" />
+        </span>{" "}
+        My Blogs
+      </Link>
     </div>
   );
 };

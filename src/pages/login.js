@@ -29,7 +29,7 @@ const LoginPage = () => {
           <div>
             <Login></Login>
           </div>
-          <div className="sm:w-[150%]">
+          {/* <div className="sm:w-[150%]">
             <Divider>Or Login with</Divider>
           </div>
           <div className="my-5">
@@ -59,7 +59,7 @@ const LoginPage = () => {
                 <BsFacebook /> Facebook
               </button>
             </div>
-          </div>
+          </div> */}
 
           <div className="text-sm font-medium text-gray-600 flex gap-2 my-5">
             Don&apos;t have any account ?

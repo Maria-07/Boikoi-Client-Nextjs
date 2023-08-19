@@ -4,15 +4,16 @@ import Link from "next/link";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { useSession, signOut } from "next-auth/react";
 import NavbarSmallDevice from "./NavbarSmallDevice";
 import CurrentUserEmail from "@/hook/currentUserHook";
 import Cookies from "js-cookie";
 import { getAccessToken } from "@/redux/api/apiSlice";
 import { useRouter } from "next/router";
+import SearchBox from "../SearchBox/SearchBox";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const [search, setSearch] = useState(false);
   const [accessToken, setAccessToken] = useState("");
   const currentRoute = usePathname();
 
@@ -61,7 +62,7 @@ const Navbar = () => {
               className={
                 currentRoute === "/shops" ? "active custom_link" : "custom_link"
               }
-              href={"/shops"}
+              href={"/shops/"}
             >
               Shops
             </Link>
@@ -107,31 +108,46 @@ const Navbar = () => {
                 </Link>
               )}
             </div>
-            <button className="bk-input-button ">Search</button>
+            <button
+              onClick={() => setSearch(!search)}
+              className="bk-input-button "
+            >
+              Search
+            </button>
           </div>
         </div>
       </div>
       <div className="lg:hidden block">
-        <div className="flex items-center justify-between px-3 py-2">
+        <div className="flex items-center justify-between px-3 py-3">
           <div>
             <GiHamburgerMenu
+              size={24}
               onClick={() => {
                 setOpen(!open);
               }}
             />
           </div>
           <div>
-            <Image
-              src={logo}
-              width={100}
-              height={100}
-              alt="Picture of the author"
-            />
+            <Link href={"/"}>
+              {" "}
+              <Image
+                src={logo}
+                width={100}
+                height={100}
+                alt="Picture of the author"
+              />
+            </Link>
           </div>
-          <button>Search</button>
+          <button
+            onClick={() => setSearch(!search)}
+            className="bk-input-button "
+          >
+            Search
+          </button>
         </div>
         <NavbarSmallDevice isOpen={open} setOpen={setOpen}></NavbarSmallDevice>
       </div>
+      {search && <SearchBox isOpen={search} setOpen={setSearch}></SearchBox>}
     </div>
   );
 };

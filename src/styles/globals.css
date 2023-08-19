@@ -226,3 +226,10 @@ body {
 .custom_link_ {
   color: black;
 }
+
+.box {
+  border-top: 10px solid #1B6273;
+  border-bottom: 10px solid #1B6273;
+  border-radius: 10px;
+  box-shadow: 2px 2px 2px 0px #2c2e2e;
+}
