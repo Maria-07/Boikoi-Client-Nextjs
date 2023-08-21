@@ -1,10 +1,20 @@
+import { useGetProfileQuery } from "@/redux/features/auth/userApi";
 import { Input, Modal } from "antd";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 
 const { TextArea } = Input;
 
 const PostBlogModel = ({ handleClose, clicked }) => {
+  const { data: userProfile, isLoading, isError } = useGetProfileQuery();
+
+  useEffect(() => {
+    if (!isLoading && !isError) {
+      console.log("User Profile:", userProfile?.data);
+    }
+  }, [userProfile, isLoading, isError]);
+
   const {
     register,
     handleSubmit,

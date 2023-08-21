@@ -8,7 +8,7 @@ const userApi = api.injectEndpoints({
         method: "POST",
         body: credentials,
       }),
-      invalidatesTags: ["login"],
+      invalidatesTags: ["profile"],
     }),
     signup: builder.mutation({
       query: (userData) => ({
@@ -34,4 +34,9 @@ const userApi = api.injectEndpoints({
   }),
 });
 
-export const { useLoginMutation, useSignupMutation } = userApi;
+export const {
+  useLoginMutation,
+  useSignupMutation,
+  useGetProfileQuery,
+  useUpdateProfileMutation,
+} = userApi;

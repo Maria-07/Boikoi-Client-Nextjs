@@ -23,7 +23,7 @@ const BlogSidePart = () => {
           onClick={handleAddBlog}
           className="bk-input-button w-[120px] mr-3"
         >
-          Share a blog
+          Write a blog
         </button>
         <Link href={"/myItems/blogs"}>
           <button

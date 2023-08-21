@@ -1,7 +1,16 @@
 import Image from "next/image";
 import aboutUs from "../../../assets/img/aboutUs.png";
+import { useGetProfileQuery } from "@/redux/features/auth/userApi";
+import { useEffect } from "react";
 
 const AboutUs = () => {
+  const { data: userProfile, isLoading, isError } = useGetProfileQuery();
+
+  useEffect(() => {
+    if (!isLoading && !isError) {
+      console.log("User Profile:", userProfile);
+    }
+  }, [userProfile, isLoading, isError]);
   return (
     <div className="bg-[#1b6173bc]">
       {" "}
