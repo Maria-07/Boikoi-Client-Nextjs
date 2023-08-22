@@ -1,14 +1,23 @@
 import { Divider } from "antd";
 import Link from "next/link";
 import RecentBlog from "./RecentBlog";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PostBlogModel from "./PostBlogModel";
+import { getAccessToken } from "@/redux/api/apiSlice";
 
 const BlogSidePart = () => {
   const [addBlog, setAddBlog] = useState(false);
   const handleAddBlog = () => {
     setAddBlog(!addBlog);
   };
+
+  //! Check out if user login
+  const [accessToken, setAccessToken] = useState("");
+  const token = getAccessToken();
+  useEffect(() => {
+    setAccessToken(token);
+  }, [token]);
+
   return (
     <div className="">
       <div>
@@ -18,22 +27,34 @@ const BlogSidePart = () => {
         </button>
       </div>
       <Divider></Divider>
-      <div className="mb-5">
-        <button
-          onClick={handleAddBlog}
-          className="bk-input-button w-[120px] mr-3"
-        >
-          Write a blog
-        </button>
-        <Link href={"/myItems/blogs"}>
-          <button
-            // onClick={handleUpdateBook}
-            className="bk-input-button w-[120px]"
-          >
-            My Blogs
-          </button>
-        </Link>
-      </div>
+      {accessToken ? (
+        <>
+          <div className="mb-5 flex items-center gap-5 flex-wrap">
+            <button
+              onClick={handleAddBlog}
+              className="bk-input-button w-[120px] "
+            >
+              Write a blog
+            </button>
+            <Link href={"/myItems/blogs"}>
+              <button
+                // onClick={handleUpdateBook}
+                className="bk-input-button w-[120px]"
+              >
+                My Blogs
+              </button>
+            </Link>
+          </div>
+        </>
+      ) : (
+        <div className="text-base font-semibold">
+          Please{" "}
+          <Link className="hover:text-secondary text-primary" href={"/login"}>
+            Login
+          </Link>{" "}
+          to write a blog !!!
+        </div>
+      )}
       <div>
         <h1 className="text-lg font-semibold my-5 text">Important Links</h1>
         <div>

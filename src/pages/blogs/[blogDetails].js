@@ -9,7 +9,8 @@ import { BsCalendarDate } from "react-icons/bs";
 import { FaFacebookF, FaInstagram, FaTwitch, FaTwitter } from "react-icons/fa";
 import { GiNewspaper } from "react-icons/gi";
 
-const BlogDetails = () => {
+const BlogDetails = ({ singleData }) => {
+  // console.log("singleData", singleData);
   const currentRoute = usePathname();
   return (
     <div>
@@ -134,3 +135,28 @@ export default BlogDetails;
 BlogDetails.getLayout = function getLayout(page) {
   return <RootLayout>{page}</RootLayout>;
 };
+
+export async function getStaticPaths() {
+  const res = await fetch("http://localhost:3000/api/v1/blogs");
+  const blogs = await res.json();
+
+  // console.log(blogs);
+
+  const paths = blogs?.data?.map((blog) => ({
+    params: { blogDetails: blog.id },
+  }));
+
+  return { paths, fallback: false };
+}
+
+export async function getStaticProps({ params }) {
+  const res = await fetch(
+    `http://localhost:3000/api/v1/blogs/${params.blogDetails}`
+  );
+  const data = await res.json();
+
+  // console.log(data);
+
+  // Pass post data to the page via props
+  return { props: { singleData: data } };
+}

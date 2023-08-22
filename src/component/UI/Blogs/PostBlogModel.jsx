@@ -1,12 +1,17 @@
 import { useGetProfileQuery } from "@/redux/features/auth/userApi";
+import { usePostBlogMutation } from "@/redux/features/blog/blogApi";
 import { Input, Modal } from "antd";
-import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { IoMdCloseCircleOutline } from "react-icons/io";
+import { toast } from "react-toastify";
 
 const { TextArea } = Input;
 
 const PostBlogModel = ({ handleClose, clicked }) => {
+  const [blogDescription, setBlogDescription] = useState("");
+
   const { data: userProfile, isLoading, isError } = useGetProfileQuery();
 
   useEffect(() => {
@@ -18,11 +23,42 @@ const PostBlogModel = ({ handleClose, clicked }) => {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm();
+
+  const router = useRouter();
+
+  //! Post blog :
+  const [blog] = usePostBlogMutation(undefined, {
+    refetchOnMountOrArgChange: true,
+    pollingInterval: 50,
+  });
+
   const onSubmit = async (data) => {
     console.log(data);
+
+    try {
+      const blogData = {
+        title: data.blog_header,
+        img: "",
+        blog_part: blogDescription,
+        email: userProfile?.data?.email,
+        user_name: userProfile?.data?.lastName,
+      };
+
+      console.log("blogData", blogData);
+
+      const response = await blog(blogData);
+      console.log("response", response);
+      if (response?.data?.statusCode === 200) {
+        toast.success(response?.data?.message);
+      } else {
+        toast.error(response?.error?.data?.message);
+      }
+      router.push("/blogs");
+    } catch (error) {
+      console.log("error", error);
+    }
   };
   return (
     <div>
@@ -71,7 +107,7 @@ const PostBlogModel = ({ handleClose, clicked }) => {
             <div>
               <h1 className="input-title-font">Your Blog</h1>
               <TextArea
-                onChange={(e) => setDescription(e.target.value)}
+                onChange={(e) => setBlogDescription(e.target.value)}
                 rows={14}
                 placeholder="About Your Shop"
               />

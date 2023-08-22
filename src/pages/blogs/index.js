@@ -1,13 +1,24 @@
 import RootLayout from "@/component/Layouts/RootLayout";
 import BlogCard from "@/component/UI/Blogs/BlogCard";
 import BlogSidePart from "@/component/UI/Blogs/BlogSidePart";
+import { useGetBlogsQuery } from "@/redux/features/blog/blogApi";
 import { Breadcrumb, Divider } from "antd";
 import { usePathname } from "next/navigation";
 import { AiOutlineHome } from "react-icons/ai";
 import { GiNewspaper } from "react-icons/gi";
+import { useEffect } from "react";
 
 const BlogPage = () => {
   const currentRoute = usePathname();
+
+  const { data: blogs, isLoading, isError } = useGetBlogsQuery();
+
+  useEffect(() => {
+    if (!isLoading && !isError) {
+      console.log("All Blogs:", blogs?.data);
+    }
+  }, [blogs, isLoading, isError]);
+
   return (
     <div>
       {" "}
@@ -48,12 +59,9 @@ const BlogPage = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5  gap-10 ">
           <div className="sm:col-span-4">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-10 ">
-              <BlogCard></BlogCard>
-              <BlogCard></BlogCard>
-              <BlogCard></BlogCard>
-              <BlogCard></BlogCard>
-              <BlogCard></BlogCard>
-              <BlogCard></BlogCard>
+              {blogs?.data?.map((blog, i) => (
+                <BlogCard blog={blog} key={i}></BlogCard>
+              ))}
             </div>
           </div>
           <div>
