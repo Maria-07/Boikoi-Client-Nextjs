@@ -1,24 +1,31 @@
 import { Card, Image } from "antd";
+import Link from "next/link";
 
-const RecentBlog = () => {
+const RecentBlog = ({ blog }) => {
+  const { title, id } = blog;
   return (
     <div className="my-4">
-      <Card hoverable>
-        <div className="flex items-center">
-          <Image
-            src="https://p4.wallpaperbetter.com/wallpaper/830/169/217/book-books-culture-flowers-wallpaper-preview.jpg"
-            width={180}
-            height={"auto"}
-            alt="Picture of the author"
-          ></Image>
-          <div className="p-2">
-            <div className="text-xs  text-black  hover:text-primary">
-              The London Book Fair is to be packed with exciting
+      <Link href={`/blogs/${id}`}>
+        <Card hoverable>
+          <div className="grid grid-cols-3 ">
+            <div className="">
+              <Image
+                src="https://p4.wallpaperbetter.com/wallpaper/830/169/217/book-books-culture-flowers-wallpaper-preview.jpg"
+                width={"100%"}
+                height={"100%"}
+                alt="Picture of the author"
+              ></Image>
             </div>
-            <h2 className="text-xs text-accent mt-1">Jan 25, 2022</h2>
+
+            <div className="p-2 col-span-2">
+              <div className="text-xs  text-black  hover:text-primary">
+                {title}
+              </div>
+              <h2 className="text-xs text-accent mt-1">Jan 25, 2022</h2>
+            </div>
           </div>
-        </div>
-      </Card>
+        </Card>
+      </Link>
     </div>
   );
 };

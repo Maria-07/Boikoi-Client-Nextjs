@@ -1,18 +1,17 @@
 import UserInfo from "@/hook/userInfo";
-import { useGetProfileQuery } from "@/redux/features/auth/userApi";
-import { usePostBlogMutation } from "@/redux/features/blog/blogApi";
-import { Input, Modal, Upload } from "antd";
+import { useUpdateBlogMutation } from "@/redux/features/blog/blogApi";
+import { Input, Modal } from "antd";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { toast } from "react-toastify";
-import { PlusOutlined } from "@ant-design/icons";
 
 const { TextArea } = Input;
 
-const PostBlogModel = ({ handleClose, clicked }) => {
+const BlogEditModal = ({ id, singleData, handleClose, clicked }) => {
   const [blogDescription, setBlogDescription] = useState("");
+  const { title, user_name, blog_part } = singleData;
 
   //! User data
   const user = UserInfo();
@@ -25,14 +24,14 @@ const PostBlogModel = ({ handleClose, clicked }) => {
 
   const router = useRouter();
 
-  //! Post blog :
-  const [blog] = usePostBlogMutation(undefined, {
+  //! Edit blog :
+  const [updateBlog] = useUpdateBlogMutation(undefined, {
     refetchOnMountOrArgChange: true,
-    pollingInterval: 50,
+    pollingInterval: 100,
   });
 
   const onSubmit = async (data) => {
-    console.log("Blog data", data);
+    // console.log(data);
 
     try {
       const blogData = {
@@ -40,25 +39,24 @@ const PostBlogModel = ({ handleClose, clicked }) => {
         img: "",
         blog_part: blogDescription,
         email: user?.email,
-        user_name: `${user?.firstName} ${user?.middleName} ${user?.lastName}`,
+        user_name: user?.lastName,
       };
 
       console.log("blogData", blogData);
+      const response = await updateBlog({ id, blogData }).unwrap();
 
-      const response = await blog(blogData);
       console.log("response", response);
-      if (response?.data?.statusCode === 200) {
-        toast.success(response?.data?.message);
+      if (response?.statusCode === 200) {
+        toast.success(response?.message);
+        handleClose();
       } else {
         toast.error(response?.error?.data?.message);
       }
-      handleClose();
-      router.push("/blogs");
+      router.push(`/blogs/${id}`);
     } catch (error) {
       console.log("error", error);
     }
   };
-
   return (
     <div>
       {" "}
@@ -89,6 +87,7 @@ const PostBlogModel = ({ handleClose, clicked }) => {
               <div>
                 <h1 className="input-title-font">Blog&apos;s Header</h1>
                 <input
+                  defaultValue={title}
                   type="text"
                   className="input-border-bottom w-full  mb-2"
                   {...register("blog_header")}
@@ -106,6 +105,7 @@ const PostBlogModel = ({ handleClose, clicked }) => {
             <div>
               <h1 className="input-title-font">Your Blog</h1>
               <TextArea
+                defaultValue={blog_part}
                 onChange={(e) => setBlogDescription(e.target.value)}
                 rows={14}
                 placeholder="About Your Shop"
@@ -122,4 +122,4 @@ const PostBlogModel = ({ handleClose, clicked }) => {
   );
 };
 
-export default PostBlogModel;
+export default BlogEditModal;

@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import PostBlogModel from "./PostBlogModel";
 import { getAccessToken } from "@/redux/api/apiSlice";
 
-const BlogSidePart = () => {
+const BlogSidePart = ({ blogs }) => {
   const [addBlog, setAddBlog] = useState(false);
   const handleAddBlog = () => {
     setAddBlog(!addBlog);
@@ -91,9 +91,9 @@ const BlogSidePart = () => {
       <Divider></Divider>
       <div>
         <h1 className="text-lg font-semibold my-5 text">Recent Posts</h1>
-        <RecentBlog></RecentBlog>
-        <RecentBlog></RecentBlog>
-        <RecentBlog></RecentBlog>
+        {blogs?.data?.slice(0, 10).map((blog, i) => (
+          <RecentBlog blog={blog} key={i}></RecentBlog>
+        ))}
       </div>
       <Divider></Divider>
       <div>

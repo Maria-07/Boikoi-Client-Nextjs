@@ -11,7 +11,14 @@ import { useEffect } from "react";
 const BlogPage = () => {
   const currentRoute = usePathname();
 
-  const { data: blogs, isLoading, isError } = useGetBlogsQuery();
+  const {
+    data: blogs,
+    isLoading,
+    isError,
+  } = useGetBlogsQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+    pollingInterval: 100,
+  });
 
   useEffect(() => {
     if (!isLoading && !isError) {
@@ -65,7 +72,7 @@ const BlogPage = () => {
             </div>
           </div>
           <div>
-            <BlogSidePart></BlogSidePart>
+            <BlogSidePart blogs={blogs}></BlogSidePart>
           </div>
         </div>
       </div>

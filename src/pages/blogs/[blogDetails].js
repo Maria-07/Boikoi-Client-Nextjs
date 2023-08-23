@@ -3,14 +3,67 @@ import AddComments from "@/component/UI/Blogs/AddComments";
 import BlogSidePart from "@/component/UI/Blogs/BlogSidePart";
 import { Breadcrumb, Divider, Image } from "antd";
 import { usePathname } from "next/navigation";
-import { AiOutlineHome } from "react-icons/ai";
+import { AiOutlineDelete, AiOutlineHome } from "react-icons/ai";
 import { BiSolidUserCircle } from "react-icons/bi";
 import { BsCalendarDate } from "react-icons/bs";
 import { FaFacebookF, FaInstagram, FaTwitch, FaTwitter } from "react-icons/fa";
 import { GiNewspaper } from "react-icons/gi";
+import { FiEdit } from "react-icons/fi";
+import { useState, useEffect } from "react";
+import CurrentUserEmail from "@/hook/currentUserHook";
+import BlogEditModal from "@/component/UI/Blogs/BlogEditModal";
+import {
+  useDeleteBlogMutation,
+  useGetBlogsQuery,
+} from "@/redux/features/blog/blogApi";
+import BlogDeleteModal from "@/component/UI/Blogs/BlogDeleteModal";
+import { format } from "date-fns";
+import { useRouter } from "next/router";
 
 const BlogDetails = ({ singleData }) => {
-  // console.log("singleData", singleData);
+  //* console.log("singleData", singleData);
+  const { id, email, blog_part, title, createdAt, user_name } = singleData;
+  const [em, setEm] = useState("");
+
+  const router = useRouter();
+  //* console.log("router.query.allShops", router.query.blogDetails);
+
+  //! User data
+  const userEmail = CurrentUserEmail();
+  //* console.log("user email", userEmail, email);
+
+  useEffect(() => {
+    setEm(userEmail);
+  }, [em, userEmail]);
+
+  //! Edit Blog
+  const [editBlog, setEditBlog] = useState(false);
+  const handleEditBlog = () => {
+    setEditBlog(!editBlog);
+  };
+
+  //! Delete blog
+  const [deleteBlog, setDeleteBlog] = useState(false);
+  const handleDeleteBlog = () => {
+    setDeleteBlog(!deleteBlog);
+  };
+
+  //! Get all Blogs
+  const {
+    data: blogs,
+    isLoading,
+    isError,
+  } = useGetBlogsQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+    // pollingInterval: 100,
+  });
+
+  useEffect(() => {
+    if (!isLoading && !isError) {
+      //* console.log("All Blogs:", blogs?.data);
+    }
+  }, [blogs, isLoading, isError]);
+
   const currentRoute = usePathname();
   return (
     <div>
@@ -60,18 +113,49 @@ const BlogDetails = ({ singleData }) => {
         <Divider></Divider>
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4  gap-10 ">
           <div>
-            <BlogSidePart></BlogSidePart>
+            <BlogSidePart blogs={blogs}></BlogSidePart>
           </div>
           <div className="sm:col-span-3">
-            <div className="border px-8 py-16">
+            <div className="border px-8 pb-16 pt-5">
+              {email === em && (
+                <div className="pb-5 flex items-center justify-end">
+                  <div className="flex items-center gap-2">
+                    <FiEdit
+                      onClick={handleEditBlog}
+                      className="text-lg hover:text-primary"
+                      title="Edit-blog"
+                    />
+                    <AiOutlineDelete
+                      onClick={handleDeleteBlog}
+                      className="text-xl hover:text-rose-600"
+                      title="Delete-blog"
+                    />
+                  </div>
+                </div>
+              )}
               <h1 className="text-4xl text-dark text-center font-semibold font-primary">
-                International activities of the Frankfurt Book
+                {title}
               </h1>
-              <div className="text-accent font-normal text-sm flex items-center gap-1 justify-center my-4">
-                <BiSolidUserCircle className="text-lg" /> Posted By:{" "}
-                <span className="font-semibold">Susan Demo Admin</span> |
-                <BsCalendarDate className="text-lg" /> Posted On:
-                <span className="font-semibold">Jan 25, 2022</span>
+              <div className="text-accent font-normal text-sm flex flex-wrap items-center gap-2 justify-center my-4">
+                <div className="flex items-center gap-1">
+                  <BiSolidUserCircle className="text-lg" /> Posted By :{" "}
+                  <span className="font-semibold">{user_name}</span>{" "}
+                </div>
+                |
+                <div className="flex items-center gap-1">
+                  <BsCalendarDate className="text-lg" />
+                  Posted On :
+                  <span className="font-semibold">
+                    {(() => {
+                      try {
+                        const createdAtDate = new Date(createdAt);
+                        return format(createdAtDate, "MMM dd, yyyy");
+                      } catch (error) {
+                        return "comments Time Not Found";
+                      }
+                    })()}
+                  </span>
+                </div>
               </div>
               <div className="my-8">
                 {" "}
@@ -83,6 +167,8 @@ const BlogDetails = ({ singleData }) => {
                 ></Image>
               </div>
               <div className="text-sm font-medium text-accent">
+                {blog_part} <br />
+                <br />
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed,
                 ipsum deleniti repellendus nam deserunt vitae ullam amet quos!
                 Nesciunt, quo. Lorem, ipsum dolor. Lorem ipsum dolor sit amet
@@ -122,10 +208,26 @@ const BlogDetails = ({ singleData }) => {
                 <FaTwitter className="text-4xl p-2 border hover:bg-sky-700 hover:text-white" />
               </div>
             </div>
-            <AddComments></AddComments>
+            <AddComments singleData={singleData}></AddComments>
           </div>
         </div>
       </div>
+      {editBlog && (
+        <BlogEditModal
+          singleData={singleData}
+          id={id}
+          handleClose={handleEditBlog}
+          clicked={editBlog}
+        ></BlogEditModal>
+      )}
+      {deleteBlog && (
+        <BlogDeleteModal
+          title={title}
+          id={id}
+          handleClose={handleDeleteBlog}
+          clicked={deleteBlog}
+        ></BlogDeleteModal>
+      )}
     </div>
   );
 };
@@ -140,8 +242,6 @@ export async function getStaticPaths() {
   const res = await fetch("http://localhost:3000/api/v1/blogs");
   const blogs = await res.json();
 
-  // console.log(blogs);
-
   const paths = blogs?.data?.map((blog) => ({
     params: { blogDetails: blog.id },
   }));
@@ -155,8 +255,6 @@ export async function getStaticProps({ params }) {
   );
   const data = await res.json();
 
-  // console.log(data);
-
   // Pass post data to the page via props
-  return { props: { singleData: data } };
+  return { props: { singleData: data?.data } };
 }

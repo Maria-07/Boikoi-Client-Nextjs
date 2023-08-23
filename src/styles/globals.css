@@ -97,6 +97,25 @@ body {
   transition: ease-in-out 0.3s;
 }
 
+.bk-modal-red-button {
+  font-family: 'Poppins',
+    sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 2em;
+  letter-spacing: 0.3px;
+  background-color: #b00808d8;
+  color: #fff;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-top: 4px;
+  padding-bottom: 3px;
+  border-width: 0px;
+  border-radius: 4px;
+  box-shadow: 1px 1px 4px 0px #000000;
+  transition: ease-in-out 0.3s;
+}
+
 .bk-input-red-button {
   font-family: 'Poppins',
     sans-serif;

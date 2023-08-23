@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import { useSignupMutation } from "@/redux/features/auth/userApi";
+import { useRouter } from "next/router";
 
 const SignupFrom = () => {
   const [signup, { isLoading }] = useSignupMutation();
@@ -12,6 +13,7 @@ const SignupFrom = () => {
     reset,
     formState: { errors },
   } = useForm();
+  const router = useRouter();
 
   const onSubmit = async (data) => {
     console.log("Sign up data =", data);
@@ -22,6 +24,7 @@ const SignupFrom = () => {
         console.log(response, "response");
         toast.success(response?.message);
       }
+      router.push("/login");
     } catch (error) {
       console.log("error?.data?.message", error?.data?.message);
       if (error?.data?.message === "Already exist") {
