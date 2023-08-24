@@ -20,7 +20,20 @@ const shopApi = api.injectEndpoints({
         providesTags: ["shops"],
       }),
     }),
+
+    //* Get My-shop :
+    getMyShop: builder.query({
+      query: () => ({
+        url: "/shops/my-shop",
+        method: "GET",
+        providesTags: ["shops"],
+      }),
+    }),
   }),
 });
 
-export const { useCreateShopMutation, useGetShopAddressQuery } = shopApi;
+export const {
+  useCreateShopMutation,
+  useGetShopAddressQuery,
+  useGetMyShopQuery,
+} = shopApi;
