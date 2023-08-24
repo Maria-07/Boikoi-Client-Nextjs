@@ -9,8 +9,18 @@ const shopApi = api.injectEndpoints({
         method: "POST",
         body: shopData,
       }),
+      invalidatesTags: ["shops"],
+    }),
+
+    //* Get all address of shop :
+    getShopAddress: builder.query({
+      query: () => ({
+        url: "/shops/shop-address",
+        method: "GET",
+        providesTags: ["shops"],
+      }),
     }),
   }),
 });
 
-export const { useCreateShopMutation } = shopApi;
+export const { useCreateShopMutation, useGetShopAddressQuery } = shopApi;

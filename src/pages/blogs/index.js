@@ -11,6 +11,7 @@ import { useEffect } from "react";
 const BlogPage = () => {
   const currentRoute = usePathname();
 
+  //! get all blogs
   const {
     data: blogs,
     isLoading,
