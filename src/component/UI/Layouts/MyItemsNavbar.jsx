@@ -20,21 +20,21 @@ const MyItemsNavbar = () => {
 
   return (
     <div className="px-3 py-3  sm:min-h-[100vh]">
-      {role === "bookShopOwner" && (
-        <Link
-          className={
-            currentRoute === "/myItems/shop/createShop"
-              ? "flex items-center gap-2 justify-center border-[2px] h-8 my-item-button text-base font-medium leading-5 tracking-wide uppercase pt-1 pb-1 transition ease-in-out duration-300 bg-primary border-primary text-white"
-              : "flex items-center gap-2 justify-center text-dark border-[2px] h-8 my-item-button text-base font-medium leading-5 tracking-wide uppercase pt-1 pb-1 transition ease-in-out duration-300"
-          }
-          href={"/myItems/shop/createShop"}
-        >
-          <span>
-            <AiFillShop className="text-lg" />
-          </span>{" "}
-          Create a shop
-        </Link>
-      )}
+      {/* {role === "bookShopOwner" && (
+          <Link
+            className={
+              currentRoute === "/myItems/shop/createShop"
+                ? "flex items-center gap-2 justify-center border-[2px] h-8 my-item-button text-base font-medium leading-5 tracking-wide uppercase pt-1 pb-1 transition ease-in-out duration-300 bg-primary border-primary text-white"
+                : "flex items-center gap-2 justify-center text-dark border-[2px] h-8 my-item-button text-base font-medium leading-5 tracking-wide uppercase pt-1 pb-1 transition ease-in-out duration-300"
+            }
+            href={"/myItems/shop/createShop"}
+          >
+            <span>
+              <AiFillShop className="text-lg" />
+            </span>{" "}
+            Create a shop
+          </Link>
+        )} */}
       {role === "bookShopOwner" && (
         <Link
           className={

@@ -4,11 +4,18 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useGetMyShopQuery } from "@/redux/features/shop/shopApi";
 import EditShopModal from "@/component/UI/MyItems/Shops/EditShopModal";
+import MyShopDetails from "@/component/UI/MyItems/Shops/MyShopDetails";
+import DeleteShopModal from "@/component/UI/MyItems/Shops/DeleteShopModal";
 
 const MyShop = () => {
   const [editShop, setEditShop] = useState(false);
+  const [deleteShop, setDeleteShop] = useState(false);
+
   const handleEditModel = () => {
     setEditShop(!editShop);
+  };
+  const handleDeleteModel = () => {
+    setDeleteShop(!deleteShop);
   };
 
   //! get My Shop
@@ -18,7 +25,7 @@ const MyShop = () => {
     isError,
   } = useGetMyShopQuery(undefined, {
     refetchOnMountOrArgChange: true,
-    // pollingInterval: 500,
+    pollingInterval: 500,
   });
 
   useEffect(() => {
@@ -43,13 +50,18 @@ const MyShop = () => {
         </div>
       ) : (
         <>
-          {" "}
-          <button
-            onClick={handleEditModel}
-            className="bk-input-button w-[120px] "
-          >
-            Edit Shop
-          </button>
+          <MyShopDetails myShopData={myShopData?.data}></MyShopDetails>
+          <div className="flex items-center gap-3 my-10">
+            <button onClick={handleEditModel} className="bk-input-button ">
+              Edit Shop Details
+            </button>
+            <button
+              onClick={handleDeleteModel}
+              className="bk-input-red-button my-5"
+            >
+              Delete
+            </button>
+          </div>
         </>
       )}
 
@@ -59,6 +71,14 @@ const MyShop = () => {
           handleClose={handleEditModel}
           clicked={editShop}
         ></EditShopModal>
+      )}
+
+      {deleteShop && (
+        <DeleteShopModal
+          myShopData={myShopData}
+          handleClose={handleDeleteModel}
+          clicked={deleteShop}
+        ></DeleteShopModal>
       )}
     </div>
   );

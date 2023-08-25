@@ -5,6 +5,7 @@ import {
 } from "@/redux/features/shop/shopApi";
 import CustomDefaultOptionAntd from "@/shared/CustomDefaultOptionAntd";
 import { Input, Modal } from "antd";
+import { useRouter } from "next/router";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -42,6 +43,8 @@ const EditShopModal = ({ handleClose, clicked, myShopData }) => {
   //! User data
   const user = UserInfo();
   // console.log(user);
+
+  const router = useRouter();
 
   //! Update Your Shop :
   const [updateShop, { isLoading }] = useUpdateShopMutation(undefined, {
@@ -88,6 +91,8 @@ const EditShopModal = ({ handleClose, clicked, myShopData }) => {
 
       if (response?.statusCode === 200) {
         toast.success(response?.message);
+        handleClose();
+        router.push("/myItems/shop");
       } else {
         toast.error(response?.message);
       }
@@ -266,7 +271,7 @@ const EditShopModal = ({ handleClose, clicked, myShopData }) => {
                   {...register("shop_close_time")}
                 />
               </div>
-              <div>
+              <div className="sm:col-span-2">
                 <h1 className="input-title-font">Description</h1>
                 <TextArea
                   defaultValue={myShopData?.data?.description}

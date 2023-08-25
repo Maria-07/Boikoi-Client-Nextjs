@@ -13,6 +13,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import CustomOptionAntd from "@/shared/CustomOptionAntd";
 import UserInfo from "@/hook/UserInfo";
+import { useRouter } from "next/router";
 
 const { TextArea } = Input;
 
@@ -44,7 +45,7 @@ const createShop = () => {
 
   //! image upload
   const image_hosting_token = process.env.NEXT_PUBLIC_IMAGE_UPLOAD_TOKEN;
-  const image_hosting_url = `https://api.imgbb.com/1/upload?expiration=600&key=${image_hosting_token}`;
+  const image_hosting_url = `https://api.imgbb.com/1/upload?key=${image_hosting_token}`;
 
   const {
     register,
@@ -59,10 +60,12 @@ const createShop = () => {
   const user = UserInfo();
   // console.log(user);
 
+  const router = useRouter();
+
   //! Post Your Shop :
   const [createShop] = useCreateShopMutation(undefined, {
     refetchOnMountOrArgChange: true,
-    pollingInterval: 50,
+    pollingInterval: 100,
   });
 
   const onSubmit = async (data) => {
@@ -105,6 +108,7 @@ const createShop = () => {
         console.log("response", response);
         if (response?.statusCode === 200) {
           toast.success(response?.message);
+          router.push("/myItems/shop");
         } else {
           toast.error(response?.message);
         }

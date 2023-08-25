@@ -6,7 +6,7 @@ let index = 0;
 
 const CustomDefaultOptionAntd = ({ item, dValue, option }) => {
   const [items, setItems] = useState([]);
-  console.log("dValue", dValue);
+  // console.log("dValue", dValue);
 
   useEffect(() => {
     const uniqueArray = [...new Set(item)];

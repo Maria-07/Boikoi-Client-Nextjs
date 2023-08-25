@@ -39,6 +39,15 @@ const shopApi = api.injectEndpoints({
       }),
       invalidatesTags: ["shops"],
     }),
+
+    //* Delete a shop
+    deleteShop: builder.mutation({
+      query: ({ id }) => ({
+        url: `/shops/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["shops"],
+    }),
   }),
 });
 
@@ -47,4 +56,5 @@ export const {
   useGetShopAddressQuery,
   useGetMyShopQuery,
   useUpdateShopMutation,
+  useDeleteShopMutation,
 } = shopApi;

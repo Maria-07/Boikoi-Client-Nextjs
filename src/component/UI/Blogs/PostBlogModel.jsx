@@ -14,7 +14,7 @@ const image_hosting_token = process.env.NEXT_PUBLIC_IMAGE_UPLOAD_TOKEN;
 
 const PostBlogModel = ({ handleClose, clicked }) => {
   const [blogDescription, setBlogDescription] = useState("");
-  const image_hosting_url = `https://api.imgbb.com/1/upload?expiration=600&key=${image_hosting_token}`;
+  const image_hosting_url = `https://api.imgbb.com/1/upload?key=${image_hosting_token}`;
 
   //! User data
   const user = UserInfo();
@@ -30,7 +30,7 @@ const PostBlogModel = ({ handleClose, clicked }) => {
   //! Post blog :
   const [blog] = usePostBlogMutation(undefined, {
     refetchOnMountOrArgChange: true,
-    pollingInterval: 50,
+    pollingInterval: 500,
   });
 
   const onSubmit = async (data) => {
