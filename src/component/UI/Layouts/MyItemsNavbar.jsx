@@ -12,7 +12,7 @@ const MyItemsNavbar = () => {
 
   //! User data
   const user = UserInfo();
-  console.log(user?.role);
+  // console.log(user?.role);
 
   useEffect(() => {
     setRole(user?.role);

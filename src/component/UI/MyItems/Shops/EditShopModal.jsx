@@ -4,7 +4,7 @@ import {
   useUpdateShopMutation,
 } from "@/redux/features/shop/shopApi";
 import CustomDefaultOptionAntd from "@/shared/CustomDefaultOptionAntd";
-import { Modal } from "antd";
+import { Input, Modal } from "antd";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -12,10 +12,13 @@ import { useForm } from "react-hook-form";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { toast } from "react-toastify";
 
+const { TextArea } = Input;
+
 const EditShopModal = ({ handleClose, clicked, myShopData }) => {
-  const [street, setStreet] = useState();
-  const [area, setArea] = useState();
-  const [city, setCity] = useState();
+  const [street, setStreet] = useState(myShopData?.data?.address?.street);
+  const [area, setArea] = useState(myShopData?.data?.address?.area);
+  const [city, setCity] = useState(myShopData?.data?.address?.city);
+  const [description, setDescription] = useState(myShopData?.data?.description);
 
   const [streetArray, setStreetArray] = useState([]);
   const [areaArray, setAreaArray] = useState([]);
@@ -29,8 +32,6 @@ const EditShopModal = ({ handleClose, clicked, myShopData }) => {
       // console.log("Shop Address:", shopAddress.data);
       const newStreetArray = shopAddress.data.map((s) => s.address.street);
       setStreetArray(newStreetArray);
-      // console.log("newStreetArray", newStreetArray);
-
       const newAreaArray = shopAddress.data.map((s) => s.address.area);
       setAreaArray(newAreaArray);
       const newCityArray = shopAddress.data.map((s) => s.address.city);
@@ -56,15 +57,12 @@ const EditShopModal = ({ handleClose, clicked, myShopData }) => {
     formState: { errors },
   } = useForm();
 
-  const [description, setDescription] = useState("");
-
   const onSubmit = async (data) => {
     try {
       const shopData = {
         shop_name: data.shop_name,
         shop_number: data.shop_number,
         contact_number: data.contact_number,
-        image: "",
         location: data.location,
         address: {
           street: street,
@@ -75,10 +73,9 @@ const EditShopModal = ({ handleClose, clicked, myShopData }) => {
         shop_open_time: data.shop_open_time,
         shop_close_time: data.shop_close_time,
         book_shop_ratings: "4.5",
-        // description: description,
+        description: description,
         bookShopOwner: user?.id,
       };
-      // console.log("shopData", shopData);
 
       const id = myShopData?.data?.id;
 
@@ -267,6 +264,15 @@ const EditShopModal = ({ handleClose, clicked, myShopData }) => {
                   type="time"
                   className="input-border w-full  mb-2"
                   {...register("shop_close_time")}
+                />
+              </div>
+              <div>
+                <h1 className="input-title-font">Description</h1>
+                <TextArea
+                  defaultValue={myShopData?.data?.description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  rows={8}
+                  placeholder="About Your Shop"
                 />
               </div>
             </div>

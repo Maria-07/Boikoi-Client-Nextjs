@@ -23,7 +23,7 @@ const MyShop = () => {
 
   useEffect(() => {
     if (!isLoading && !isError) {
-      console.log("My Shop Data:", myShopData?.data?.location);
+      console.log("My Shop Data:", myShopData);
     }
   }, [myShopData, isLoading, isError]);
 
@@ -32,10 +32,7 @@ const MyShop = () => {
   }
   return (
     <div>
-      <button onClick={handleEditModel} className="bk-input-button w-[120px] ">
-        Edit Shop
-      </button>
-      {!myShopData && (
+      {myShopData?.data === null ? (
         <div className="flex items-center justify-center py-16 mb-10 border bg-[#438e9320]">
           <Link href={"/myItems/shop/createShop"}>
             {" "}
@@ -44,6 +41,16 @@ const MyShop = () => {
             </button>
           </Link>
         </div>
+      ) : (
+        <>
+          {" "}
+          <button
+            onClick={handleEditModel}
+            className="bk-input-button w-[120px] "
+          >
+            Edit Shop
+          </button>
+        </>
       )}
 
       {editShop && (

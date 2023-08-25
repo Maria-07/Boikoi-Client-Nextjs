@@ -42,7 +42,9 @@ const createShop = () => {
     }
   }, [shopAddress, isLoading, isError]);
 
-  // console.log("streetArray", streetArray);
+  //! image upload
+  const image_hosting_token = process.env.NEXT_PUBLIC_IMAGE_UPLOAD_TOKEN;
+  const image_hosting_url = `https://api.imgbb.com/1/upload?expiration=600&key=${image_hosting_token}`;
 
   const {
     register,
@@ -66,33 +68,48 @@ const createShop = () => {
   const onSubmit = async (data) => {
     // console.log(data);
     try {
-      const shopData = {
-        shop_name: data.shop_name,
-        shop_number: data.shop_number,
-        contact_number: data.contact_number,
-        image: "",
-        location: data.location,
-        address: {
-          street: street,
-          area: area,
-          city: city,
-        },
-        shop_weekend: data.shop_weekend,
-        shop_open_time: data.shop_open_time,
-        shop_close_time: data.shop_close_time,
-        book_shop_ratings: "4.5",
-        description: description,
-        bookShopOwner: user?.id,
-      };
-      // console.log("shopData", shopData);
+      //! image upload
+      const formData = new FormData();
+      formData.append("image", data?.image[0]);
 
-      const response = await createShop(shopData).unwrap();
-      // console.log("response======", response);
-      console.log("response", response);
-      if (response?.statusCode === 200) {
-        toast.success(response?.message);
+      const imgResponse = await fetch(image_hosting_url, {
+        method: "POST",
+        body: formData,
+      }).then((res) => res.json());
+
+      console.log("imgResponse", imgResponse);
+
+      if (imgResponse?.success) {
+        const shopData = {
+          shop_name: data.shop_name,
+          shop_number: data.shop_number,
+          contact_number: data.contact_number,
+          image: imgResponse.data.display_url,
+          location: data.location,
+          address: {
+            street: street,
+            area: area,
+            city: city,
+          },
+          shop_weekend: data.shop_weekend,
+          shop_open_time: data.shop_open_time,
+          shop_close_time: data.shop_close_time,
+          book_shop_ratings: "4.5",
+          description: description,
+          bookShopOwner: user?.id,
+        };
+        // console.log("shopData", shopData);
+
+        const response = await createShop(shopData).unwrap();
+        // console.log("response======", response);
+        console.log("response", response);
+        if (response?.statusCode === 200) {
+          toast.success(response?.message);
+        } else {
+          toast.error(response?.message);
+        }
       } else {
-        toast.error(response?.message);
+        toast.error("Unable to upload image");
       }
     } catch (error) {
       // console.error(error?.data?.message);
@@ -235,6 +252,14 @@ const createShop = () => {
           </div>
         </div>
         <div>
+          <h1 className="input-title-font">real</h1>
+          <input
+            type="file"
+            className="border w-full  mb-2"
+            {...register("image")}
+          />
+        </div>
+        <div>
           <h1 className="input-title-font">Description</h1>
           <TextArea
             onChange={(e) => setDescription(e.target.value)}
@@ -242,17 +267,7 @@ const createShop = () => {
             placeholder="About Your Shop"
           />
         </div>
-        {/* <div>
-          <h1 className="input-title-font">Shop Image</h1>
-          <Upload
-            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-            listType="picture-card"
-            onChange={onChange}
-            onPreview={onPreview}
-          >
-            {"+ Upload"}
-          </Upload>
-        </div> */}
+
         <button type="submit" className="bk-input-button my-5  ">
           Create Shop
         </button>
