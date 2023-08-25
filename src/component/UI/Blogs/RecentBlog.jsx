@@ -1,8 +1,9 @@
 import { Card, Image } from "antd";
+import { format } from "date-fns";
 import Link from "next/link";
 
 const RecentBlog = ({ blog }) => {
-  const { title, id } = blog;
+  const { title, id, img, createdAt } = blog;
   return (
     <div className="my-4">
       <Link href={`/blogs/${id}`}>
@@ -10,7 +11,7 @@ const RecentBlog = ({ blog }) => {
           <div className="grid grid-cols-3 ">
             <div className="">
               <Image
-                src="https://p4.wallpaperbetter.com/wallpaper/830/169/217/book-books-culture-flowers-wallpaper-preview.jpg"
+                src={img}
                 width={"100%"}
                 height={"100%"}
                 alt="Picture of the author"
@@ -19,9 +20,18 @@ const RecentBlog = ({ blog }) => {
 
             <div className="p-2 col-span-2">
               <div className="text-xs  text-black  hover:text-primary">
-                {title}
+                {title.length > 50 ? `${title.slice(0, 50)} ...` : title}
               </div>
-              <h2 className="text-xs text-accent mt-1">Jan 25, 2022</h2>
+              <h2 className="text-xs text-accent mt-1">
+                {(() => {
+                  try {
+                    const createdAtDate = new Date(createdAt);
+                    return format(createdAtDate, "MMM dd, yyyy");
+                  } catch (error) {
+                    return "Posted Time Not Found";
+                  }
+                })()}
+              </h2>
             </div>
           </div>
         </Card>

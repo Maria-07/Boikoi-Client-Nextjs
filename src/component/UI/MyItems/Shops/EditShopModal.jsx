@@ -1,4 +1,8 @@
-import { useGetShopAddressQuery } from "@/redux/features/shop/shopApi";
+import UserInfo from "@/hook/UserInfo";
+import {
+  useGetShopAddressQuery,
+  useUpdateShopMutation,
+} from "@/redux/features/shop/shopApi";
 import CustomDefaultOptionAntd from "@/shared/CustomDefaultOptionAntd";
 import { Modal } from "antd";
 import React from "react";
@@ -6,11 +10,9 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { IoMdCloseCircleOutline } from "react-icons/io";
+import { toast } from "react-toastify";
 
 const EditShopModal = ({ handleClose, clicked, myShopData }) => {
-  console.log(myShopData);
-
-  // const streetArray = [];
   const [street, setStreet] = useState();
   const [area, setArea] = useState();
   const [city, setCity] = useState();
@@ -36,7 +38,15 @@ const EditShopModal = ({ handleClose, clicked, myShopData }) => {
     }
   }, [shopAddress, isLoading2, isError2]);
 
-  // console.log("streetArray", streetArray);
+  //! User data
+  const user = UserInfo();
+  // console.log(user);
+
+  //! Update Your Shop :
+  const [updateShop, { isLoading }] = useUpdateShopMutation(undefined, {
+    refetchOnMountOrArgChange: true,
+    pollingInterval: 100,
+  });
 
   //! hook onSubmit
   const {
@@ -49,40 +59,43 @@ const EditShopModal = ({ handleClose, clicked, myShopData }) => {
   const [description, setDescription] = useState("");
 
   const onSubmit = async (data) => {
-    console.log(data);
     try {
       const shopData = {
-        // shop_name: data.shop_name,
-        // shop_number: data.shop_number,
-        // contact_number: data.contact_number,
-        // image: "",
-        // location: data.location,
-        // address: {
-        //   street: street,
-        //   area: area,
-        //   city: city,
-        // },
-        // shop_weekend: data.shop_weekend,
-        // shop_open_time: data.shop_open_time,
-        // shop_close_time: data.shop_open_time,
-        // book_shop_ratings: "4.5",
+        shop_name: data.shop_name,
+        shop_number: data.shop_number,
+        contact_number: data.contact_number,
+        image: "",
+        location: data.location,
+        address: {
+          street: street,
+          area: area,
+          city: city,
+        },
+        shop_weekend: data.shop_weekend,
+        shop_open_time: data.shop_open_time,
+        shop_close_time: data.shop_close_time,
+        book_shop_ratings: "4.5",
         // description: description,
-        // bookShopOwner: user?.id,
+        bookShopOwner: user?.id,
       };
-      console.log("shopData", shopData);
+      // console.log("shopData", shopData);
 
-      // const response = await createShop(shopData).unwrap();
-      // // console.log("response======", response);
-      // console.log("response", response);
-      // if (response?.statusCode === 200) {
-      //   toast.success(response?.message);
-      // } else {
-      //   toast.error(response?.message);
-      // }
+      const id = myShopData?.data?.id;
+
+      if (isLoading) {
+        console.log("loading");
+      }
+
+      const response = await updateShop({ id, shopData }).unwrap();
+      console.log("response======", response);
+
+      if (response?.statusCode === 200) {
+        toast.success(response?.message);
+      } else {
+        toast.error(response?.message);
+      }
     } catch (error) {
-      // console.error(error?.data?.message);
-      // toast.error(error?.data?.message);
-      // console.log(error?.data?.message);
+      toast.error(error?.data?.message);
     }
   };
 
@@ -101,7 +114,10 @@ const EditShopModal = ({ handleClose, clicked, myShopData }) => {
         <div className="">
           <div className="flex items-center justify-between">
             <h1 className="text-xl font-semibold tracking-tight">
-              Post Your Blogs
+              Update Shop :{" "}
+              <span className="text-primary">
+                {myShopData?.data?.shop_name}
+              </span>
             </h1>
 
             <IoMdCloseCircleOutline
@@ -254,10 +270,16 @@ const EditShopModal = ({ handleClose, clicked, myShopData }) => {
                 />
               </div>
             </div>
+            <div className="bg-gray-200 py-[1px] my-3"></div>
 
-            <button type="submit" className="bk-input-button my-5  ">
-              Post Your Blog
-            </button>
+            <div className="flex gap-3 items-end justify-end mb-2 mt-4">
+              <button type="submit" className="bk-input-button  ">
+                Update Your Shop
+              </button>
+              <button onClick={handleClose} className="bk-modal-red-button ">
+                Close
+              </button>
+            </div>
           </form>
         </div>
       </Modal>

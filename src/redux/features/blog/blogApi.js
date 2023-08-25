@@ -42,10 +42,10 @@ const blogApi = api.injectEndpoints({
 
     //* post a blog comment
     postBlogComment: builder.mutation({
-      query: ({ comment, id }) => ({
+      query: ({ id, comments }) => ({
         url: `/blogs/${id}/comments`,
         method: "POST",
-        body: comment,
+        body: comments,
       }),
       invalidatesTags: ["blogs"],
     }),

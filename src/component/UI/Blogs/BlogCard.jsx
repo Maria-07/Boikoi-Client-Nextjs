@@ -1,17 +1,19 @@
 import { Image } from "antd";
+import { format } from "date-fns";
 import Link from "next/link";
 
 const BlogCard = ({ blog }) => {
   // console.log("single blog", blog);
-  const { blog_part, title, date, user_name, id } = blog;
+  const { blog_part, title, createdAt, user_name, id, img } = blog;
+
   return (
     <div>
       <div className="">
-        <div>
+        <div className="h-[250px]">
           <Image
-            src="https://susan-demo.myshopify.com/cdn/shop/articles/9_740x470_crop_center.jpg?v=1567855381"
-            width={"auto"}
-            height={"auto"}
+            src={img}
+            width={"100%"}
+            height={"100%"}
             alt="Picture of the author"
           ></Image>
         </div>
@@ -20,12 +22,20 @@ const BlogCard = ({ blog }) => {
             {title}
           </div>
           <h2 className="text-sm text-dark ">
-            Jan 25, 2022 | <span className="text-accent">{user_name}</span>
+            {(() => {
+              try {
+                const createdAtDate = new Date(createdAt);
+                return format(createdAtDate, "MMM dd, yyyy");
+              } catch (error) {
+                return "Posted Time Not Found";
+              }
+            })()}{" "}
+            | <span className="text-accent">{user_name}</span>
           </h2>
 
-          <p className="text-[15px] h-[120px] my-5">
-            {blog_part.length > 250
-              ? `${blog_part.slice(0, 250)} ...`
+          <p className="text-[15px] h-[60px] my-5">
+            {blog_part.length > 80
+              ? `${blog_part.slice(0, 80)} ...`
               : blog_part}
           </p>
           <Link href={`/blogs/${id}`}>

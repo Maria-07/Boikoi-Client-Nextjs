@@ -29,6 +29,16 @@ const shopApi = api.injectEndpoints({
         providesTags: ["shops"],
       }),
     }),
+
+    //* Update a shop
+    updateShop: builder.mutation({
+      query: ({ id, shopData }) => ({
+        url: `/shops/${id}`,
+        method: "PATCH",
+        body: shopData,
+      }),
+      invalidatesTags: ["shops"],
+    }),
   }),
 });
 
@@ -36,4 +46,5 @@ export const {
   useCreateShopMutation,
   useGetShopAddressQuery,
   useGetMyShopQuery,
+  useUpdateShopMutation,
 } = shopApi;

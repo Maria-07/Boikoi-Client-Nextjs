@@ -22,7 +22,7 @@ import { useRouter } from "next/router";
 
 const BlogDetails = ({ singleData }) => {
   //* console.log("singleData", singleData);
-  const { id, email, blog_part, title, createdAt, user_name } = singleData;
+  const { id, email, blog_part, title, createdAt, user_name, img } = singleData;
   const [em, setEm] = useState("");
 
   const router = useRouter();
@@ -151,7 +151,7 @@ const BlogDetails = ({ singleData }) => {
                         const createdAtDate = new Date(createdAt);
                         return format(createdAtDate, "MMM dd, yyyy");
                       } catch (error) {
-                        return "comments Time Not Found";
+                        return "Posted Time Not Found";
                       }
                     })()}
                   </span>
@@ -160,8 +160,8 @@ const BlogDetails = ({ singleData }) => {
               <div className="my-8">
                 {" "}
                 <Image
-                  src="https://susan-demo.myshopify.com/cdn/shop/articles/lit_fest_odesa.jpg?v=1567855487"
-                  width={"auto"}
+                  src={img}
+                  width={"100%"}
                   height={"auto"}
                   alt="Picture of the author"
                 ></Image>

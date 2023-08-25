@@ -27,6 +27,9 @@ const MyShop = () => {
     }
   }, [myShopData, isLoading, isError]);
 
+  if (isLoading) {
+    <>Loading</>;
+  }
   return (
     <div>
       <button onClick={handleEditModel} className="bk-input-button w-[120px] ">

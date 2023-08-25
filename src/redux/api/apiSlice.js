@@ -1,4 +1,4 @@
-import { BASE_URL } from "@/config/config";
+// import { BASE_URL } from "@/config/config";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import Cookies from "js-cookie";
 
@@ -9,7 +9,7 @@ export const getAccessToken = () => {
 export const api = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl: BASE_URL,
+    baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
     prepareHeaders: (headers, {}) => {
       const token = getAccessToken();
       if (token) {

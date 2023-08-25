@@ -28,50 +28,25 @@ const AddComments = ({ singleData }) => {
   );
 
   const handleComment = async () => {
-    // try {
-    //   const comments = {
-    //     comment: comment,
-    //     user_name: `${user?.firstName} ${user?.middleName} ${user?.lastName}`,
-    //   };
-
-    //   console.log("comments", comments, id);
-    //   const response = await postBlogComment({ comments, id });
-    //   console.log("response", response);
-    //   if (isLoading) {
-    //     console.log("loading");
-    //   }
-    //   if (response?.data?.statusCode === 200) {
-    //     toast.success(response?.data?.message);
-    //   } else {
-    //     toast.error(response?.error?.data?.message);
-    //   }
-    //   // handleClose();
-    //   // router.push("/blogs");
-    // } catch (error) {
-    //   console.log("error", error);
-    // }
     try {
       const comments = {
         comment: comment,
         user_name: `${user?.firstName} ${user?.middleName} ${user?.lastName}`,
       };
-      const response = await fetch(`${BASE_URL}/blogs/${id}/comments`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(comments),
-      });
+      console.log("comments", comments, id);
+      const response = await postBlogComment({ id, comments });
       console.log("response", response);
-      if (response?.status === 200) {
-        toast.success("Comment Add Successfully");
-      } else {
-        toast.error("comment add unsuccess");
+      if (isLoading) {
+        console.log("loading");
       }
-      // handleClose();
+      if (response?.data?.statusCode === 200) {
+        toast.success(response?.data?.message);
+      } else {
+        toast.error(response?.error?.data?.message);
+      }
       router.push(`/blogs/${id}`);
     } catch (error) {
-      console.error("Error submitting review:", error);
+      console.log("error", error);
     }
   };
 

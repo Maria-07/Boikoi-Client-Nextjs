@@ -10,11 +10,16 @@ import { toast } from "react-toastify";
 const { TextArea } = Input;
 
 const BlogEditModal = ({ id, singleData, handleClose, clicked }) => {
-  const [blogDescription, setBlogDescription] = useState("");
-  const { title, user_name, blog_part } = singleData;
+  const { title, blog_part, img } = singleData;
+
+  const image_hosting_token = process.env.NEXT_PUBLIC_IMAGE_UPLOAD_TOKEN;
+  const image_hosting_url = `https://api.imgbb.com/1/upload?expiration=600&key=${image_hosting_token}`;
 
   //! User data
   const user = UserInfo();
+
+  const [imageUpdate, setImageUpdate] = useState(img);
+  const [blogDescription, setBlogDescription] = useState(blog_part);
 
   const {
     register,
@@ -31,21 +36,32 @@ const BlogEditModal = ({ id, singleData, handleClose, clicked }) => {
   });
 
   const onSubmit = async (data) => {
-    // console.log(data);
-
     try {
+      //! image upload
+      const formData = new FormData();
+      formData.append("image", data?.img[0]);
+
+      const imgResponse = await fetch(image_hosting_url, {
+        method: "POST",
+        body: formData,
+      }).then((res) => res.json());
+
+      if (imgResponse?.success) {
+        setImageUpdate(imgResponse.data.display_url);
+      } else {
+        toast.error("Unable to upload image");
+      }
       const blogData = {
         title: data.blog_header,
-        img: "",
+        img: imageUpdate,
         blog_part: blogDescription,
         email: user?.email,
         user_name: user?.lastName,
       };
-
       console.log("blogData", blogData);
       const response = await updateBlog({ id, blogData }).unwrap();
-
       console.log("response", response);
+
       if (response?.statusCode === 200) {
         toast.success(response?.message);
         handleClose();
@@ -57,6 +73,7 @@ const BlogEditModal = ({ id, singleData, handleClose, clicked }) => {
       console.log("error", error);
     }
   };
+
   return (
     <div>
       {" "}
@@ -96,6 +113,7 @@ const BlogEditModal = ({ id, singleData, handleClose, clicked }) => {
               <div>
                 <h1 className="input-title-font">Image</h1>
                 <input
+                  // defaultValue={img}
                   type="file"
                   className="border w-full  mb-2"
                   {...register("img")}

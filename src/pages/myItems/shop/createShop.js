@@ -17,7 +17,6 @@ import UserInfo from "@/hook/UserInfo";
 const { TextArea } = Input;
 
 const createShop = () => {
-  // const streetArray = [];
   const [street, setStreet] = useState();
   const [area, setArea] = useState();
   const [city, setCity] = useState();
@@ -80,7 +79,7 @@ const createShop = () => {
         },
         shop_weekend: data.shop_weekend,
         shop_open_time: data.shop_open_time,
-        shop_close_time: data.shop_open_time,
+        shop_close_time: data.shop_close_time,
         book_shop_ratings: "4.5",
         description: description,
         bookShopOwner: user?.id,

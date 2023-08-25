@@ -7,12 +7,14 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { toast } from "react-toastify";
-import { PlusOutlined } from "@ant-design/icons";
 
 const { TextArea } = Input;
 
+const image_hosting_token = process.env.NEXT_PUBLIC_IMAGE_UPLOAD_TOKEN;
+
 const PostBlogModel = ({ handleClose, clicked }) => {
   const [blogDescription, setBlogDescription] = useState("");
+  const image_hosting_url = `https://api.imgbb.com/1/upload?expiration=600&key=${image_hosting_token}`;
 
   //! User data
   const user = UserInfo();
@@ -32,28 +34,37 @@ const PostBlogModel = ({ handleClose, clicked }) => {
   });
 
   const onSubmit = async (data) => {
-    console.log("Blog data", data);
-
     try {
-      const blogData = {
-        title: data.blog_header,
-        img: "",
-        blog_part: blogDescription,
-        email: user?.email,
-        user_name: `${user?.firstName} ${user?.middleName} ${user?.lastName}`,
-      };
+      //! image upload
+      const formData = new FormData();
+      formData.append("image", data?.img[0]);
 
-      console.log("blogData", blogData);
+      const imgResponse = await fetch(image_hosting_url, {
+        method: "POST",
+        body: formData,
+      }).then((res) => res.json());
 
-      const response = await blog(blogData);
-      console.log("response", response);
-      if (response?.data?.statusCode === 200) {
-        toast.success(response?.data?.message);
+      if (imgResponse?.success) {
+        const blogData = {
+          title: data.blog_header,
+          img: imgResponse.data.display_url,
+          blog_part: blogDescription,
+          email: user?.email,
+          user_name: `${user?.firstName} ${user?.middleName} ${user?.lastName}`,
+        };
+
+        const response = await blog(blogData);
+
+        if (response?.data?.statusCode === 200) {
+          toast.success(response?.data?.message);
+          handleClose();
+          router.push("/blogs");
+        } else {
+          toast.error(response?.error?.data?.message);
+        }
       } else {
-        toast.error(response?.error?.data?.message);
+        toast.error("Unable to upload image");
       }
-      handleClose();
-      router.push("/blogs");
     } catch (error) {
       console.log("error", error);
     }
@@ -95,7 +106,7 @@ const PostBlogModel = ({ handleClose, clicked }) => {
                 />
               </div>
               <div>
-                <h1 className="input-title-font">Image</h1>
+                <h1 className="input-title-font">real</h1>
                 <input
                   type="file"
                   className="border w-full  mb-2"
