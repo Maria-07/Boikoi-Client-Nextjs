@@ -1,4 +1,3 @@
-import { BASE_URL } from "@/config/config";
 import UserInfo from "@/hook/UserInfo";
 import { usePostBlogCommentMutation } from "@/redux/features/blog/blogApi";
 import { Avatar, Input } from "antd";

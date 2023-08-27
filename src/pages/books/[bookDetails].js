@@ -3,11 +3,7 @@ import RootLayout from "@/component/Layouts/RootLayout";
 import SimilarBooks from "@/component/UI/Books/BookDetails/SimilarBooks";
 import { Breadcrumb, Image } from "antd";
 import { usePathname } from "next/navigation";
-import {
-  AiFillPrinter,
-  AiOutlineHome,
-  AiOutlineShareAlt,
-} from "react-icons/ai";
+import { AiOutlineHome } from "react-icons/ai";
 import { BiBookBookmark, BiBookOpen } from "react-icons/bi";
 import { FaFacebookF, FaInstagram, FaTwitch, FaTwitter } from "react-icons/fa";
 

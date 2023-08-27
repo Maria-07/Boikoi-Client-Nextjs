@@ -97,3 +97,10 @@
     pointer-events: auto;
     padding: 10px 14px;
 }
+
+/* select options  */
+
+.ant-select-dropdown .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+    background-color: #438E93;
+    color: #ffffff;
+}
