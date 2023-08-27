@@ -261,3 +261,25 @@ body {
   border-radius: 10px;
   box-shadow: 2px 2px 2px 0px #2c2e2e;
 }
+
+/* Customized default Select Option */
+select option:checked {
+  background: #32A2B3;
+  color: #fff;
+}
+
+select option {
+  padding: 4px;
+  font-family: sans-serif;
+}
+
+select option:hover {
+  background: #32A2B3 !important;
+  color: #fff;
+}
+
+/* For copying things */
+::selection {
+  color: white !important;
+  background: #32A2B3 !important;
+}

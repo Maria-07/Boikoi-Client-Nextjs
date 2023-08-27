@@ -1,9 +1,8 @@
-import UserInfo from "@/hook/userInfo";
-import { useGetProfileQuery } from "@/redux/features/auth/userApi";
+import UserInfo from "../../../hook/UserInfo";
 import { usePostBlogMutation } from "@/redux/features/blog/blogApi";
-import { Input, Modal, Upload } from "antd";
+import { Input, Modal } from "antd";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { toast } from "react-toastify";

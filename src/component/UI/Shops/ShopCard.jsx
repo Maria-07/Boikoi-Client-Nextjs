@@ -1,19 +1,19 @@
-import { Card } from "antd";
-import Image from "next/image";
+import { Card, Image } from "antd";
+
 import SImage from "../../../assets/img/Bookshop-cuate.png";
 import Link from "next/link";
 
 const ShopCard = ({ shop }) => {
-  const { shop_name, location, address, contact_number } = shop;
+  const { shop_name, location, address, contact_number, image, id } = shop;
   return (
     <div className="mx-auto">
-      <Link href={"/shops/shopDetails/123"}>
-        <Card hoverable style={{ width: 260 }}>
+      <Link href={`/shops/shopDetails/${id}`}>
+        <Card hoverable style={{ width: 260, height: 450 }}>
           <div className="relative w-full ">
             <Image
-              src={SImage}
-              width={"auto"}
-              height={"auto"}
+              src={image}
+              width={"260px"}
+              height={"190px"}
               alt="Picture of the author"
               className=" "
             />

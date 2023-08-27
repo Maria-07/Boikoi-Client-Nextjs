@@ -1,30 +1,47 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import RootLayout from "@/component/Layouts/RootLayout";
+import UserInfo from "@/hook/UserInfo";
+import { useGetSingleShopQuery } from "@/redux/features/shop/shopApi";
 import { Breadcrumb, Image, Table } from "antd";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { AiOutlineHome, AiTwotoneShop } from "react-icons/ai";
 import { FaFacebookF, FaInstagram, FaTwitch, FaTwitter } from "react-icons/fa";
 
 const shopDetails = () => {
   const currentRoute = usePathname();
 
-  const shop = {
-    shop_name: "Page Turner Books",
-    shop_number: "54321",
-    contact_number: "9876543210",
-    image: "https://example.com/page_turner_books.jpg",
-    location: "Gulshan",
-    address: {
-      street: "Gulshan Avenue",
-      area: "Gulshan",
-      city: "Dhaka",
-    },
-    shop_weekend: "Saturday, Sunday",
-    shop_open_time: "9:00 AM",
-    shop_close_time: "7:00 PM",
-    book_shop_ratings: 4.3,
-    userEmail: "pageturner@example.com",
-  };
+  //! User data
+  const user = UserInfo();
+  console.log(user);
+
+  //! param from query
+  const router = useRouter();
+  const { query } = router;
+  const id = query.shopDetails;
+  // console.log(id);
+
+  //! Single shop details :
+  const {
+    data: shopData,
+    isLoading,
+    isError,
+  } = useGetSingleShopQuery(id, {
+    refetchOnMountOrArgChange: true,
+    pollingInterval: 5000,
+  });
+
+  // console.log("getSingleShop", shopData);
+
+  useEffect(() => {
+    if (!isLoading && !isError) {
+      console.log("My Shop Data:", shopData);
+    }
+  }, [shopData, isLoading, isError]);
+
+  const myShopData = shopData?.data;
 
   const columns = [
     {
@@ -61,52 +78,52 @@ const shopDetails = () => {
   const data = [
     {
       key: 1,
-      value: shop?.shop_number,
+      value: myShopData?.shop_number,
       feature: "Shop Number",
     },
     {
       key: 2,
-      value: shop?.contact_number,
+      value: myShopData?.contact_number,
       feature: "Shop Contact",
     },
     {
       key: 3,
-      value: shop?.location,
+      value: myShopData?.location,
       feature: "Shop Location",
     },
     {
       key: 4,
-      value: shop?.address?.street,
+      value: myShopData?.address?.street,
       feature: "Street",
     },
     {
       key: 5,
-      value: shop?.address?.area,
+      value: myShopData?.address?.area,
       feature: "Area",
     },
     {
       key: 6,
-      value: shop?.address?.city,
+      value: myShopData?.address?.city,
       feature: "City",
     },
     {
       key: 7,
-      value: shop?.shop_weekend,
+      value: myShopData?.shop_weekend,
       feature: "Shop Weekend",
     },
     {
       key: 8,
-      value: shop?.shop_open_time,
+      value: myShopData?.shop_open_time,
       feature: "Shop Open Time",
     },
     {
       key: 9,
-      value: shop?.shop_close_time,
+      value: myShopData?.shop_close_time,
       feature: "Shop Open Time",
     },
     {
       key: 10,
-      value: shop?.book_shop_ratings,
+      value: myShopData?.book_shop_ratings,
       feature: "Ratings",
     },
   ];
@@ -115,7 +132,7 @@ const shopDetails = () => {
       <div>
         <div className="h-[40vh]  overflow-hidden">
           <Image
-            src="https://www.dickins.co.uk/wp-content/uploads/Old-Town-Bookshop.jpg"
+            src={shopData?.data?.image}
             width={"100vw"}
             // height={"auto"}
             alt="Picture of the author"
@@ -152,7 +169,7 @@ const shopDetails = () => {
                   title: (
                     <button className="text-primary flex items-center gap-2 hover:text-primary font-semibold">
                       <AiTwotoneShop className="  text-lg" />
-                      <span>{shop?.shop_name}</span>
+                      <span>{myShopData?.shop_name}</span>
                     </button>
                   ),
                 },
@@ -162,7 +179,7 @@ const shopDetails = () => {
           <div className="grid sm:grid-cols-2 grid-cols-1 gap-5">
             <div>
               <h1 className="text-3xl text-secondary font-secondary">
-                {shop?.shop_name}
+                {myShopData?.shop_name}
               </h1>
               <hr className="my-3" />
               <div>
@@ -188,28 +205,20 @@ const shopDetails = () => {
                 # Shop Description
               </h1>
               <hr className="my-3" />
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit
-                repudiandae magnam fuga possimus facilis amet, nam iure dolor,
-                ipsam tenetur tempora ipsum quod debitis sit. Sapiente unde
-                laboriosam doloremque maxime?
-              </p>
-              <div>
-                <div className="my-10 flex items-center  gap-4">
-                  <button
-                    // onClick={handleUpdateBook}
-                    className="bk-input-button"
-                  >
-                    Edit BookShop
-                  </button>
-                  <button
-                    // onClick={handleDeleteBook}
-                    className="bk-input-red-button"
-                  >
-                    Delete
-                  </button>
+              <p>{myShopData?.description}</p>
+              {user?.email === myShopData?.userEmail && (
+                <div>
+                  <div className="my-10 flex items-center  gap-4">
+                    <Link href={"/myItems/shop"}>
+                      <button className="bk-input-button">Edit BookShop</button>
+                    </Link>
+                    <Link href={"/myItems/shop"}>
+                      <button className="bk-input-red-button">Delete</button>
+                    </Link>
+                  </div>
                 </div>
-              </div>
+              )}
+
               <div className="my-10">
                 <h1 className="text-[16px] font-semibold  text-primary">
                   Share This BookShop

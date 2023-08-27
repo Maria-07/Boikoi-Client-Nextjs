@@ -13,7 +13,7 @@ const BookPage = () => {
   const [location, setLocation] = useState("");
 
   const [demoData, setDemoData] = useState([]);
-  console.log("demoData", demoData);
+  // console.log("demoData", demoData);
 
   useEffect(() => {
     async function fetchDemoData() {

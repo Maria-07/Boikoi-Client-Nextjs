@@ -18,23 +18,14 @@ import {
 } from "@/redux/features/blog/blogApi";
 import BlogDeleteModal from "@/component/UI/Blogs/BlogDeleteModal";
 import { format } from "date-fns";
-import { useRouter } from "next/router";
+import UserInfo from "@/hook/UserInfo";
 
 const BlogDetails = ({ singleData }) => {
   //* console.log("singleData", singleData);
   const { id, email, blog_part, title, createdAt, user_name, img } = singleData;
-  const [em, setEm] = useState("");
-
-  const router = useRouter();
-  //* console.log("router.query.allShops", router.query.blogDetails);
 
   //! User data
-  const userEmail = CurrentUserEmail();
-  //* console.log("user email", userEmail, email);
-
-  useEffect(() => {
-    setEm(userEmail);
-  }, [em, userEmail]);
+  const user = UserInfo();
 
   //! Edit Blog
   const [editBlog, setEditBlog] = useState(false);
@@ -117,7 +108,7 @@ const BlogDetails = ({ singleData }) => {
           </div>
           <div className="sm:col-span-3">
             <div className="border px-8 pb-16 pt-5">
-              {email === em && (
+              {email === user?.email && (
                 <div className="pb-5 flex items-center justify-end">
                   <div className="flex items-center gap-2">
                     <FiEdit

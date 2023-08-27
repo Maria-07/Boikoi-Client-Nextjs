@@ -1,4 +1,4 @@
-import UserInfo from "@/hook/userInfo";
+import UserInfo from "../../../hook/UserInfo";
 import { useUpdateBlogMutation } from "@/redux/features/blog/blogApi";
 import { Input, Modal } from "antd";
 import { useRouter } from "next/router";

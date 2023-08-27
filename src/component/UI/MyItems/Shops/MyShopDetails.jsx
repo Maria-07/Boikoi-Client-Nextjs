@@ -131,12 +131,7 @@ const MyShopDetails = ({ myShopData }) => {
           # Shop Description
         </h1>
         <hr className="my-3" />
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit
-          repudiandae magnam fuga possimus facilis amet, nam iure dolor, ipsam
-          tenetur tempora ipsum quod debitis sit. Sapiente unde laboriosam
-          doloremque maxime?
-        </p>
+        <p>{myShopData?.description}</p>
       </div>
     </div>
   );

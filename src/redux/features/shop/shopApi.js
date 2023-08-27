@@ -21,6 +21,57 @@ const shopApi = api.injectEndpoints({
       }),
     }),
 
+    //* Get all  shop :
+    getAllShop: builder.query({
+      query: () => ({
+        url: "/shops",
+        method: "GET",
+        providesTags: ["shops"],
+      }),
+    }),
+
+    //* Get all Filterable Shop :
+    getAllFilterableShops: builder.query({
+      query: ({ street, area, city, location, searchTerm }) => {
+        let url = "/shops";
+        let queryParameters = "";
+
+        if (city) {
+          queryParameters += `&address.city=${city}`;
+        }
+        if (area) {
+          queryParameters += `&address.area=${area}`;
+        }
+        if (street) {
+          queryParameters += `&address.street=${street}`;
+        }
+        if (location) {
+          queryParameters += `&location=${location}`;
+        }
+        if (searchTerm) {
+          queryParameters += `&searchTerm=${searchTerm}`;
+        }
+
+        if (queryParameters) {
+          url += `?${queryParameters.substring(1)}`;
+        }
+
+        return url;
+      },
+      providesTags: ["shops"],
+    }),
+
+    //* Get a single shop
+    getSingleShop: builder.query({
+      query: (id) => `/shops/${id}`,
+      providesTags: ["shops"],
+    }),
+
+    // singleBook: builder.query({
+    //   query: (id) => `/books/${id}`,
+    //   providesTags: ["newBook"],
+    // }),
+
     //* Get My-shop :
     getMyShop: builder.query({
       query: () => ({
@@ -54,6 +105,9 @@ const shopApi = api.injectEndpoints({
 export const {
   useCreateShopMutation,
   useGetShopAddressQuery,
+  useGetAllFilterableShopsQuery,
+  useGetAllShopQuery,
+  useGetSingleShopQuery,
   useGetMyShopQuery,
   useUpdateShopMutation,
   useDeleteShopMutation,
