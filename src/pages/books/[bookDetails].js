@@ -1,38 +1,62 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import RootLayout from "@/component/Layouts/RootLayout";
+import ShopDetails from "@/component/UI/Books/BookDetails/ShopDetails";
 import SimilarBooks from "@/component/UI/Books/BookDetails/SimilarBooks";
+import DeleteBookModal from "@/component/UI/MyItems/Books/DeleteBookModal";
+import EditBookModal from "@/component/UI/MyItems/Books/EditBookModal";
+import UserInfo from "@/hook/UserInfo";
+import { useGetSingleBookQuery } from "@/redux/features/book/bookApi";
 import { Breadcrumb, Image } from "antd";
 import { usePathname } from "next/navigation";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { AiOutlineHome } from "react-icons/ai";
 import { BiBookBookmark, BiBookOpen } from "react-icons/bi";
 import { FaFacebookF, FaInstagram, FaTwitch, FaTwitter } from "react-icons/fa";
 
 const bookDetails = () => {
   const currentRoute = usePathname();
-  const book = {
-    title: "To Kill a Mockingbird",
-    image: "book_cover3.jpg",
-    author_name: "Harper Lee",
-    publisher_name: "J. B. Lippincott & Co.",
-    genre: "Classic Literature",
-    class_level: "High School",
-    faculty_name: "Faculty of Language and Literature",
-    quantity: 8,
-    description:
-      "A powerful novel dealing with racial injustice in the American South.",
-    price: "17",
-    is_sale: false,
-    Last_edition: "2020",
-    shop: "shop789",
-    userEmail: "user3@example.com",
-    reviews: ["Timeless masterpiece!", "Eye-opening and thought-provoking."],
+
+  //! User data
+  const user = UserInfo();
+
+  const [editBook, setEditBook] = useState(false);
+  const [deleteBook, setDeleteBook] = useState(false);
+
+  const handleEditBookModel = () => {
+    setEditBook(!editBook);
   };
+  const handleDeleteBookModel = () => {
+    setDeleteBook(!deleteBook);
+  };
+
+  //! param from query
+  const router = useRouter();
+  const { query } = router;
+  const id = query.bookDetails;
+  // console.log(id);
+
+  //! Single Book details :
+  const {
+    data: bookData,
+    isLoading,
+    isError,
+  } = useGetSingleBookQuery(id, {
+    refetchOnMountOrArgChange: true,
+    pollingInterval: 5000,
+  });
+
+  useEffect(() => {
+    if (!isLoading && !isError) {
+      console.log("My Book Data:", bookData);
+    }
+  }, [bookData, isLoading, isError, id]);
+
+  const book = bookData?.data;
   return (
     <div>
-      {" "}
       <div className="lg:w-[80%] lg:mx-auto py-4 my-10 px-4">
-        <div className="mt-5 mb-10">
-          {" "}
+        <div className="mt-5 mb-5">
           <Breadcrumb
             items={[
               {
@@ -69,10 +93,10 @@ const bookDetails = () => {
         </div>
 
         <hr />
-        <div className="flex items-center justify-center gap-10 lg:flex-nowrap flex-wrap my-16">
-          <div>
+        <div className="flex justify-center gap-10 lg:flex-nowrap flex-wrap my-16">
+          <div className="mt-2">
             <Image
-              src="https://ttpl.imgix.net/9789357780155_img.jpg"
+              src={book?.image}
               width={400}
               height={550}
               alt="Picture of the author"
@@ -80,31 +104,81 @@ const bookDetails = () => {
             ></Image>
           </div>
 
-          <div className="p-5">
+          <div className="px-5">
             <div>
               <h1 className="text-2xl mb-3 font-secondary font-semibold text-secondary">
                 {book?.title}
               </h1>
               <h2 className="text-[16px] font-medium text-primary">
-                <span className="font-semibold"> Author :</span>{" "}
+                <span className="font-semibold text-secondary"> Author :</span>{" "}
                 {book?.author_name}
               </h2>
-              <h3 className="text-[16px] font-medium text-primary">
-                <span className="font-semibold"> Genre :</span> {book?.genre}
-              </h3>
-              <h4 className="text-[16px] font-medium text-primary">
-                <span className="font-semibold"> Last Edition :</span>{" "}
-                {book?.Last_edition}
-              </h4>
+              <h2 className="text-[16px] font-medium text-primary">
+                <span className="font-semibold text-secondary">
+                  {" "}
+                  Publisher Name :
+                </span>{" "}
+                {book?.publisher_name}
+              </h2>
+            </div>
+            <div>
+              <table className="min-w-full border-[1px] border-gray-200 my-8 overflow-x-scroll">
+                <tbody>
+                  <tr className="border-b border-[1px] border-gray-500 ">
+                    <td className="text-sm font-semibold text-dark  bg-gray-100 px-2 py-3 whitespace-nowrap border-r border-gray-200 border-[1px] border-b-gray-200">
+                      Genre
+                    </td>
+                    <td className="text-sm  font-light px-2 py-3 whitespace-nowrap border border-gray-200 border-1">
+                      {book?.genre}
+                    </td>
+                  </tr>
+                  <tr className="border-b border-[1px] border-gray-500 ">
+                    <td className="text-sm font-semibold text-dark  bg-gray-100 px-2 py-3 whitespace-nowrap border-r border-gray-200 border-[1px] border-b-gray-200">
+                      Class Level
+                    </td>
+                    <td className="text-sm  font-light px-2 py-3 whitespace-nowrap border border-gray-200 border-1">
+                      {book?.class_level}
+                    </td>
+                  </tr>
+                  <tr className="border-b border-[1px] border-gray-500 ">
+                    <td className="text-sm font-semibold text-dark  bg-gray-100 px-2 py-3 whitespace-nowrap border-r border-gray-200 border-[1px] border-b-gray-200">
+                      Faculty Name
+                    </td>
+                    <td className="text-sm  font-light px-2 py-3 whitespace-nowrap border border-gray-200 border-1">
+                      {book?.faculty_name}
+                    </td>
+                  </tr>
+                  <tr className="border-b border-[1px] border-gray-500 ">
+                    <td className="text-sm font-semibold text-dark  bg-gray-100 px-2 py-3 whitespace-nowrap border-r border-gray-200 border-[1px] border-b-gray-200">
+                      Quantity
+                    </td>
+                    <td className="text-sm  font-light px-2 py-3 whitespace-nowrap border border-gray-200 border-1">
+                      {book?.quantity}
+                    </td>
+                  </tr>
+                  <tr className="border-b border-[1px] border-gray-500 ">
+                    <td className="text-sm font-semibold text-dark  bg-gray-100 px-2 py-3 whitespace-nowrap border-r border-gray-200 border-[1px] border-b-gray-200">
+                      Price
+                    </td>
+                    <td className="text-sm text-primary  font-semibold px-2 py-3 whitespace-nowrap border border-gray-200 border-1">
+                      {book?.price}
+                    </td>
+                  </tr>
+                  <tr className="border-b border-[1px] border-gray-500 ">
+                    <td className="text-sm font-semibold text-dark  bg-gray-100 px-2 py-3 whitespace-nowrap border-r border-gray-200 border-[1px] border-b-gray-200">
+                      Last Edition
+                    </td>
+                    <td className="text-sm  font-light px-2 py-3 whitespace-nowrap border border-gray-200 border-1">
+                      {book?.Last_edition}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
             <div>
               <p className="sm:w-[500px] my-10">
                 <span className="font-semibold">Description : </span>
-                Each inspirational book is jam-packed with rich content and
-                positive information that will be a positive guiding light to
-                your life, health, business, career, and relationships. It shows
-                you how to get to the cause of all your stumbling blocks so that
-                you are empowered to find solutions.
+                {book?.description}
               </p>
             </div>
 
@@ -112,22 +186,6 @@ const bookDetails = () => {
               <button className="px-3 py-1 border border-gray-400  leading-7 shadow-md text-[15px] hover:bg-secondary hover:text-white rounded-md">
                 Add to Favorite
               </button>
-              {/* <Dropdown menu={{ items }}>
-                <a
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setWishButton(!wishButton);
-                  }}
-                >
-                  <button title="Add To WishList">
-                    {!wishButton ? (
-                      <FaRegBookmark className="mt-[6px] text-[38px] text-[#804769] p-2 border border-[#804769] rounded-sm shadow-sm hover:bg-[#804769] hover:text-secondary" />
-                    ) : (
-                      <FaRegBookmark className="mt-[6px] text-[38px] text-[#fff] p-2 border border-[#804769] rounded-sm shadow-sm bg-[#804769] " />
-                    )}
-                  </button>
-                </a>
-              </Dropdown> */}
             </div>
 
             <div>
@@ -142,31 +200,44 @@ const bookDetails = () => {
               </div>
             </div>
 
-            <div>
-              <div className="my-10 flex items-center  gap-4">
-                <button
-                  // onClick={handleUpdateBook}
-                  className="bk-input-button"
-                >
-                  Edit BookShop
-                </button>
-                <button
-                  // onClick={handleDeleteBook}
-                  className="bk-input-red-button"
-                >
-                  Delete
-                </button>
+            {user?.email === book?.userEmail && (
+              <div>
+                <div className="mt-10 mb-5 flex items-center  gap-4">
+                  <button
+                    onClick={handleEditBookModel}
+                    className="bk-input-button"
+                  >
+                    Edit BookShop
+                  </button>
+                  <button
+                    onClick={handleDeleteBookModel}
+                    className="bk-input-red-button"
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
-        <hr />
+
         <div>
+          <h1 className="text-base text-gray-600 font-semibold border-gray-200 pb-1">
+            # Shop Details
+          </h1>
+          <hr />
+        </div>
+        <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-5 my-5">
+          <div className="sm:col-span-2">
+            <ShopDetails id={book?.shop?.id}></ShopDetails>
+          </div>
+        </div>
+        {/* <div>
           <h1 className="text-base text-gray-600 font-semibold border-gray-200 pb-2 my-5">
             # Similar Books
           </h1>
           <SimilarBooks></SimilarBooks>
-        </div>
+        </div> */}
         {/* review part  */}
         {/* <div className="view-part mx-auto">
           <div className="my-10 p-4">
@@ -225,22 +296,22 @@ const bookDetails = () => {
             />
           </div>
         </div>
-        {deleteBook && (
-          <DeleteBookModal
-            id={id}
-            handleClose={handleDeleteBook}
-            clicked={deleteBook}
-          ></DeleteBookModal>
-        )}
-        {updateBook && (
-          <UpdateBook
-            id={id}
-            book={book}
-            handleClose={handleUpdateBook}
-            clicked={updateBook}
-          ></UpdateBook>
-        )} */}
+         */}
       </div>
+      {editBook && (
+        <EditBookModal
+          book={book}
+          handleClose={handleEditBookModel}
+          clicked={editBook}
+        ></EditBookModal>
+      )}
+      {deleteBook && (
+        <DeleteBookModal
+          book={book}
+          handleClose={handleDeleteBookModel}
+          clicked={deleteBook}
+        ></DeleteBookModal>
+      )}
     </div>
   );
 };

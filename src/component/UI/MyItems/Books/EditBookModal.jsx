@@ -1,19 +1,19 @@
-import { useCreateBookMutation } from "@/redux/features/book/bookApi";
-import { useGetMyShopQuery } from "@/redux/features/shop/shopApi";
-import CustomSearchOption from "@/shared/CustomSearchOption";
+import { useUpdateBookMutation } from "@/redux/features/book/bookApi";
+import CustomDefaultSearchOption from "@/shared/CustomDefaultSearchOption";
 import { Input, Modal } from "antd";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { toast } from "react-toastify";
+
 const { TextArea } = Input;
 
-const AddNewBookModal = ({ handleClose, clicked }) => {
-  const [description, setDescription] = useState("");
-  const [genre, setGenre] = useState("");
-  const [classLevel, setClassLevel] = useState("");
-  const [faculty, setFaculty] = useState("");
+const EditBookModal = ({ book, handleClose, clicked }) => {
+  const [description, setDescription] = useState(book.description);
+  const [genre, setGenre] = useState(book.genre);
+  const [classLevel, setClassLevel] = useState(book.class_level);
+  const [faculty, setFaculty] = useState(book.faculty_name);
 
   const genreOptions = [
     "Others",
@@ -148,24 +148,8 @@ const AddNewBookModal = ({ handleClose, clicked }) => {
     "Others",
   ];
 
-  //! get My Shop
-  const {
-    data: myShopData,
-    isLoading,
-    isError,
-  } = useGetMyShopQuery(undefined, {
-    refetchOnMountOrArgChange: true,
-    pollingInterval: 5000,
-  });
-
-  useEffect(() => {
-    if (!isLoading && !isError) {
-      // console.log("My Shop Data:", myShopData?.data?.id);
-    }
-  }, [myShopData, isLoading, isError]);
-
-  //! Post Your Book :
-  const [createBook] = useCreateBookMutation(undefined, {
+  //! Update Book :
+  const [updateBook, { isLoading }] = useUpdateBookMutation(undefined, {
     refetchOnMountOrArgChange: true,
     pollingInterval: 100,
   });
@@ -179,54 +163,39 @@ const AddNewBookModal = ({ handleClose, clicked }) => {
     formState: { errors },
   } = useForm();
 
-  //! image upload
-  const image_hosting_token = process.env.NEXT_PUBLIC_IMAGE_UPLOAD_TOKEN;
-  const image_hosting_url = `https://api.imgbb.com/1/upload?key=${image_hosting_token}`;
-
   const onSubmit = async (data) => {
-    console.log(data);
     try {
-      // //! image upload
-      const formData = new FormData();
-      formData.append("image", data?.image[0]);
-      const imgResponse = await fetch(image_hosting_url, {
-        method: "POST",
-        body: formData,
-      }).then((res) => res.json());
-      console.log("imgResponse", imgResponse);
-      if (imgResponse?.success) {
-        const bookData = {
-          title: data.title,
-          author_name: data.author_name,
-          publisher_name: data.publisher_name,
-          image: imgResponse.data.display_url,
-          genre: genre,
-          class_level: classLevel,
-          faculty_name: faculty,
-          quantity: data.quantity,
-          price: data.price,
-          Last_edition: data.Last_edition,
-          description: description,
-          shop: myShopData?.data?.id,
-        };
-        console.log("Book Data", bookData);
-        const response = await createBook(bookData).unwrap();
-        // console.log("response======", response);
-        console.log("response", response);
-        if (response?.statusCode === 200) {
-          toast.success(response?.message);
-          handleClose();
-          router.push("/myItems/book");
-        } else {
-          toast.error(response?.message);
-        }
+      const bookData = {
+        title: data.title,
+        author_name: data.author_name,
+        publisher_name: data.publisher_name,
+        genre: genre,
+        class_level: classLevel,
+        faculty_name: faculty,
+        quantity: data.quantity,
+        price: data.price,
+        Last_edition: data.Last_edition,
+        description: description,
+      };
+      console.log("bookData", bookData);
+      const id = book.id;
+
+      if (isLoading) {
+        console.log("loading");
+      }
+
+      const response = await updateBook({ id, bookData }).unwrap();
+      console.log("response======", response);
+
+      if (response?.statusCode === 200) {
+        toast.success(response?.message);
+        handleClose();
+        router.push(`/books/${id}`);
       } else {
-        toast.error("Unable to upload image");
+        toast.error(response?.message);
       }
     } catch (error) {
-      // console.error(error?.data?.message);
       toast.error(error?.data?.message);
-      // console.log(error?.data?.message);
     }
   };
   return (
@@ -243,7 +212,7 @@ const AddNewBookModal = ({ handleClose, clicked }) => {
         <div className="">
           <div className="flex items-center justify-between">
             <h1 className="text-xl font-semibold tracking-tight">
-              Add New Book
+              Edit Book
               <span className="text-primary">
                 {/* {myShopData?.data?.shop_name} */}
               </span>
@@ -263,6 +232,7 @@ const AddNewBookModal = ({ handleClose, clicked }) => {
                 </h1>
                 <input
                   type="text"
+                  defaultValue={book?.title}
                   className="input-border w-full  mb-2"
                   {...register("title", {
                     required: {
@@ -276,6 +246,7 @@ const AddNewBookModal = ({ handleClose, clicked }) => {
                 <h1 className="input-title-font">Author Name</h1>
                 <input
                   type="text"
+                  defaultValue={book?.author_name}
                   className="input-border w-full  mb-2"
                   {...register("author_name")}
                 />
@@ -284,68 +255,67 @@ const AddNewBookModal = ({ handleClose, clicked }) => {
                 <h1 className="input-title-font">Publisher Name</h1>
                 <input
                   type="text"
+                  defaultValue={book?.publisher_name}
                   className="input-border w-full  mb-2"
                   {...register("publisher_name")}
                 />
               </div>
               <div>
                 <h1 className="input-title-font">Genre</h1>
-                <CustomSearchOption
+                <CustomDefaultSearchOption
+                  dValue={book.genre}
                   item={genreOptions}
                   option={setGenre}
-                ></CustomSearchOption>
+                ></CustomDefaultSearchOption>
               </div>
               <div>
                 <h1 className="input-title-font">Last Edition</h1>
                 <input
                   type="text"
+                  defaultValue={book?.Last_edition}
                   className="input-border w-full  mb-2"
                   {...register("Last_edition")}
                 />
               </div>
               <div className="md:col-span-2">
                 <h1 className="input-title-font">Class Level</h1>
-                <CustomSearchOption
+                <CustomDefaultSearchOption
+                  dValue={book.class_level}
                   item={educationLevels}
                   option={setClassLevel}
-                ></CustomSearchOption>
+                ></CustomDefaultSearchOption>
               </div>
               <div>
                 <h1 className="input-title-font">Price</h1>
                 <input
                   type="text"
+                  defaultValue={book?.price}
                   className="input-border w-full  mb-2"
                   {...register("price")}
                 />
               </div>
               <div className="md:col-span-2">
                 <h1 className="input-title-font">Faculty</h1>
-                <CustomSearchOption
+                <CustomDefaultSearchOption
+                  dValue={book.faculty_name}
                   item={facultiesList}
                   option={setFaculty}
-                ></CustomSearchOption>
+                ></CustomDefaultSearchOption>
               </div>
               <div>
                 <h1 className="input-title-font">Quantity</h1>
                 <input
                   type="text"
+                  defaultValue={book?.quantity}
                   className="input-border w-full  mb-2"
                   {...register("quantity")}
-                />
-              </div>
-
-              <div>
-                <h1 className="input-title-font">Book Image</h1>
-                <input
-                  type="file"
-                  className="border w-full  mb-2"
-                  {...register("image")}
                 />
               </div>
 
               <div className="sm:col-span-3">
                 <h1 className="input-title-font">Description</h1>
                 <TextArea
+                  defaultValue={book.description}
                   onChange={(e) => setDescription(e.target.value)}
                   rows={4}
                   placeholder="About This Book"
@@ -356,7 +326,7 @@ const AddNewBookModal = ({ handleClose, clicked }) => {
 
             <div className="flex gap-3 items-end justify-end mb-2 mt-4">
               <button type="submit" className="bk-input-button  ">
-                Add new Book
+                Edit Book
               </button>
               <button onClick={handleClose} className="bk-modal-red-button ">
                 Close
@@ -369,4 +339,4 @@ const AddNewBookModal = ({ handleClose, clicked }) => {
   );
 };
 
-export default AddNewBookModal;
+export default EditBookModal;

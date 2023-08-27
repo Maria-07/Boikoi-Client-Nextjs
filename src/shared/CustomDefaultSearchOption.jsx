@@ -1,7 +1,7 @@
 import { Select } from "antd";
 import { useEffect, useState } from "react";
 
-const CustomSearchOption = ({ item, option }) => {
+const CustomDefaultSearchOption = ({ item, option, dValue }) => {
   const [items, setItems] = useState([]);
   // console.log("item", item);
 
@@ -29,6 +29,7 @@ const CustomSearchOption = ({ item, option }) => {
         style={{
           width: "100%",
         }}
+        defaultValue={dValue}
         onChange={onChange}
         onSearch={onSearch}
         options={items.map((item) => ({
@@ -40,4 +41,4 @@ const CustomSearchOption = ({ item, option }) => {
   );
 };
 
-export default CustomSearchOption;
+export default CustomDefaultSearchOption;

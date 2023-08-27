@@ -119,7 +119,7 @@ const shopDetails = () => {
     {
       key: 9,
       value: myShopData?.shop_close_time,
-      feature: "Shop Open Time",
+      feature: "Shop Close Time",
     },
     {
       key: 10,

@@ -33,14 +33,16 @@ const MyBooks = () => {
 
   useEffect(() => {
     if (!isLoading && !isError) {
-      console.log("books mine:", books);
+      // console.log("books mine:", books);
     }
   }, [isLoading, isError, books]);
 
   return (
     <div>
       <div className="flex items-end justify-between sm:px-6 mt-3 ">
-        <h1>My Books</h1>
+        <h1 className="text-base text-gray-600 font-semibold border-gray-200 ">
+          My Books
+        </h1>
         <button onClick={handleAddBookModel} className="bk-input-button ">
           Add New Book
         </button>
