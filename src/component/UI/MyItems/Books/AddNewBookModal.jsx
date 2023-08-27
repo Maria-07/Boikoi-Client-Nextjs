@@ -313,7 +313,7 @@ const AddNewBookModal = ({ handleClose, clicked }) => {
               <div>
                 <h1 className="input-title-font">Price</h1>
                 <input
-                  type="text"
+                  type="number"
                   className="input-border w-full  mb-2"
                   {...register("price")}
                 />

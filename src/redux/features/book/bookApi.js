@@ -12,6 +12,64 @@ const bookApi = api.injectEndpoints({
       invalidatesTags: ["books"],
     }),
 
+    //* Get all Books :
+    getAllBooks: builder.query({
+      query: () => ({
+        url: `/books`,
+        method: "GET",
+        providesTags: ["books"],
+      }),
+    }),
+
+    //* Get all Filterable Books :
+    getAllFilterableBooks: builder.query({
+      query: ({
+        authorName,
+        publisherName,
+        genre,
+        classLevel,
+        facultyName,
+        isSale,
+        lastEdition,
+        searchTerm,
+      }) => {
+        let url = "/books";
+        let queryParameters = "";
+
+        if (authorName) {
+          queryParameters += `&author_name=${authorName}`;
+        }
+        if (publisherName) {
+          queryParameters += `&publisher_name=${publisherName}`;
+        }
+        if (genre) {
+          queryParameters += `&genre=${genre}`;
+        }
+        if (classLevel) {
+          queryParameters += `&class_level=${classLevel}`;
+        }
+        if (facultyName) {
+          queryParameters += `&faculty_name=${facultyName}`;
+        }
+        if (isSale) {
+          queryParameters += `&is_sale=${isSale}`;
+        }
+        if (lastEdition) {
+          queryParameters += `&Last_edition=${lastEdition}`;
+        }
+        if (searchTerm) {
+          queryParameters += `&searchTerm=${searchTerm}`;
+        }
+
+        if (queryParameters) {
+          url += `?${queryParameters.substring(1)}`;
+        }
+
+        return url;
+      },
+      providesTags: ["books"],
+    }),
+
     //* Get all My Books :
     getAllMyBooks: builder.query({
       query: ({ mail }) => ({
@@ -50,6 +108,8 @@ const bookApi = api.injectEndpoints({
 
 export const {
   useCreateBookMutation,
+  useGetAllBooksQuery,
+  useGetAllFilterableBooksQuery,
   useGetAllMyBooksQuery,
   useGetSingleBookQuery,
   useUpdateBookMutation,
