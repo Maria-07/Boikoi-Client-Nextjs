@@ -5,7 +5,7 @@ import Image from "next/image";
 const Category = ({ category }) => {
   return (
     <div className="mx-auto">
-      <Link href={"/books/1213"}>
+      <Link href={"/books"}>
         <div className="border-[0.2px] border-gray-300 rounded-md ">
           <Card hoverable style={{ width: 230, height: 300 }}>
             <div className="p-5">

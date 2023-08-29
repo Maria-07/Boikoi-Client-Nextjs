@@ -10,6 +10,9 @@ import Cookies from "js-cookie";
 import { getAccessToken } from "@/redux/api/apiSlice";
 import { useRouter } from "next/router";
 import SearchBox from "../SearchBox/SearchBox";
+import { AiOutlineMenu } from "react-icons/ai";
+import { BiSearchAlt2 } from "react-icons/bi";
+import { Dropdown } from "antd";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -19,7 +22,18 @@ const Navbar = () => {
 
   const token = getAccessToken();
   const email = CurrentUserEmail();
-  console.log("userEmail", email);
+  // console.log("userEmail", email);
+
+  const items = [
+    {
+      key: "1",
+      label: <Link href={"/books"}>Regular Books</Link>,
+    },
+    {
+      key: "2",
+      label: <Link href={"/oldBooks"}>Old Books</Link>,
+    },
+  ];
 
   useEffect(() => {
     setAccessToken(token);
@@ -31,14 +45,14 @@ const Navbar = () => {
     console.log("logout");
     Cookies.remove("accessToken");
     router.push("/");
-    console.log("userEmail logout", email);
+    // console.log("userEmail logout", email);
   };
 
   return (
     <div>
       {" "}
-      <div className="hidden lg:block">
-        <div className="sm:w-[80%]  sm:mx-auto py-4 flex justify-between">
+      <div className="hidden lg:block sticky top-0">
+        <div className="sm:w-[80%]  sm:mx-auto py-2 flex justify-between">
           <div>
             <Link href={"/"}>
               <Image
@@ -66,14 +80,7 @@ const Navbar = () => {
             >
               Shops
             </Link>
-            <Link
-              className={
-                currentRoute === "/books" ? "active custom_link" : "custom_link"
-              }
-              href={"/books"}
-            >
-              Books
-            </Link>
+
             <Link
               className={
                 currentRoute === "/blogs"
@@ -82,10 +89,18 @@ const Navbar = () => {
               }
               href={"/blogs"}
             >
-              Blogs
+              <Dropdown
+                menu={{
+                  items,
+                }}
+                placement="bottom"
+                arrow
+              >
+                <button>Books</button>
+              </Dropdown>
             </Link>
 
-            <Link
+            {/* <Link
               className={
                 currentRoute === "/myItems"
                   ? "active custom_link"
@@ -95,25 +110,86 @@ const Navbar = () => {
               // href={"/myItems"}
             >
               My Item
-            </Link>
+            </Link> */}
 
-            <div>
-              {accessToken ? (
-                <button className="input-button" onClick={handleLogOut}>
-                  Log Out
-                </button>
-              ) : (
-                <Link href={"/login"}>
-                  <button className="input-button">Log In</button>
-                </Link>
-              )}
-            </div>
-            <button
-              onClick={() => setSearch(!search)}
-              className="bk-input-button "
-            >
-              Search
+            <button onClick={() => setSearch(!search)} className="">
+              <BiSearchAlt2 className="text-2xl hover:text-primary" />
             </button>
+            <Dropdown
+              overlay={
+                <div className="bg-white p-8 w-[280px] border shadow-md rounded-sm">
+                  <div>
+                    <h1 className="text-[15px] font-semibold text-dark mb-2">
+                      My Account
+                    </h1>
+                    <hr></hr>
+                    <div className="mx-5">
+                      {accessToken ? (
+                        <>
+                          <Link href={"/login"}>
+                            <button className="hover:text-primary my-2">
+                              My Profile
+                            </button>
+                          </Link>
+                          <br />
+                          <button
+                            className="hover:text-primary"
+                            onClick={handleLogOut}
+                          >
+                            Log Out
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <Link href={"/login"}>
+                            <button className="hover:text-primary my-2">
+                              Log In
+                            </button>
+                          </Link>
+                          <br />
+                          <Link href={"/signup"}>
+                            <button className="hover:text-primary ">
+                              Create Account
+                            </button>
+                          </Link>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                  {accessToken && (
+                    <div>
+                      <h1 className="text-[15px] font-semibold text-dark mb-2 mt-4">
+                        My Items
+                      </h1>
+                      <hr></hr>
+                      <div className="mx-5">
+                        <Link href={"/myItems/shop"}>
+                          <h1 className="hover:text-primary my-2">My Shop</h1>
+                        </Link>
+                        <Link href={"/myItems/book"}>
+                          <h1 className="hover:text-primary my-2">My Books</h1>
+                        </Link>
+                        <Link href={"/myItems/blogs"}>
+                          <h1 className="hover:text-primary my-2">My Blogs</h1>
+                        </Link>
+                        <Link href={"/myItems/oldBooks"}>
+                          <h1 className="hover:text-primary my-2">
+                            My Old Books
+                          </h1>
+                        </Link>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              }
+              placement="bottomRight"
+              arrow
+              st
+            >
+              <button className="border p-1">
+                <AiOutlineMenu className="text-xl hover:text-primary" />
+              </button>
+            </Dropdown>
           </div>
         </div>
       </div>

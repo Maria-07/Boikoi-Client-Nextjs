@@ -4,7 +4,7 @@ import WishList from "../WishList/WishList";
 
 const OldBooks = () => {
   const [demoData, setDemoData] = useState([]);
-  console.log("demoData", demoData);
+  // console.log("demoData", demoData);
 
   useEffect(() => {
     async function fetchDemoData() {

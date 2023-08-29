@@ -1,0 +1,215 @@
+import RootLayout from "@/component/Layouts/RootLayout";
+import OldBookCard from "@/component/UI/OldBooks/OldBookCard";
+import {
+  useGetAllFilterableOldBooksQuery,
+  useGetAllOldBooksQuery,
+} from "@/redux/features/oldBook/oldBookApi";
+import CustomSearchOption from "@/shared/CustomSearchOption";
+import { genreOptions } from "@/shared/constance";
+import { Breadcrumb, Input, Pagination } from "antd";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import { AiOutlineHome } from "react-icons/ai";
+import { BsBook } from "react-icons/bs";
+
+const { Search } = Input;
+
+const OldBooksPage = () => {
+  const currentRoute = usePathname();
+  const [authorName, setAuthorName] = useState("");
+  const [publisherName, setPublisherName] = useState("");
+  const [genre, setGenre] = useState("");
+  const [classLevel, setClassLevel] = useState("");
+  const [facultyName, setFacultyName] = useState("");
+  const [lastEdition, setLastEdition] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const [classLevelArray, setClassLevelArray] = useState([]);
+  const [facultyNameArray, setFacultyNameArray] = useState([]);
+  const [authorNameArray, setAuthorNameArray] = useState([]);
+  const [publisherNameArray, setPublisherNameArray] = useState([]);
+  const [lastEditionArray, setLastEditionArray] = useState([]);
+
+  const onSearch = (value) => {
+    // console.log("search:", value);
+  };
+
+  //! get all Old Books
+  const { data: allBooks, isLoading, isError } = useGetAllOldBooksQuery();
+
+  useEffect(() => {
+    console.log(allBooks);
+    if (!isLoading && !isError && allBooks?.data) {
+      const newClassLevelArray = allBooks.data.map((s) => s.class_level);
+      setClassLevelArray(newClassLevelArray);
+
+      const newFacultyNameArray = allBooks.data.map((s) => s.faculty_name);
+      setFacultyNameArray(newFacultyNameArray);
+
+      const newAuthorNameArray = allBooks.data.map((s) => s.author_name);
+      setAuthorNameArray(newAuthorNameArray);
+
+      const newPublisherNameArray = allBooks.data.map((s) => s.publisher_name);
+      setPublisherNameArray(newPublisherNameArray);
+
+      const newLastEditionArray = allBooks.data.map((s) => s.Last_edition);
+      setLastEditionArray(newLastEditionArray);
+    }
+  }, [allBooks, isLoading, isError]);
+
+  //! get all filterable Books
+  const {
+    data: books,
+    isLoading2,
+    isError2,
+  } = useGetAllFilterableOldBooksQuery(
+    {
+      authorName,
+      publisherName,
+      genre,
+      classLevel,
+      facultyName,
+      lastEdition,
+      searchTerm,
+    },
+    {
+      refetchOnMountOrArgChange: true,
+      pollingInterval: 5000,
+    }
+  );
+
+  useEffect(() => {
+    if (!isLoading2 && !isError2) {
+      console.log("All Books:", books?.data);
+      console.log("filterShops:", books);
+    }
+  }, [isLoading2, isError2, books]);
+  return (
+    <div>
+      <div>
+        <div className="bg-popover py-24">
+          <h1 className="text-center text-secondary font-semibold text-xl">
+            Find Your Books
+          </h1>
+        </div>
+        <div className="lg:w-[80%] lg:mx-auto py-4 px-4">
+          <div className="my-5">
+            {" "}
+            <Breadcrumb
+              items={[
+                {
+                  href: "/",
+                  title: (
+                    <AiOutlineHome className="hover:text-primary font-semibold text-lg mt-[2px]" />
+                  ),
+                },
+                {
+                  title: (
+                    <button
+                      className={
+                        currentRoute === "/oldBooks"
+                          ? "text-primary flex items-center gap-2 hover:text-primary font-semibold"
+                          : "flex items-center gap-2 hover:text-primary font-semibold"
+                      }
+                    >
+                      <BsBook className="  text-lg" />
+                      <span>Old Books</span>
+                    </button>
+                  ),
+                },
+              ]}
+            />
+          </div>
+
+          <div className="my-10">
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5  gap-5 ">
+              <div className="border min-h-[100vh] shadow-md px-5 py-7">
+                <div className="mb-5">
+                  <h1 className="text-[15px] text-dark my-2 font-semibold">
+                    Author Name
+                  </h1>
+                  <CustomSearchOption
+                    item={authorNameArray}
+                    option={setAuthorName}
+                  ></CustomSearchOption>
+                </div>
+                <div className="mb-5">
+                  <h1 className="text-[15px] text-dark my-2 font-semibold">
+                    Publisher Name
+                  </h1>
+                  <CustomSearchOption
+                    item={publisherNameArray}
+                    option={setPublisherName}
+                  ></CustomSearchOption>
+                </div>
+                <div className="mb-5">
+                  <h1 className="text-[15px] text-dark my-2 font-semibold">
+                    Genre
+                  </h1>
+                  <CustomSearchOption
+                    item={genreOptions}
+                    option={setGenre}
+                  ></CustomSearchOption>
+                </div>
+                <div className="mb-5">
+                  <h1 className="text-[15px] text-dark my-2 font-semibold">
+                    Class Level
+                  </h1>
+                  <CustomSearchOption
+                    item={classLevelArray}
+                    option={setClassLevel}
+                  ></CustomSearchOption>
+                </div>
+                <div className="mb-5">
+                  <h1 className="text-[15px] text-dark my-2 font-semibold">
+                    Faculty
+                  </h1>
+                  <CustomSearchOption
+                    item={facultyNameArray}
+                    option={setFacultyName}
+                  ></CustomSearchOption>
+                </div>
+                <div className="mb-5">
+                  <h1 className="text-[15px] text-dark my-2 font-semibold">
+                    Last Edition
+                  </h1>
+                  <CustomSearchOption
+                    item={lastEditionArray}
+                    option={setLastEdition}
+                  ></CustomSearchOption>
+                </div>
+              </div>
+              <div className="md:col-span-4 border shadow-md px-3 py-5">
+                <div>
+                  <Search
+                    placeholder="Search Book here"
+                    onSearch={onSearch}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    // style={{
+                    //   width: "100%",
+                    // }}
+                    className="md:w-[50%] mx-auto m-10 px-2"
+                  />
+                </div>
+                <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-5 ">
+                  {books?.data?.map((book, i) => (
+                    <OldBookCard book={book} key={i}></OldBookCard>
+                  ))}
+                </div>
+                <div className="my-10 flex items-center justify-center">
+                  <Pagination defaultCurrent={1} total={50} />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default OldBooksPage;
+
+OldBooksPage.getLayout = function getLayout(page) {
+  return <RootLayout>{page}</RootLayout>;
+};

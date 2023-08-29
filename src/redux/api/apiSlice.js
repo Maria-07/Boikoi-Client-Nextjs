@@ -19,6 +19,6 @@ export const api = createApi({
       return headers;
     },
   }),
-  tagTypes: ["profile", "login", "blogs", "shops", "books"],
+  tagTypes: ["profile", "login", "blogs", "shops", "books", "oldBooks"],
   endpoints: () => ({}),
 });

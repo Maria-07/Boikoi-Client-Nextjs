@@ -1,12 +1,11 @@
 import { Card, Image } from "antd";
 import Link from "next/link";
 
-const RegularBookCard = ({ book }) => {
-  // console.log(book);
+const OldBookCard = ({ book }) => {
   const { title, price, publisher_name, id, image } = book;
   return (
     <div className="mx-auto ">
-      <Link href={`/books/bookDetails/${id}`}>
+      <Link href={`/oldBooks/${id}`}>
         <div className="border-[0.2px] border-gray-300 rounded-md ">
           <Card hoverable style={{ width: 250, height: 430 }}>
             <div className="p-5">
@@ -23,7 +22,7 @@ const RegularBookCard = ({ book }) => {
               <h1 className="text-sm text-accent font-primary font-medium ">
                 {publisher_name}
               </h1>
-              <h2 className="text-base font-primary h-[40px] my-1 font-semibold text-dark">
+              <h2 className="text-base font-primary h-[60px] my-1 font-semibold text-dark">
                 {title}
               </h2>
               <h3 className="text-base font-primary mb-2 font-medium text-primary">
@@ -37,4 +36,4 @@ const RegularBookCard = ({ book }) => {
   );
 };
 
-export default RegularBookCard;
+export default OldBookCard;

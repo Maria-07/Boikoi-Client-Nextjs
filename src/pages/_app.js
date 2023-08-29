@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function App({ Component, pageProps }) {
   const getLayout = Component.getLayout || ((page) => page);
+
   return (
     <>
       <ToastContainer />
