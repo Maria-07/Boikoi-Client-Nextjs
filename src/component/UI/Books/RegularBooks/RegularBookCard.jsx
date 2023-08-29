@@ -1,5 +1,4 @@
 import { Card, Image } from "antd";
-import bookPic from "../../../../assets/img/book.jpg";
 import Link from "next/link";
 
 const RegularBookCard = ({ book }) => {
@@ -7,7 +6,7 @@ const RegularBookCard = ({ book }) => {
   const { title, price, publisher_name, id, image } = book;
   return (
     <div className="mx-auto ">
-      <Link href={`/books/${id}`}>
+      <Link href={`/books/bookDetails/${id}`}>
         <div className="border-[0.2px] border-gray-300 rounded-md ">
           <Card hoverable style={{ width: 240, height: 430 }}>
             <div className="p-5">

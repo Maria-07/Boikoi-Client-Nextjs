@@ -230,7 +230,9 @@ BlogDetails.getLayout = function getLayout(page) {
 };
 
 export async function getStaticPaths() {
-  const res = await fetch("http://localhost:3000/api/v1/blogs");
+  const res = await fetch(
+    "https://boikoi-auth-service.vercel.app/api/v1/blogs"
+  );
   const blogs = await res.json();
 
   const paths = blogs?.data?.map((blog) => ({
@@ -242,7 +244,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   const res = await fetch(
-    `http://localhost:3000/api/v1/blogs/${params.blogDetails}`
+    `https://boikoi-auth-service.vercel.app/api/v1/blogs/${params.blogDetails}`
   );
   const data = await res.json();
 
