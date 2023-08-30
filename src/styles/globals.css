@@ -208,6 +208,13 @@ body {
 }
 
 
+.my-profile-bg {
+  background: url('../assets/img/Heading-bg-01.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+
 /* menu  hover effect  */
 
 .custom_link {

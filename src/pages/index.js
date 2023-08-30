@@ -17,15 +17,6 @@ import { ToastContainer, toast } from "react-toastify";
 const HomePage = () => {
   return (
     <>
-      <Head>
-        <title>BoiKoi</title>
-        <meta
-          name="description"
-          content="This is Book/book-shop management application made by next-js"
-        />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
-
       <div className="bg-[rgba(96,158,162,0.77)] pt-8 pb-36 px-3">
         <div className="sm:w-[80%] sm:mx-auto flex flex-wrap items-center justify-between">
           <div className="text-4xl font-bold font-primary text-white">

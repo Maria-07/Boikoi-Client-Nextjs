@@ -6,9 +6,9 @@ import Link from "next/link";
 const AvailableBookCard = ({ book }) => {
   const { title, price, publisher_name } = book;
   return (
-    <div className="mx-auto ">
+    <div className=" mx-auto">
       <Link href={"/books/1213"}>
-        <div className="border-[0.2px] border-gray-300 rounded-md ">
+        <div className="border-[0.2px] border-gray-300 rounded-md w-full">
           <Card hoverable style={{ width: 240, height: 400 }}>
             <div className="p-5">
               <Image

@@ -89,11 +89,39 @@ const Navbar = () => {
               }
               href={"/blogs"}
             >
+              Blogs
+            </Link>
+            <Link
+              className={
+                currentRoute === "/books"
+                  ? "active custom_link font-medium"
+                  : "custom_link font-medium"
+              }
+              href={"/books"}
+            >
               <Dropdown
-                menu={{
-                  items,
-                }}
-                placement="bottom"
+                overlay={
+                  <div className="bg-white p-2 w-[180px] border shadow-md rounded-sm">
+                    <div>
+                      <div className="mx-5">
+                        <>
+                          <Link href={"/books"}>
+                            <button className="hover:text-primary my-2">
+                              Regular Books
+                            </button>
+                          </Link>
+                          <br />
+                          <Link href={"/oldBooks"}>
+                            <button className="hover:text-primary my-2">
+                              Old Books
+                            </button>
+                          </Link>
+                        </>
+                      </div>
+                    </div>
+                  </div>
+                }
+                placement="bottomRight"
                 arrow
               >
                 <button>Books</button>
@@ -126,7 +154,7 @@ const Navbar = () => {
                     <div className="mx-5">
                       {accessToken ? (
                         <>
-                          <Link href={"/login"}>
+                          <Link href={"/myProfile"}>
                             <button className="hover:text-primary my-2">
                               My Profile
                             </button>

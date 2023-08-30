@@ -1,12 +1,13 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import RootLayout from "@/component/Layouts/RootLayout";
+import Reviews from "@/component/UI/Books/BookDetails/Reviews";
 import ShopDetails from "@/component/UI/Books/BookDetails/ShopDetails";
 import SimilarBooks from "@/component/UI/Books/BookDetails/SimilarBooks";
 import DeleteBookModal from "@/component/UI/MyItems/Books/DeleteBookModal";
 import EditBookModal from "@/component/UI/MyItems/Books/EditBookModal";
 import UserInfo from "@/hook/UserInfo";
 import { useGetSingleBookQuery } from "@/redux/features/book/bookApi";
-import { Breadcrumb, Image } from "antd";
+import { Breadcrumb, Image, Rate, Tabs } from "antd";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -53,6 +54,55 @@ const bookDetails = () => {
   }, [bookData, isLoading, isError, id]);
 
   const book = bookData?.data;
+
+  const tabItems = [
+    {
+      label: (
+        <h1 className="text-dark text-base hover:text-primary">Shop Details</h1>
+      ),
+      key: 1,
+      children: (
+        <>
+          <ShopDetails id={book?.shop?.id}></ShopDetails>
+        </>
+      ),
+    },
+    {
+      label: (
+        <h1 className="text-dark text-base hover:text-primary">Description</h1>
+      ),
+      key: 2,
+      children: (
+        <>
+          <p className="px-2 text-base text-accent"> {book?.description}</p>
+        </>
+      ),
+    },
+    {
+      label: (
+        <h1 className="text-dark text-base hover:text-primary">Reviews</h1>
+      ),
+      key: 3,
+      children: (
+        <>
+          <Reviews reviews={book?.reviews} id={book?.id}></Reviews>
+        </>
+      ),
+    },
+    {
+      label: (
+        <h1 className="text-dark text-base hover:text-primary">
+          Similar Books
+        </h1>
+      ),
+      key: 4,
+      children: (
+        <>
+          <SimilarBooks></SimilarBooks>
+        </>
+      ),
+    },
+  ];
   return (
     <div>
       <div className="lg:w-[80%] lg:mx-auto py-4 my-10 px-4">
@@ -97,7 +147,7 @@ const bookDetails = () => {
           <div className="mt-2">
             <Image
               src={book?.image}
-              width={400}
+              width={"100%"}
               height={550}
               alt="Picture of the author"
               className="p-10 border "
@@ -106,24 +156,40 @@ const bookDetails = () => {
 
           <div className="px-5">
             <div>
-              <h1 className="text-2xl mb-3 font-secondary font-semibold text-secondary">
+              <h1 className="text-2xl mb-3 font-secondary font-regular text-secondary">
                 {book?.title}
               </h1>
-              <h2 className="text-[16px] font-medium text-primary">
-                <span className="font-semibold text-secondary"> Author :</span>{" "}
-                {book?.author_name}
-              </h2>
-              <h2 className="text-[16px] font-medium text-primary">
-                <span className="font-semibold text-secondary">
-                  {" "}
-                  Publisher Name :
-                </span>{" "}
-                {book?.publisher_name}
-              </h2>
+              <Rate
+                allowHalf
+                className="text-dark text-base"
+                defaultValue={4.5}
+              />
+              ;
+              <div className="text-primary font-semibold mt-[3px]">
+                {book?.price} BDT
+              </div>
+              <div className=" mt-[2px] text-accent">Availability: 5</div>
+              <hr className="mt-3" />
             </div>
             <div>
               <table className="min-w-full border-[1px] border-gray-200 my-8 overflow-x-scroll">
                 <tbody>
+                  <tr className="border-b border-[1px] border-gray-500 ">
+                    <td className="text-sm font-semibold text-dark  bg-gray-100 px-2 py-3 whitespace-nowrap border-r border-gray-200 border-[1px] border-b-gray-200">
+                      Author Name
+                    </td>
+                    <td className="text-sm  font-light px-2 py-3 whitespace-nowrap border border-gray-200 border-1">
+                      {book?.author_name}
+                    </td>
+                  </tr>
+                  <tr className="border-b border-[1px] border-gray-500 ">
+                    <td className="text-sm font-semibold text-dark  bg-gray-100 px-2 py-3 whitespace-nowrap border-r border-gray-200 border-[1px] border-b-gray-200">
+                      Publisher Name
+                    </td>
+                    <td className="text-sm  font-light px-2 py-3 whitespace-nowrap border border-gray-200 border-1">
+                      {book?.publisher_name}
+                    </td>
+                  </tr>
                   <tr className="border-b border-[1px] border-gray-500 ">
                     <td className="text-sm font-semibold text-dark  bg-gray-100 px-2 py-3 whitespace-nowrap border-r border-gray-200 border-[1px] border-b-gray-200">
                       Genre
@@ -161,7 +227,7 @@ const bookDetails = () => {
                       Price
                     </td>
                     <td className="text-sm text-primary  font-semibold px-2 py-3 whitespace-nowrap border border-gray-200 border-1">
-                      {book?.price}
+                      {book?.price} BDT
                     </td>
                   </tr>
                   <tr className="border-b border-[1px] border-gray-500 ">
@@ -220,83 +286,9 @@ const bookDetails = () => {
             )}
           </div>
         </div>
-
-        <div>
-          <h1 className="text-base text-gray-600 font-semibold border-gray-200 pb-1">
-            # Shop Details
-          </h1>
-          <hr />
+        <div className="sm:w-[65%] mx-auto mb-10">
+          <Tabs type="card" items={tabItems} />
         </div>
-        <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-5 my-5">
-          <div className="sm:col-span-2">
-            <ShopDetails id={book?.shop?.id}></ShopDetails>
-          </div>
-        </div>
-        {/* <div>
-          <h1 className="text-base text-gray-600 font-semibold border-gray-200 pb-2 my-5">
-            # Similar Books
-          </h1>
-          <SimilarBooks></SimilarBooks>
-        </div> */}
-        {/* review part  */}
-        {/* <div className="view-part mx-auto">
-          <div className="my-10 p-4">
-            <Tabs
-              type="card"
-              items={new Array(1).fill(null).map((_, i) => {
-                const id = String(i + 1);
-                return {
-                  label: (
-                    <p key={i} className="text-lg text-primary">
-                      Review
-                    </p>
-                  ),
-                  key: id,
-                  children: (
-                    <div>
-                      <form onSubmit={handleSubmit}>
-                        <div className="my-16 ">
-                          <TextArea
-                            className="min-h-[30px] w-1/2"
-                            rows={4}
-                            placeholder="maxLength is 6"
-                            onChange={handleChange}
-                            value={inputValue}
-                          />
-                          <br />
-                          <button className="px-3 my-3 py-1 border rounded-sm leading-7 text-[15px] bg-popover shadow-md hover:bg-[#804769] text-secondary">
-                            Submit
-                          </button>
-                        </div>
-                      </form>
-
-                      {reviews.map(
-                        (review: string, index: number) => (
-                          <>
-                            {" "}
-                            <div
-                              key={index}
-                              className=" flex items-center flex-wrap gap-5"
-                            >
-                              <Avatar
-                                icon={<BsPersonCircle className="text-3xl" />}
-                              />
-                              <div className="text-base">
-                                <p>{review}</p>
-                              </div>
-                            </div>
-                            <hr className="my-3" />
-                          </>
-                        )
-                      )}
-                    </div>
-                  ),
-                };
-              })}
-            />
-          </div>
-        </div>
-         */}
       </div>
       {editBook && (
         <EditBookModal
