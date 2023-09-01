@@ -6,7 +6,7 @@ const UserInfo = () => {
   const { data: userProfile, isLoading, isError } = useGetProfileQuery();
   useEffect(() => {
     if (!isLoading && !isError) {
-      //   console.log("User Profile:", userProfile?.data);
+      console.log("User Profile:", userProfile?.data);
       setUser(userProfile?.data);
     }
   }, [userProfile, isLoading, isError]);

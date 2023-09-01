@@ -74,30 +74,30 @@ const oldBookApi = api.injectEndpoints({
     //   }),
     // }),
 
-    // //* Get a single Book
-    // getSingleBook: builder.query({
-    //   query: (id) => `/books/${id}`,
-    //   providesTags: ["books"],
-    // }),
+    //* Get a single Book
+    getSingleOldBook: builder.query({
+      query: (id) => `/oldBooks/${id}`,
+      providesTags: ["oldBooks"],
+    }),
 
-    // //* Update a book
-    // updateBook: builder.mutation({
-    //   query: ({ id, bookData }) => ({
-    //     url: `/books/${id}`,
-    //     method: "PATCH",
-    //     body: bookData,
-    //   }),
-    //   invalidatesTags: ["books"],
-    // }),
+    //* Update a book
+    updateOldBook: builder.mutation({
+      query: ({ id, bookData }) => ({
+        url: `/oldBooks/${id}`,
+        method: "PATCH",
+        body: bookData,
+      }),
+      invalidatesTags: ["oldBooks"],
+    }),
 
-    // //* Delete a Book
-    // deleteBook: builder.mutation({
-    //   query: ({ id }) => ({
-    //     url: `/books/${id}`,
-    //     method: "DELETE",
-    //   }),
-    //   invalidatesTags: ["books"],
-    // }),
+    //* Delete a Book
+    deleteOldBook: builder.mutation({
+      query: ({ id }) => ({
+        url: `/oldBooks/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["oldBooks"],
+    }),
   }),
 });
 
@@ -105,4 +105,7 @@ export const {
   useCreateOldBookMutation,
   useGetAllOldBooksQuery,
   useGetAllFilterableOldBooksQuery,
+  useGetSingleOldBookQuery,
+  useUpdateOldBookMutation,
+  useDeleteOldBookMutation,
 } = oldBookApi;

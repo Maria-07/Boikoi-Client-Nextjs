@@ -10,7 +10,6 @@ const RegularBookCard = ({ book }) => {
         <div className="border-[0.2px] border-gray-300 rounded-md ">
           <Card hoverable style={{ width: 250, height: 430 }}>
             <div className="p-5">
-              {" "}
               <div className="h-[240px] overflow-hidden">
                 <Image
                   src={image}
