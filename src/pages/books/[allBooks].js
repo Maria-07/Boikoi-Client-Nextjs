@@ -104,8 +104,8 @@ const AllBooks = () => {
     <div>
       {" "}
       <div>
-        <div className="bg-popover py-24">
-          <h1 className="text-center text-secondary font-semibold text-xl">
+        <div className="my-profile-bg py-24">
+          <h1 className="text-center text-xl font-secondary text-gray-200">
             Find Your Books
           </h1>
         </div>

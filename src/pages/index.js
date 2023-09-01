@@ -13,6 +13,7 @@ import Blogs from "@/component/UI/Home/Blogs/Blogs";
 import AboutUs from "@/component/UI/AboutUs/AboutUs";
 import Reviews from "@/component/UI/Home/Reviews/Reviews";
 import { ToastContainer, toast } from "react-toastify";
+import Tickets from "@/component/UI/Home/Tickets/Tickets";
 
 const HomePage = () => {
   return (
@@ -44,6 +45,7 @@ const HomePage = () => {
       <Blogs></Blogs>
       <AboutUs></AboutUs>
       <Reviews></Reviews>
+      <Tickets></Tickets>
     </>
   );
 };

@@ -2,7 +2,8 @@ import UserInfo from "@/hook/UserInfo";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { AiFillShop } from "react-icons/ai";
+import { AiFillShop, AiOutlineShop } from "react-icons/ai";
+import { BiBook, BiNews } from "react-icons/bi";
 import { BsBook } from "react-icons/bs";
 
 const MyItemsNavbar = () => {
@@ -66,19 +67,21 @@ const MyItemsNavbar = () => {
           My Books
         </Link>
       )}
-      <Link
-        className={
-          currentRoute === "/myItems/oldBooks"
-            ? "flex items-center gap-2 justify-center border-[2px] h-8 my-item-button text-base font-medium leading-5 tracking-wide uppercase pt-1 pb-1 transition ease-in-out duration-300 bg-primary border-primary text-white"
-            : "flex items-center gap-2 justify-center text-dark border-[2px] h-8 my-item-button text-base font-medium leading-5 tracking-wide uppercase pt-1 pb-1 transition ease-in-out duration-300"
-        }
-        href={"/myItems/oldBooks"}
-      >
-        <span>
-          <BsBook className="text-base" />
-        </span>
-        My Old Books
-      </Link>
+      {role === "customer" && (
+        <Link
+          className={
+            currentRoute === "/myItems/oldBooks"
+              ? "flex items-center gap-2 justify-center border-[2px] h-8 my-item-button text-base font-medium leading-5 tracking-wide uppercase pt-1 pb-1 transition ease-in-out duration-300 bg-primary border-primary text-white"
+              : "flex items-center gap-2 justify-center text-dark border-[2px] h-8 my-item-button text-base font-medium leading-5 tracking-wide uppercase pt-1 pb-1 transition ease-in-out duration-300"
+          }
+          href={"/myItems/oldBooks"}
+        >
+          <span>
+            <BsBook className="text-base" />
+          </span>
+          My Old Books
+        </Link>
+      )}
       <Link
         className={
           currentRoute === "/myItems/blogs"
@@ -88,9 +91,35 @@ const MyItemsNavbar = () => {
         href={"/myItems/blogs"}
       >
         <span>
-          <BsBook className="text-base" />
+          <BiNews className="text-base" />
         </span>
         My Blogs
+      </Link>
+      <Link
+        className={
+          currentRoute === "/myItems/favShops"
+            ? "flex items-center gap-2 justify-center border-[2px] h-8 my-item-button text-base font-medium leading-5 tracking-wide uppercase pt-1 pb-1 transition ease-in-out duration-300 bg-primary border-primary text-white"
+            : "flex items-center gap-2 justify-center text-dark border-[2px] h-8 my-item-button text-base font-medium leading-5 tracking-wide uppercase pt-1 pb-1 transition ease-in-out duration-300"
+        }
+        href={"/myItems/favShops"}
+      >
+        <span>
+          <AiOutlineShop className="text-base" />
+        </span>
+        My Shortlisted Shops
+      </Link>
+      <Link
+        className={
+          currentRoute === "/myItems/favBooks"
+            ? "flex items-center gap-2 justify-center border-[2px] h-8 my-item-button text-base font-medium leading-5 tracking-wide uppercase pt-1 pb-1 transition ease-in-out duration-300 bg-primary border-primary text-white"
+            : "flex items-center gap-2 justify-center text-dark border-[2px] h-8 my-item-button text-base font-medium leading-5 tracking-wide uppercase pt-1 pb-1 transition ease-in-out duration-300"
+        }
+        href={"/myItems/favBooks"}
+      >
+        <span>
+          <BiBook className="text-base" />
+        </span>
+        My Shortlisted Books
       </Link>
     </div>
   );

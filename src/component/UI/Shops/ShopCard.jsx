@@ -6,9 +6,9 @@ import Link from "next/link";
 const ShopCard = ({ shop }) => {
   const { shop_name, location, address, contact_number, image, id } = shop;
   return (
-    <div className="mx-auto">
+    <div className="mx-auto border">
       <Link href={`/shops/shopDetails/${id}`}>
-        <Card hoverable style={{ width: 260, height: 450 }}>
+        <Card hoverable style={{ width: 260, height: 400 }}>
           <div className="relative w-full ">
             <Image
               src={image}

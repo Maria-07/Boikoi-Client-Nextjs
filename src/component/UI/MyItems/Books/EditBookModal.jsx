@@ -190,7 +190,7 @@ const EditBookModal = ({ book, handleClose, clicked }) => {
       if (response?.statusCode === 200) {
         toast.success(response?.message);
         handleClose();
-        router.push(`/books/${id}`);
+        router.push(`/books/bookDetails/${id}`);
       } else {
         toast.error(response?.message);
       }

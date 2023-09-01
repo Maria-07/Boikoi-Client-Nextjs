@@ -9,7 +9,7 @@ const BlogCard = ({ blog }) => {
   return (
     <div>
       <div className="">
-        <div className="h-[250px]">
+        <div className="h-[270px]">
           <Image
             src={img}
             width={"100%"}

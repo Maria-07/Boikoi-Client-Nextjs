@@ -30,12 +30,12 @@ const BlogPage = () => {
   return (
     <div>
       {" "}
-      <div className="bg-popover py-24">
-        <h1 className="text-center text-secondary font-semibold text-xl">
-          News
+      <div className="my-profile-bg py-24">
+        <h1 className="text-center text-xl font-secondary text-gray-200">
+          All Daily Blogs
         </h1>
       </div>
-      <div className="lg:w-[80%] lg:mx-auto py-4 px-4">
+      <div className="lg:w-[80%] lg:mx-auto min-h-screen py-4 px-4">
         <div className="my-5">
           {" "}
           <Breadcrumb
@@ -65,7 +65,7 @@ const BlogPage = () => {
         </div>
         <Divider></Divider>
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5  gap-10 ">
-          <div className="sm:col-span-4">
+          <div className="sm:col-span-4 border-r-[1px]">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-10 ">
               {blogs?.data?.map((blog, i) => (
                 <BlogCard blog={blog} key={i}></BlogCard>

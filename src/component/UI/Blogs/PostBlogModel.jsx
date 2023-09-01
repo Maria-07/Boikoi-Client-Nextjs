@@ -100,7 +100,7 @@ const PostBlogModel = ({ handleClose, clicked }) => {
                 <h1 className="input-title-font">Blog&apos;s Header</h1>
                 <input
                   type="text"
-                  className="input-border-bottom w-full  mb-2"
+                  className="input-border w-full  mb-2"
                   {...register("blog_header")}
                 />
               </div>
