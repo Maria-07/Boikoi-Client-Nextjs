@@ -3,6 +3,7 @@ import RootLayout from "@/component/Layouts/RootLayout";
 import Reviews from "@/component/UI/Books/BookDetails/Reviews";
 import ShopDetails from "@/component/UI/Books/BookDetails/ShopDetails";
 import SimilarBooks from "@/component/UI/Books/BookDetails/SimilarBooks";
+import BookImageUpdateModal from "@/component/UI/ImageUpdate/BookImageUpdateModal";
 import DeleteBookModal from "@/component/UI/MyItems/Books/DeleteBookModal";
 import EditBookModal from "@/component/UI/MyItems/Books/EditBookModal";
 import UserInfo from "@/hook/UserInfo";
@@ -22,10 +23,14 @@ const bookDetails = () => {
   const user = UserInfo();
 
   const [editBook, setEditBook] = useState(false);
+  const [editImageBook, setEditImageBook] = useState(false);
   const [deleteBook, setDeleteBook] = useState(false);
 
   const handleEditBookModel = () => {
     setEditBook(!editBook);
+  };
+  const handleEditImageBookModel = () => {
+    setEditImageBook(!editImageBook);
   };
   const handleDeleteBookModel = () => {
     setDeleteBook(!deleteBook);
@@ -145,13 +150,25 @@ const bookDetails = () => {
         <hr />
         <div className="flex justify-center gap-10 lg:flex-nowrap flex-wrap my-16">
           <div className="mt-2">
-            <Image
-              src={book?.image}
-              width={"100%"}
-              height={550}
-              alt="Picture of the author"
-              className="p-10 border "
-            ></Image>
+            <div className="sm:p-10 p-3 border ">
+              <div className="w-[350px] h-[550px] overflow-hidden">
+                <Image
+                  src={book?.image}
+                  width={"100%"}
+                  height={550}
+                  alt="Picture of the author"
+                ></Image>
+              </div>
+            </div>
+
+            <div className="my-2">
+              <button
+                onClick={handleEditImageBookModel}
+                className="text-xs px-2 py-1 rounded-sm hover:bg-primary hover:text-white bg-gray-100 border"
+              >
+                Edit Image
+              </button>
+            </div>
           </div>
 
           <div className="px-5">
@@ -296,6 +313,13 @@ const bookDetails = () => {
           handleClose={handleEditBookModel}
           clicked={editBook}
         ></EditBookModal>
+      )}
+      {editImageBook && (
+        <BookImageUpdateModal
+          id={book?.id}
+          handleClose={handleEditImageBookModel}
+          clicked={editImageBook}
+        ></BookImageUpdateModal>
       )}
       {deleteBook && (
         <DeleteBookModal

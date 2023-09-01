@@ -1,4 +1,5 @@
 import RootLayout from "@/component/Layouts/RootLayout";
+import Loader from "@/component/UI/Loader/Loader";
 import ShopCard from "@/component/UI/Shops/ShopCard";
 import {
   useGetAllFilterableShopsQuery,
@@ -91,8 +92,12 @@ const AllShops = () => {
     }
   }, [isLoading2, isError2, shops]);
 
+  if (isLoading) {
+    return <Loader></Loader>;
+  }
+
   return (
-    <div>
+    <div className="min-h-screen">
       <div className="my-profile-bg py-24">
         <h1 className="text-center text-xl font-secondary text-gray-200">
           Find Your nearby shops
@@ -179,6 +184,7 @@ const AllShops = () => {
                   className="md:w-[50%] mx-auto m-10 px-2"
                 />
               </div>
+              {isLoading2 && <Loader></Loader>}
               <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4  gap-5 ">
                 {shops?.data?.map((shop, i) => (
                   <ShopCard shop={shop} key={i}></ShopCard>

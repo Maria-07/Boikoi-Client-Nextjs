@@ -1,6 +1,4 @@
 import { Card, Image } from "antd";
-
-import SImage from "../../../assets/img/Bookshop-cuate.png";
 import Link from "next/link";
 
 const ShopCard = ({ shop }) => {
@@ -10,13 +8,16 @@ const ShopCard = ({ shop }) => {
       <Link href={`/shops/shopDetails/${id}`}>
         <Card hoverable style={{ width: 260, height: 400 }}>
           <div className="relative w-full ">
-            <Image
-              src={image}
-              width={"260px"}
-              height={"190px"}
-              alt="Picture of the author"
-              className=" "
-            />
+            <div className="w-[260px] h-[190px] overflow-hidden">
+              {" "}
+              <Image
+                src={image}
+                width={"100%"}
+                height={"100%"}
+                alt="Picture of the author"
+                className=" "
+              />
+            </div>
           </div>
 
           <div className="  p-5">

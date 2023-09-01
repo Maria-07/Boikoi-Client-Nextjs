@@ -10,19 +10,22 @@ import { FaFacebookF, FaInstagram, FaTwitch, FaTwitter } from "react-icons/fa";
 import { GiNewspaper } from "react-icons/gi";
 import { FiEdit } from "react-icons/fi";
 import { useState, useEffect } from "react";
-import CurrentUserEmail from "@/hook/currentUserHook";
 import BlogEditModal from "@/component/UI/Blogs/BlogEditModal";
-import {
-  useDeleteBlogMutation,
-  useGetBlogsQuery,
-} from "@/redux/features/blog/blogApi";
+import { useGetBlogsQuery } from "@/redux/features/blog/blogApi";
 import BlogDeleteModal from "@/component/UI/Blogs/BlogDeleteModal";
 import { format } from "date-fns";
 import UserInfo from "@/hook/UserInfo";
+import BlogImageUpdateModal from "@/component/UI/ImageUpdate/BlogImageUpdateModal";
 
 const BlogDetails = ({ singleData }) => {
   //* console.log("singleData", singleData);
   const { id, email, blog_part, title, createdAt, user_name, img } = singleData;
+
+  //! Edit image :
+  const [editImage, setEditImage] = useState(false);
+  const handleEditImageModel = () => {
+    setEditImage(!editImage);
+  };
 
   //! User data
   const user = UserInfo();
@@ -148,12 +151,20 @@ const BlogDetails = ({ singleData }) => {
                   </span>
                 </div>
               </div>
-              <div className="my-8">
+              <div className=" lg:mx-auto flex justify-end">
+                <button
+                  onClick={handleEditImageModel}
+                  className="text-xs px-2 py-1 rounded-sm hover:bg-primary hover:text-white bg-gray-100 border"
+                >
+                  Edit Image
+                </button>
+              </div>
+              <div className="mb-8 mt-4 h-[500px] overflow-hidden">
                 {" "}
                 <Image
                   src={img}
                   width={"100%"}
-                  height={"auto"}
+                  // height={"100%"}
                   alt="Picture of the author"
                 ></Image>
               </div>
@@ -203,6 +214,13 @@ const BlogDetails = ({ singleData }) => {
           </div>
         </div>
       </div>
+      {editImage && (
+        <BlogImageUpdateModal
+          id={id}
+          handleClose={handleEditImageModel}
+          clicked={editImage}
+        ></BlogImageUpdateModal>
+      )}
       {editBlog && (
         <BlogEditModal
           singleData={singleData}
@@ -230,7 +248,7 @@ BlogDetails.getLayout = function getLayout(page) {
 };
 
 export async function getStaticPaths() {
-  const res = await fetch("http://localhost:3000/api/v1/blogs");
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/blogs`);
   const blogs = await res.json();
 
   const paths = blogs?.data?.map((blog) => ({
@@ -242,7 +260,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   const res = await fetch(
-    `http://localhost:3000/api/v1/blogs/${params.blogDetails}`
+    `${process.env.NEXT_PUBLIC_BASE_URL}/blogs/${params.blogDetails}`
   );
   const data = await res.json();
 

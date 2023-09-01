@@ -1,17 +1,24 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import RootLayout from "@/component/Layouts/RootLayout";
+import ShopImageUpdateModal from "@/component/UI/ImageUpdate/ShopImageUpdateModal";
 import UserInfo from "@/hook/UserInfo";
 import { useGetSingleShopQuery } from "@/redux/features/shop/shopApi";
 import { Breadcrumb, Image, Table } from "antd";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlineHome, AiTwotoneShop } from "react-icons/ai";
 import { FaFacebookF, FaInstagram, FaTwitch, FaTwitter } from "react-icons/fa";
 
 const shopDetails = () => {
   const currentRoute = usePathname();
+
+  //! Edit image :
+  const [editImage, setEditImage] = useState(false);
+  const handleEditImageModel = () => {
+    setEditImage(!editImage);
+  };
 
   //! User data
   const user = UserInfo();
@@ -139,6 +146,15 @@ const shopDetails = () => {
             className=""
           ></Image>
         </div>
+        <div className="lg:w-[80%] lg:mx-auto flex justify-end">
+          <button
+            onClick={handleEditImageModel}
+            className="text-xs px-2 py-1 rounded-sm hover:bg-primary hover:text-white bg-gray-100 border"
+          >
+            Edit Image
+          </button>
+        </div>
+
         <div className="lg:w-[80%] lg:mx-auto py-4 my-10 px-4">
           <div className="mt-5 mb-10">
             {" "}
@@ -234,6 +250,13 @@ const shopDetails = () => {
           </div>
         </div>
       </div>
+      {editImage && (
+        <ShopImageUpdateModal
+          id={myShopData?.id}
+          handleClose={handleEditImageModel}
+          clicked={editImage}
+        ></ShopImageUpdateModal>
+      )}
     </div>
   );
 };
