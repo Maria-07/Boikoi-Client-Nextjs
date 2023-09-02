@@ -146,7 +146,7 @@ const shopDetails = () => {
             className=""
           ></Image>
         </div>
-        <div className="lg:w-[80%] lg:mx-auto flex justify-end">
+        <div className="xl:w-[80%] xl:mx-auto flex justify-end">
           <button
             onClick={handleEditImageModel}
             className="text-xs px-2 py-1 rounded-sm hover:bg-primary hover:text-white bg-gray-100 border"
@@ -155,7 +155,7 @@ const shopDetails = () => {
           </button>
         </div>
 
-        <div className="lg:w-[80%] lg:mx-auto py-4 my-10 px-4">
+        <div className="xl:w-[80%] xl:mx-auto py-4 my-10 px-4">
           <div className="mt-5 mb-10">
             {" "}
             <Breadcrumb

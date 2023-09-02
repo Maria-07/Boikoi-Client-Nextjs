@@ -18,7 +18,7 @@ const Login = () => {
 
   const [login, { isLoading }] = useLoginMutation(undefined, {
     refetchOnMountOrArgChange: true,
-    pollingInterval: 50,
+    pollingInterval: 5000,
   });
 
   const onSubmit = async (data) => {

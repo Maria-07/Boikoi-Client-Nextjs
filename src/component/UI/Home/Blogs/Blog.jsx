@@ -1,33 +1,60 @@
 import { Image } from "antd";
+import { format } from "date-fns";
+import Link from "next/link";
 
-const Blog = () => {
+const Blog = ({ blog }) => {
+  const { blog_part, title, createdAt, user_name, id, img } = blog;
   return (
     <div className="py-10">
       <div>
-        <Image
-          src="https://susan-demo.myshopify.com/cdn/shop/articles/9_740x470_crop_center.jpg?v=1567855381"
-          width={"auto"}
-          height={"auto"}
-          alt="Picture of the author"
-        ></Image>
+        <div className="h-[270px]">
+          <Image
+            src={img}
+            width={"100%"}
+            height={"100%"}
+            alt="Picture of the author"
+          ></Image>
+        </div>
         <div className="px-5 py-3 rounded-[100%] absolute top-16 left-5 bg-white text-dark text-center text-base">
-          20 <br />
-          <span className="font-semibold">May</span>
+          {(() => {
+            try {
+              const createdAtDate = new Date(createdAt);
+              return format(createdAtDate, "dd");
+            } catch (error) {
+              return "Posted Time Not Found";
+            }
+          })()}
+          <br />
+          <span className="font-semibold">
+            {(() => {
+              try {
+                const createdAtDate = new Date(createdAt);
+                return format(createdAtDate, "MMM");
+              } catch (error) {
+                return "Posted Time Not Found";
+              }
+            })()}
+          </span>
         </div>
       </div>
       <div>
-        <div className="text-base my-5 text-black font-semibold hover:text-primary">
-          The London Book Fair is to be packed with exciting
-        </div>
-        <h2 className="text-sm text-accent ">Posted By: Susan Demo Admin</h2>
-        <p className="text-[15px]  my-5">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed, ipsum
-          deleniti repellendus nam deserunt vitae ullam amet quos! Nesciunt,
-          quo. Lorem, ipsum dolor.
+        <Link href={`/blogs/${id}`}>
+          <button className="text-base my-5 text-black font-semibold hover:text-primary">
+            {title}
+          </button>
+        </Link>
+
+        <h2 className="text-sm text-accent ">Posted By: {user_name}</h2>
+        <p className="text-[15px] h-[80px] my-5">
+          {blog_part.length > 180
+            ? `${blog_part.slice(0, 180)} ...`
+            : blog_part}
         </p>
-        <button className="text-sm hover:text-secondary text-accent ">
-          Read More
-        </button>
+        <Link href={`/blogs/${id}`}>
+          <button className="text-sm hover:text-secondary text-accent ">
+            Read More
+          </button>
+        </Link>
       </div>
     </div>
   );

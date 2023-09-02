@@ -1,4 +1,5 @@
 import RegularBookCard from "@/component/UI/Books/RegularBooks/RegularBookCard";
+import Loader from "@/component/UI/Loader/Loader";
 import {
   useGetAllBooksQuery,
   useGetAllFilterableBooksQuery,
@@ -100,6 +101,10 @@ const AllBooks = () => {
     }
   }, [isLoading2, isError2, books]);
 
+  if (isLoading2 || isLoading) {
+    return <Loader></Loader>;
+  }
+
   return (
     <div>
       {" "}
@@ -109,7 +114,7 @@ const AllBooks = () => {
             Find Your Books
           </h1>
         </div>
-        <div className="lg:w-[80%] lg:mx-auto py-4 px-4">
+        <div className="xl:w-[80%] xl:mx-auto py-4 px-4">
           <div className="my-5">
             {" "}
             <Breadcrumb

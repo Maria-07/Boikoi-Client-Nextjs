@@ -5,7 +5,6 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import NavbarSmallDevice from "./NavbarSmallDevice";
-import CurrentUserEmail from "@/hook/currentUserHook";
 import Cookies from "js-cookie";
 import { getAccessToken } from "@/redux/api/apiSlice";
 import { useRouter } from "next/router";
@@ -13,38 +12,33 @@ import SearchBox from "../SearchBox/SearchBox";
 import { AiOutlineMenu } from "react-icons/ai";
 import { BiSearchAlt2 } from "react-icons/bi";
 import { Dropdown } from "antd";
+import UserInfo from "@/hook/UserInfo";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState(false);
   const [accessToken, setAccessToken] = useState("");
   const currentRoute = usePathname();
+  const [userInfo, setUserInfo] = useState();
 
   const token = getAccessToken();
-  const email = CurrentUserEmail();
-  // console.log("userEmail", email);
 
-  const items = [
-    {
-      key: "1",
-      label: <Link href={"/books"}>Regular Books</Link>,
-    },
-    {
-      key: "2",
-      label: <Link href={"/oldBooks"}>Old Books</Link>,
-    },
-  ];
+  //! User data
+  const user = UserInfo();
+  // console.log("user", user.role);
 
   useEffect(() => {
     setAccessToken(token);
-  }, [token]);
+    setUserInfo(user);
+  }, [token, user]);
 
   const router = useRouter();
 
   const handleLogOut = () => {
     console.log("logout");
     Cookies.remove("accessToken");
-    router.push("/");
+    setUserInfo(null);
+    router.push("/login");
     // console.log("userEmail logout", email);
   };
 
@@ -83,16 +77,6 @@ const Navbar = () => {
 
             <Link
               className={
-                currentRoute === "/blogs"
-                  ? "active custom_link font-medium"
-                  : "custom_link font-medium"
-              }
-              href={"/blogs"}
-            >
-              Blogs
-            </Link>
-            <Link
-              className={
                 currentRoute === "/books"
                   ? "active custom_link font-medium"
                   : "custom_link font-medium"
@@ -128,17 +112,16 @@ const Navbar = () => {
               </Dropdown>
             </Link>
 
-            {/* <Link
+            <Link
               className={
-                currentRoute === "/myItems"
-                  ? "active custom_link"
-                  : "custom_link"
+                currentRoute === "/blogs"
+                  ? "active custom_link font-medium"
+                  : "custom_link font-medium"
               }
-              href={token ? "/myItems" : "/login"}
-              // href={"/myItems"}
+              href={"/blogs"}
             >
-              My Item
-            </Link> */}
+              Blogs
+            </Link>
 
             <button onClick={() => setSearch(!search)} className="">
               <BiSearchAlt2 className="text-2xl hover:text-primary" />
@@ -148,7 +131,10 @@ const Navbar = () => {
                 <div className="bg-white p-8 w-[280px] border shadow-md rounded-sm">
                   <div>
                     <h1 className="text-[15px] font-semibold text-dark mb-2">
-                      My Account
+                      My Account{" "}
+                      <span className="text-sm text-gray-400">
+                        ({userInfo?.role})
+                      </span>
                     </h1>
                     <hr></hr>
                     <div className="mx-5">
@@ -191,19 +177,31 @@ const Navbar = () => {
                       </h1>
                       <hr></hr>
                       <div className="mx-5">
-                        <Link href={"/myItems/shop"}>
-                          <h1 className="hover:text-primary my-2">My Shop</h1>
-                        </Link>
-                        <Link href={"/myItems/book"}>
-                          <h1 className="hover:text-primary my-2">My Books</h1>
-                        </Link>
+                        {userInfo?.role === "bookShopOwner" ? (
+                          <>
+                            <Link href={"/myItems/shop"}>
+                              <h1 className="hover:text-primary my-2">
+                                My Shop
+                              </h1>
+                            </Link>
+                            <Link href={"/myItems/book"}>
+                              <h1 className="hover:text-primary my-2">
+                                My Books
+                              </h1>
+                            </Link>
+                          </>
+                        ) : (
+                          <>
+                            <Link href={"/myItems/oldBooks"}>
+                              <h1 className="hover:text-primary my-2">
+                                My Old Books
+                              </h1>
+                            </Link>
+                          </>
+                        )}
+
                         <Link href={"/myItems/blogs"}>
                           <h1 className="hover:text-primary my-2">My Blogs</h1>
-                        </Link>
-                        <Link href={"/myItems/oldBooks"}>
-                          <h1 className="hover:text-primary my-2">
-                            My Old Books
-                          </h1>
                         </Link>
                       </div>
                     </div>

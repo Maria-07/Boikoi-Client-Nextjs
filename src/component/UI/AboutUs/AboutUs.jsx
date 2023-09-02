@@ -6,7 +6,7 @@ import { useEffect } from "react";
 const AboutUs = () => {
   return (
     <div className="bg-[#1b6173bc]">
-      <div className="lg:w-[80%] lg:mx-auto py-4 my-28">
+      <div className="xl:w-[80%] xl:mx-auto py-4 my-28">
         <div className="flex items-center lg:flex-nowrap flex-wrap">
           <div className="lg:w-3/4  lg:p-24 p-5">
             <div>

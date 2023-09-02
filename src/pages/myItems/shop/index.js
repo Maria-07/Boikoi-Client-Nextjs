@@ -6,6 +6,7 @@ import { useGetMyShopQuery } from "@/redux/features/shop/shopApi";
 import EditShopModal from "@/component/UI/MyItems/Shops/EditShopModal";
 import MyShopDetails from "@/component/UI/MyItems/Shops/MyShopDetails";
 import DeleteShopModal from "@/component/UI/MyItems/Shops/DeleteShopModal";
+import Loader from "@/component/UI/Loader/Loader";
 
 const MyShop = () => {
   const [editShop, setEditShop] = useState(false);
@@ -35,7 +36,7 @@ const MyShop = () => {
   }, [myShopData, isLoading, isError]);
 
   if (isLoading) {
-    <>Loading</>;
+    return <Loader></Loader>;
   }
   return (
     <div>

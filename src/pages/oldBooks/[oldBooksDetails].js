@@ -59,7 +59,7 @@ const OldBookDetails = () => {
   return (
     <div>
       {" "}
-      <div className="lg:w-[80%] lg:mx-auto py-4 my-10 px-4">
+      <div className="xl:w-[80%] xl:mx-auto py-4 my-10 px-4">
         <div className="mt-5 mb-5">
           <Breadcrumb
             items={[

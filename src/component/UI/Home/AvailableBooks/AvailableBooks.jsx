@@ -2,27 +2,27 @@ import { useEffect, useState } from "react";
 import AvailableBookCard from "./AvailableBookCard";
 import Link from "next/link";
 import { AiOutlineArrowRight } from "react-icons/ai";
+import { useGetAllBooksQuery } from "@/redux/features/book/bookApi";
 
 const AvailableBooks = () => {
-  const [demoData, setDemoData] = useState([]);
-  console.log("demoData", demoData);
+  //! get all books
+  const {
+    data: books,
+    isLoading,
+    isError,
+  } = useGetAllBooksQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+    pollingInterval: 100,
+  });
 
   useEffect(() => {
-    async function fetchDemoData() {
-      try {
-        const response = await fetch("DemoData/book.json"); // Fetch data from public folder
-        const data = await response.json();
-        setDemoData(data);
-      } catch (error) {
-        console.error("Error fetching demo data:", error);
-      }
+    if (!isLoading && !isError) {
+      console.log("All books:", books?.data);
     }
-
-    fetchDemoData();
-  }, []);
+  }, [books, isLoading, isError]);
 
   return (
-    <div className="lg:w-[80%] lg:mx-auto py-4 sm:mt-[10%] mt-16 mb-16 px-4">
+    <div className="xl:w-[80%] xl:mx-auto py-4 sm:mt-[10%] mt-16 mb-16 px-4">
       <h1 className="heading text-center">Available Books</h1>
       <p className="text-xl font-secondary text-accent text-center lg:px-[200px] my-5">
         Welcome to BookLink&apos;s expansive book categories section. Here, you
@@ -32,8 +32,8 @@ const AvailableBooks = () => {
         adventures, we have curated an array of book categories to ignite your
         passion for reading.
       </p>
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5  gap-5 mt-16 mb-10">
-        {demoData?.map((book, i) => (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5  gap-5 mt-16 mb-10">
+        {books?.data?.slice(0, 5).map((book, i) => (
           <AvailableBookCard book={book} key={i}></AvailableBookCard>
         ))}
       </div>

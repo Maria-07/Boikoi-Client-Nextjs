@@ -14,7 +14,7 @@ const RootLayout = ({ children }) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <div className="">
-        <div className="sticky top-0 z-50 bg-[#ffffffca] border-b-[1px] shadow-md">
+        <div className="sticky top-0 z-50 bg-[#ffffffca] border-b-[1px] shadow-md ">
           <Navbar></Navbar>
         </div>
 

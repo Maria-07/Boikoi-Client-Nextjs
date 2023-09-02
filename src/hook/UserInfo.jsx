@@ -3,10 +3,17 @@ import { useEffect, useState } from "react";
 
 const UserInfo = () => {
   const [user, setUser] = useState();
-  const { data: userProfile, isLoading, isError } = useGetProfileQuery();
+  const {
+    data: userProfile,
+    isLoading,
+    isError,
+  } = useGetProfileQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+    pollingInterval: 5000,
+  });
   useEffect(() => {
     if (!isLoading && !isError) {
-      console.log("User Profile:", userProfile?.data);
+      // console.log("User Profile:", userProfile?.data);
       setUser(userProfile?.data);
     }
   }, [userProfile, isLoading, isError]);

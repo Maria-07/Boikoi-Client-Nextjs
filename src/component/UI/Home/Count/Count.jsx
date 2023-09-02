@@ -1,3 +1,5 @@
+import CountUp from "react-countup";
+
 const Count = () => {
   return (
     <div className="lg:w-[60%]  sm:mx-auto py-4 ">
@@ -6,7 +8,7 @@ const Count = () => {
           <div className="grid sm:grid-cols-3 grid-cols-1 gap-2">
             <div className="p-4 sm:border-r-2 ">
               <h1 className="text-3xl text-primary font-semibold text-center">
-                300 +
+                <CountUp start={100} delay={1} duration={2.75} end={300} /> +
               </h1>
               <h2 className="text-lg text-dark text-center my-1">Book Shops</h2>
               <p className="text-sm text-accent text-center">
@@ -16,7 +18,7 @@ const Count = () => {
             </div>
             <div className="p-4 sm:border-r-2 ">
               <h1 className="text-3xl text-primary font-semibold text-center">
-                50K +
+                <CountUp delay={1} duration={2.75} end={50} />K +
               </h1>
               <h2 className="text-lg text-dark text-center my-1">Books</h2>
               <p className="text-sm text-accent text-center">
@@ -25,7 +27,7 @@ const Count = () => {
             </div>
             <div className="p-4  ">
               <h1 className="text-3xl text-primary font-semibold text-center">
-                450 +
+                <CountUp start={200} delay={1} duration={2.75} end={450} /> +
               </h1>
               <h2 className="text-lg text-dark text-center my-1">Customers</h2>
               <p className="text-sm text-accent text-center">

@@ -103,7 +103,7 @@ const AllShops = () => {
           Find Your nearby shops
         </h1>
       </div>
-      <div className="lg:w-[80%] lg:mx-auto py-4 px-4">
+      <div className="xl:w-[80%] xl:mx-auto py-4 px-4">
         <div className="my-5">
           {" "}
           <Breadcrumb

@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import { AiOutlineHome } from "react-icons/ai";
 import { GiNewspaper } from "react-icons/gi";
 import { useEffect } from "react";
+import Loader from "@/component/UI/Loader/Loader";
 
 const BlogPage = () => {
   const currentRoute = usePathname();
@@ -27,6 +28,10 @@ const BlogPage = () => {
     }
   }, [blogs, isLoading, isError]);
 
+  if (isLoading) {
+    return <Loader></Loader>;
+  }
+
   return (
     <div>
       {" "}
@@ -35,7 +40,7 @@ const BlogPage = () => {
           All Daily Blogs
         </h1>
       </div>
-      <div className="lg:w-[80%] lg:mx-auto min-h-screen py-4 px-4">
+      <div className="xl:w-[80%] xl:mx-auto min-h-screen py-4 px-4">
         <div className="my-5">
           {" "}
           <Breadcrumb

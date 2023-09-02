@@ -1,27 +1,28 @@
 import { useEffect, useState } from "react";
 import OldBookCard from "./OldBookCard";
 import WishList from "../WishList/WishList";
+import { useGetAllOldBooksQuery } from "@/redux/features/oldBook/oldBookApi";
 
 const OldBooks = () => {
-  const [demoData, setDemoData] = useState([]);
-  // console.log("demoData", demoData);
+  //! get all filterable Books
+  const {
+    data: books,
+    isLoading2,
+    isError2,
+  } = useGetAllOldBooksQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+    pollingInterval: 5000,
+  });
 
   useEffect(() => {
-    async function fetchDemoData() {
-      try {
-        const response = await fetch("DemoData/book.json"); // Fetch data from public folder
-        const data = await response.json();
-        setDemoData(data);
-      } catch (error) {
-        console.error("Error fetching demo data:", error);
-      }
+    if (!isLoading2 && !isError2) {
+      console.log("All Books:", books?.data);
+      console.log("filterShops:", books);
     }
-
-    fetchDemoData();
-  }, []);
+  }, [isLoading2, isError2, books]);
 
   return (
-    <div className="lg:w-[80%] lg:mx-auto py-4  px-4">
+    <div className="xl:w-[80%] xl:mx-auto py-4  px-4">
       <h1 className="heading text-center">
         A Easy Way To Buy & Sell Your Books
       </h1>
@@ -57,8 +58,8 @@ const OldBooks = () => {
           </p>
         </div>
         <div className="sm:col-span-3 border-x-2 px-5">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-5 ">
-            {demoData?.map((book, i) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 2xl:grid-cols-3  gap-5 ">
+            {books?.data?.slice(0, 6)?.map((book, i) => (
               <OldBookCard book={book} key={i}></OldBookCard>
             ))}
           </div>

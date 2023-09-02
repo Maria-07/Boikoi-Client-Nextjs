@@ -65,14 +65,14 @@ const oldBookApi = api.injectEndpoints({
       providesTags: ["oldBooks"],
     }),
 
-    // //* Get all My Books :
-    // getAllMyBooks: builder.query({
-    //   query: ({ mail }) => ({
-    //     url: `/books?userEmail=${mail}`,
-    //     method: "GET",
-    //     providesTags: ["books"],
-    //   }),
-    // }),
+    //* Get all My Books :
+    getAllMyOldBooks: builder.query({
+      query: ({ mail }) => ({
+        url: `/oldBooks?userEmail=${mail}`,
+        method: "GET",
+        providesTags: ["oldBooks"],
+      }),
+    }),
 
     //* Get a single Book
     getSingleOldBook: builder.query({
@@ -103,6 +103,7 @@ const oldBookApi = api.injectEndpoints({
 
 export const {
   useCreateOldBookMutation,
+  useGetAllMyOldBooksQuery,
   useGetAllOldBooksQuery,
   useGetAllFilterableOldBooksQuery,
   useGetSingleOldBookQuery,

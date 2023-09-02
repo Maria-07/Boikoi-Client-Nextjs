@@ -29,9 +29,9 @@ const BooksOnSale = () => {
           <h1 className="sale-heading px-16">Books are on SALE % </h1>
         </div>
       </div>
-      <div className="lg:w-[80%] lg:mx-auto py-4  mb-16 px-4">
+      <div className="xl:w-[80%] xl:mx-auto py-4  mb-16 px-4">
         {" "}
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5  gap-5 mt-16 mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-3 mt-16 mb-10">
           {demoData?.map((book, i) => (
             <BooksOnSaleCard book={book} key={i}></BooksOnSaleCard>
           ))}

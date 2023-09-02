@@ -1,33 +1,33 @@
-import { Card } from "antd";
-import bookPic from "../../../../assets/img/book.jpg";
-import Image from "next/image";
+import { Card, Image } from "antd";
 import Link from "next/link";
 
 const AvailableBookCard = ({ book }) => {
-  const { title, price, publisher_name } = book;
+  const { title, price, publisher_name, image, id } = book;
   return (
-    <div className=" mx-auto">
-      <Link href={"/books/1213"}>
-        <div className="border-[0.2px] border-gray-300 rounded-md w-full">
-          <Card hoverable style={{ width: 240, height: 400 }}>
+    <div className="mx-auto ">
+      <Link href={`/books/bookDetails/${id}`}>
+        <div className="border-[0.2px] border-gray-300 rounded-md ">
+          <Card hoverable style={{ width: 250, height: 430 }}>
             <div className="p-5">
-              <Image
-                src={bookPic}
-                width={"auto"}
-                height={"auto"}
-                alt="Picture of the author"
-                className="h-[206px] "
-              />
+              <div className="h-[240px] overflow-hidden">
+                <Image
+                  src={image}
+                  width={"100%"}
+                  height={"auto"}
+                  alt="Picture of the author"
+                  className="h-[206px] "
+                />
+              </div>
             </div>
 
-            <div className=" border-t-[0.2px] border-gray-300 p-5">
+            <div className=" border-t-[0.2px] border-gray-300 px-5 py-3">
               <h1 className="text-sm text-accent font-primary font-medium ">
                 {publisher_name}
               </h1>
-              <h2 className="text-base font-primary h-[55px] my-1 font-semibold text-dark">
+              <h2 className="text-base font-primary h-[40px] mt-1 mb-5 font-semibold text-dark">
                 {title}
               </h2>
-              <h3 className="text-base font-primary mb-2 font-medium text-primary">
+              <h3 className="text-base font-primary mb-1 font-medium text-primary">
                 ৳ {price}
               </h3>
             </div>

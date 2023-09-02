@@ -4,6 +4,7 @@ import Reviews from "@/component/UI/Books/BookDetails/Reviews";
 import ShopDetails from "@/component/UI/Books/BookDetails/ShopDetails";
 import SimilarBooks from "@/component/UI/Books/BookDetails/SimilarBooks";
 import BookImageUpdateModal from "@/component/UI/ImageUpdate/BookImageUpdateModal";
+import Loader from "@/component/UI/Loader/Loader";
 import DeleteBookModal from "@/component/UI/MyItems/Books/DeleteBookModal";
 import EditBookModal from "@/component/UI/MyItems/Books/EditBookModal";
 import UserInfo from "@/hook/UserInfo";
@@ -60,6 +61,10 @@ const bookDetails = () => {
 
   const book = bookData?.data;
 
+  if (isLoading) {
+    return <Loader></Loader>;
+  }
+
   const tabItems = [
     {
       label: (
@@ -110,7 +115,7 @@ const bookDetails = () => {
   ];
   return (
     <div>
-      <div className="lg:w-[80%] lg:mx-auto py-4 my-10 px-4">
+      <div className="xl:w-[80%] xl:mx-auto py-4 my-10 px-4">
         <div className="mt-5 mb-5">
           <Breadcrumb
             items={[

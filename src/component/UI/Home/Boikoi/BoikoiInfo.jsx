@@ -8,7 +8,7 @@ import { IoIosPeople } from "react-icons/io";
 
 const BoikoiInfo = () => {
   return (
-    <div className="lg:w-[80%] lg:mx-auto py-4  px-4 my-24">
+    <div className="xl:w-[80%] xl:mx-auto py-4  px-4 my-24">
       <div className="grid lg:grid-cols-2 grid-cols-1 gap-2">
         <div className="p-5">
           <Image

@@ -21,6 +21,15 @@ const blogApi = api.injectEndpoints({
       }),
     }),
 
+    //* Get all My Books :
+    getAllMyBlogs: builder.query({
+      query: ({ mail }) => ({
+        url: `/blogs?searchTerm=${mail}`,
+        method: "GET",
+        providesTags: ["blogs"],
+      }),
+    }),
+
     //* Update a Blog
     updateBlog: builder.mutation({
       query: ({ id, blogData }) => ({
@@ -55,6 +64,7 @@ const blogApi = api.injectEndpoints({
 export const {
   usePostBlogMutation,
   useGetBlogsQuery,
+  useGetAllMyBlogsQuery,
   useUpdateBlogMutation,
   useDeleteBlogMutation,
   usePostBlogCommentMutation,

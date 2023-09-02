@@ -3,13 +3,13 @@ import img from "../../../assets/video/Processing.gif";
 
 const Loader = () => {
   return (
-    <div className="flex items-center justify-center ">
+    <div className="flex items-center justify-center h-[100vh]">
       {" "}
       <Image
-        className="mt-[5%]"
+        className="mt-[2%]"
         src={img}
-        width={200}
-        height={200}
+        width={500}
+        height={500}
         alt="Picture of the author"
       />
     </div>

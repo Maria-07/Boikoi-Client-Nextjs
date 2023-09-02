@@ -1,4 +1,5 @@
 import RootLayout from "@/component/Layouts/RootLayout";
+import Loader from "@/component/UI/Loader/Loader";
 import OldBookCard from "@/component/UI/OldBooks/OldBookCard";
 import {
   useGetAllFilterableOldBooksQuery,
@@ -84,6 +85,11 @@ const OldBooksPage = () => {
       console.log("filterShops:", books);
     }
   }, [isLoading2, isError2, books]);
+
+  if (isLoading) {
+    return <Loader></Loader>;
+  }
+
   return (
     <div>
       <div>
@@ -92,7 +98,7 @@ const OldBooksPage = () => {
             Find Your Books
           </h1>
         </div>
-        <div className="lg:w-[80%] lg:mx-auto py-4 px-4">
+        <div className="xl:w-[80%] xl:mx-auto py-4 px-4">
           <div className="my-5">
             {" "}
             <Breadcrumb

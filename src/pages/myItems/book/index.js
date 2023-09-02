@@ -1,6 +1,7 @@
 import MyItemsLayout from "@/component/Layouts/MyItemsLayout";
 import RootLayout from "@/component/Layouts/RootLayout";
 import RegularBookCard from "@/component/UI/Books/RegularBooks/RegularBookCard";
+import Loader from "@/component/UI/Loader/Loader";
 import AddNewBookModal from "@/component/UI/MyItems/Books/AddNewBookModal";
 import UserInfo from "@/hook/UserInfo";
 import { useGetAllMyBooksQuery } from "@/redux/features/book/bookApi";
@@ -36,6 +37,10 @@ const MyBooks = () => {
       // console.log("books mine:", books);
     }
   }, [isLoading, isError, books]);
+
+  if (isLoading) {
+    return <Loader></Loader>;
+  }
 
   return (
     <div>
