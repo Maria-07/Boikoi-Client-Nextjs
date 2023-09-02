@@ -122,6 +122,16 @@ const Navbar = () => {
             >
               Blogs
             </Link>
+            <Link
+              className={
+                currentRoute === "/admin"
+                  ? "active custom_link font-medium"
+                  : "custom_link font-medium"
+              }
+              href={"/admin"}
+            >
+              Dashboard
+            </Link>
 
             <button onClick={() => setSearch(!search)} className="">
               <BiSearchAlt2 className="text-2xl hover:text-primary" />
@@ -131,10 +141,7 @@ const Navbar = () => {
                 <div className="bg-white p-8 w-[280px] border shadow-md rounded-sm">
                   <div>
                     <h1 className="text-[15px] font-semibold text-dark mb-2">
-                      My Account{" "}
-                      <span className="text-sm text-gray-400">
-                        ({userInfo?.role})
-                      </span>
+                      My Account
                     </h1>
                     <hr></hr>
                     <div className="mx-5">

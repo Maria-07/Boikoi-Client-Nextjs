@@ -24,7 +24,7 @@ const AllShops = () => {
   const currentRoute = usePathname();
 
   const router = useRouter();
-  // console.log("router.query.allShops", router.query.allShops);
+  console.log("router.query.allShops", router.query.allShops);
 
   const [streetArray, setStreetArray] = useState([]);
   const [areaArray, setAreaArray] = useState([]);

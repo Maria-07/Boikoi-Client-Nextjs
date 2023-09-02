@@ -271,7 +271,7 @@ body {
 
 /* Customized default Select Option */
 select option:checked {
-  background: #32A2B3;
+  background: #438E93;
   color: #fff;
 }
 
@@ -281,12 +281,42 @@ select option {
 }
 
 select option:hover {
-  background: #32A2B3 !important;
+  background: #438E93 !important;
   color: #fff;
 }
 
 /* For copying things */
 ::selection {
   color: white !important;
-  background: #32A2B3 !important;
+  background: #438E93 !important;
+}
+
+/* scrolling  */
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  /* background-color: #fff; */
+  opacity: 0.1;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb {
+  /* box-shadow: 0px 0px 2px 0.5px #004d54; */
+  background-color: #438E93;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #c2c2c2;
+
 }

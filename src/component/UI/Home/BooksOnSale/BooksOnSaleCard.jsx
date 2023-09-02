@@ -7,7 +7,7 @@ const BooksOnSaleCard = ({ book }) => {
   const { title, price, publisher_name } = book;
   return (
     <div className="mx-auto ">
-      <Link href={"/books/1213"}>
+      <Link href={"/books/bookDetails/1213"}>
         <div className="border-[0.2px] border-gray-300 rounded-md ">
           <Card hoverable style={{ width: 240, height: "auto" }}>
             <div className="p-5">
