@@ -93,9 +93,9 @@ const OldBooksPage = () => {
   return (
     <div>
       <div>
-        <div className="bg-popover py-24">
-          <h1 className="text-center text-secondary font-semibold text-xl">
-            Find Your Books
+        <div className="my-profile-bg py-24">
+          <h1 className="text-center text-xl font-secondary text-gray-200">
+            Find Old Books
           </h1>
         </div>
         <div className="xl:w-[80%] xl:mx-auto py-4 px-4">

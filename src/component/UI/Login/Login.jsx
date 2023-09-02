@@ -28,8 +28,10 @@ const Login = () => {
 
       if (response?.data?.statusCode === 200) {
         toast.success(response?.data?.message);
+        router.push("/");
       } else {
         toast.error(response?.error?.data?.message);
+        reset();
       }
 
       const accessToken = response?.data?.data?.accessToken;
@@ -39,9 +41,6 @@ const Login = () => {
       if (accessToken) {
         Cookies.set("accessToken", accessToken); // Store the access token in a cookie
       }
-      console.log("router.query.redirect", router);
-      const redirect = router.query.redirect || "/";
-      router.push(redirect || "/");
     } catch (error) {
       console.log("error", error);
     }

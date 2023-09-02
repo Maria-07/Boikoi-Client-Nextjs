@@ -122,16 +122,18 @@ const Navbar = () => {
             >
               Blogs
             </Link>
-            <Link
-              className={
-                currentRoute === "/admin"
-                  ? "active custom_link font-medium"
-                  : "custom_link font-medium"
-              }
-              href={"/admin"}
-            >
-              Dashboard
-            </Link>
+            {userInfo?.role === "admin" && (
+              <Link
+                className={
+                  currentRoute === "/admin"
+                    ? "active custom_link font-medium"
+                    : "custom_link font-medium"
+                }
+                href={"/admin"}
+              >
+                Dashboard
+              </Link>
+            )}
 
             <button onClick={() => setSearch(!search)} className="">
               <BiSearchAlt2 className="text-2xl hover:text-primary" />
