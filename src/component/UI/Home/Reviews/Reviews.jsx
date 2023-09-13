@@ -9,7 +9,7 @@ import Review from "./Review";
 
 const Reviews = () => {
   return (
-    <div className="xl:w-[80%] xl:mx-auto py-4 my-36">
+    <div className="  py-4 my-36">
       <h1 className="heading text-center">Review</h1>
       <p className="text-xl font-secondary text-accent text-center lg:px-[200px] my-5">
         Unveiling the Voices of Readers: Dive into Engaging Book Reviews

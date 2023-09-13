@@ -4,7 +4,7 @@ import { CgCommunity } from "react-icons/cg";
 
 const Facilities = () => {
   return (
-    <div className="xl:w-[80%] xl:mx-auto py-4  my-24 px-4">
+    <div className="  py-4  my-24 px-4">
       <h1 className="heading text-center">Why to choose BoiKoi?</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-5 mt-16 mb-10">
         <div className="">

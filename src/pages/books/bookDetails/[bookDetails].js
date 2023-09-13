@@ -115,7 +115,7 @@ const bookDetails = () => {
   ];
   return (
     <div>
-      <div className="xl:w-[80%] xl:mx-auto py-4 my-10 px-4">
+      <div className="  py-4 my-10 px-4">
         <div className="mt-5 mb-5">
           <Breadcrumb
             items={[
@@ -166,14 +166,16 @@ const bookDetails = () => {
               </div>
             </div>
 
-            <div className="my-2">
-              <button
-                onClick={handleEditImageBookModel}
-                className="text-xs px-2 py-1 rounded-sm hover:bg-primary hover:text-white bg-gray-100 border"
-              >
-                Edit Image
-              </button>
-            </div>
+            {user?.email === book?.userEmail && (
+              <div className="my-2">
+                <button
+                  onClick={handleEditImageBookModel}
+                  className="text-xs px-2 py-1 rounded-sm hover:bg-primary hover:text-white bg-gray-100 border"
+                >
+                  Edit Image
+                </button>
+              </div>
+            )}
           </div>
 
           <div className="px-5">

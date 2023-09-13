@@ -114,7 +114,7 @@ const AllBooks = () => {
             Find Your Books
           </h1>
         </div>
-        <div className="xl:w-[80%] xl:mx-auto py-4 px-4">
+        <div className="  py-4 px-4">
           <div className="my-5">
             {" "}
             <Breadcrumb
@@ -239,7 +239,7 @@ const AllBooks = () => {
                     className="md:w-[50%] mx-auto m-10 px-2"
                   />
                 </div>
-                <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-5 ">
+                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 2xl:grid-cols-4 gap-5 ">
                   {books?.data?.map((book, i) => (
                     <RegularBookCard book={book} key={i}></RegularBookCard>
                   ))}

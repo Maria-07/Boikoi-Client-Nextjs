@@ -32,7 +32,7 @@ const catagoriesData = [
 const Categories = () => {
   return (
     <div className="bg-popover my-24">
-      <div className="xl:w-[80%] xl:mx-auto py-4  px-4">
+      <div className="  py-4  px-4">
         <h1 className="text-center font-semibold text-2xl mt-10 text-dark">
           CATE<span className="text-primary">GO</span>RIES
         </h1>
@@ -40,7 +40,7 @@ const Categories = () => {
           Find your nearby shops & Books
         </p>
       </div>
-      <div className="xl:w-[80%] xl:mx-auto p-4">
+      <div className="  p-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5  gap-5 mt-16 mb-10">
           {catagoriesData?.map((category, i) => (
             <Category category={category} key={i}></Category>

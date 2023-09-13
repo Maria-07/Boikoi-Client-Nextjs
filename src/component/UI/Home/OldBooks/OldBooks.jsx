@@ -22,7 +22,7 @@ const OldBooks = () => {
   }, [isLoading2, isError2, books]);
 
   return (
-    <div className="xl:w-[80%] xl:mx-auto py-4  px-4">
+    <div className="  py-4  px-4">
       <h1 className="heading text-center">
         A Easy Way To Buy & Sell Your Books
       </h1>

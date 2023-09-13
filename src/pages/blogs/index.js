@@ -40,7 +40,7 @@ const BlogPage = () => {
           All Daily Blogs
         </h1>
       </div>
-      <div className="xl:w-[80%] xl:mx-auto min-h-screen py-4 px-4">
+      <div className="  min-h-screen py-4 px-4">
         <div className="my-5">
           {" "}
           <Breadcrumb
@@ -71,7 +71,7 @@ const BlogPage = () => {
         <Divider></Divider>
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5  gap-10 ">
           <div className="sm:col-span-4 border-r-[1px]">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-10 ">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 px-2 gap-10 ">
               {blogs?.data?.map((blog, i) => (
                 <BlogCard blog={blog} key={i}></BlogCard>
               ))}

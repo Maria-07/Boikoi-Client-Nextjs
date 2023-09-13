@@ -103,7 +103,7 @@ const AllShops = () => {
           Find Your nearby shops
         </h1>
       </div>
-      <div className="xl:w-[80%] xl:mx-auto py-4 px-4">
+      <div className="  py-4 px-4">
         <div className="my-5">
           {" "}
           <Breadcrumb
@@ -133,7 +133,7 @@ const AllShops = () => {
         </div>
 
         <div className="my-10">
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5  gap-5 ">
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 gap-5 ">
             <div className="border sm:min-h-[100vh] shadow-md px-5 py-7">
               <div className="mb-5">
                 <h1 className="text-[15px] text-dark my-2 font-semibold">
@@ -185,7 +185,7 @@ const AllShops = () => {
                 />
               </div>
               {isLoading2 && <Loader></Loader>}
-              <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4  gap-5 ">
+              <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 2xl:grid-cols-4  gap-5 ">
                 {shops?.data?.map((shop, i) => (
                   <ShopCard shop={shop} key={i}></ShopCard>
                 ))}

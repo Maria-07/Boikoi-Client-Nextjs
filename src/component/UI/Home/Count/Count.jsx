@@ -3,7 +3,7 @@ import CountUp from "react-countup";
 const Count = () => {
   return (
     <div className="lg:w-[60%]  sm:mx-auto py-4 ">
-      <div className="lg:absolute border shadow-md sm:mt-[-5%] lg:w-[60%]">
+      <div className="lg:absolute border shadow-md sm:mt-[-10%] lg:w-[60%]">
         <div className="bg-white p-8 ">
           <div className="grid sm:grid-cols-3 grid-cols-1 gap-2">
             <div className="p-4 sm:border-r-2 ">

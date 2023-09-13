@@ -24,7 +24,7 @@ const Blogs = () => {
   }, [blogs, isLoading, isError]);
 
   return (
-    <div className="xl:w-[80%] xl:mx-auto py-4 my-24 px-4">
+    <div className="  py-4 my-24 px-4">
       <h1 className="heading text-center">Latest Blog</h1>
       <p className="text-xl font-secondary text-accent text-center lg:px-[200px] my-5">
         Dive into our latest blogs, explore the fascinating world of literature,
