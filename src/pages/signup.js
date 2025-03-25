@@ -1,10 +1,10 @@
-import RootLayout from "@/component/Layouts/RootLayout";
 import SignupFrom from "@/component/UI/Signup/SignupFrom";
 import { Divider } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import { BsFacebook, BsGithub, BsGoogle } from "react-icons/bs";
 import logo from "../assets/video/login.gif";
+import RootLayout from "@/component/Layouts/RootLayout";
 
 const SignUpPage = () => {
   return (
